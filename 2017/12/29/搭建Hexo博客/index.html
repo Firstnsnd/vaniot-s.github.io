@@ -136,7 +136,7 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <span>tool</span>
+        <span>web</span>
     </span>
     
     
@@ -161,8 +161,19 @@
     </div>
     
     <div class="post-body post-content">
-        <h3 id="一、安装node-js"><a href="#一、安装node-js" class="headerlink" title="一、安装node.js"></a>一、安装node.js</h3><p><a href="https://nodejs.org/en/download/" title="node.js" target="_blank" rel="noopener">官网下载</a></p>
-<h3 id="二、安装Git"><a href="#二、安装Git" class="headerlink" title="二、安装Git"></a>二、安装Git</h3><h3 id="三、Github-Pages"><a href="#三、Github-Pages" class="headerlink" title="三、Github Pages"></a>三、Github Pages</h3><p>GitHub是基于git实现的代码托管，可以免费使用，Github Pages可以被认为是用户编写的、托管在github上的静态网页，<br>简单快捷，使用Github Pages可以为你提供一个免费的服务器，免去了自己搭建服务器和写数据库的麻烦。</p>
+        <h3 id="一、安装配置Git"><a href="#一、安装配置Git" class="headerlink" title="一、安装配置Git"></a>一、安装配置Git</h3><p>1.安装git,<a href="https://git-scm.com/downloads" title="git" target="_blank" rel="noopener">下载地址</a>。<br>git中文教程<a href="http://git.oschina.net/progit/" target="_blank" rel="noopener">Pro git</a><br>2.配置用户信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;cnfeat&quot;//用户名</span><br><span class="line">$ git config --global user.email  &quot;cnfeat@gmail.com&quot;//填写自己的邮箱</span><br></pre></td></tr></table></figure></p>
+<p>3.配置SSH密钥<br>配置Github的SSH密钥可以让本地git项目与远程的github建立联系，让我们在本地写了代码之后直接通过git操作就可以实现本地代码库与Github代码库同步。<br>打开git本机是否存在SSH Keys检测<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/. ssh  //检测本机用户home目录下是否存在.ssh</span><br></pre></td></tr></table></figure></p>
+<p>若不存在此目录，创建一对新的SSH密钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ssh-keygen -t rsa -C &quot;your_email@example.com&quot;</span><br><span class="line">#这将按照你提供的邮箱地址，创建一对密钥</span><br><span class="line">#在此过程中会要求输入密码可选择不输入，及特定的文件名不输入则在默认的位置存储如/c/Users/you/.ssh/github_rsa</span><br></pre></td></tr></table></figure></p>
+<h3 id="二、安装node-js及hexo在本地"><a href="#二、安装node-js及hexo在本地" class="headerlink" title="二、安装node.js及hexo在本地"></a>二、安装node.js及hexo在本地</h3><p><a href="https://nodejs.org/en/download/" title="node.js" target="_blank" rel="noopener">官网下载</a><br>安装完node后,打开git安装hexo命令工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g #安装hexo命令行工具</span><br></pre></td></tr></table></figure></p>
+<p>创建Hexo文件夹,打开文件夹，打开文件夹使用git执行初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
+<p>为了避免出错安装以下插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-index --save</span><br><span class="line">npm install hexo-generator-archive --save</span><br><span class="line">npm install hexo-generator-category --save</span><br><span class="line">npm install hexo-generator-tag --save</span><br><span class="line">npm install hexo-server --save</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">npm install hexo-deployer-heroku --save</span><br><span class="line">npm install hexo-deployer-rsync --save</span><br><span class="line">npm install hexo-deployer-openshift --save</span><br><span class="line">npm install hexo-renderer-marked@0.2 --save</span><br><span class="line">npm install hexo-renderer-stylus@0.2 --save</span><br><span class="line">npm install hexo-generator-feed@1 --save</span><br><span class="line">npm install hexo-generator-sitemap@1 --save</span><br></pre></td></tr></table></figure></p>
+<p>在本地查看效果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></p>
+<p>登录localhost:4000，即可看到本地的效果如下：<br><img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/imagelocalhost.png" alt="初始化成功"></p>
+<h3 id="三、Github-Pages"><a href="#三、Github-Pages" class="headerlink" title="三、Github Pages"></a>三、Github Pages</h3><p>GitHub是基于git实现的代码托管，可以免费使用，Github Pages可以被认为是用户编写的、托管在github上的静态网页，<br>简单快捷，使用Github Pages可以为你提供一个免费的服务器，免去了自己搭建服务器和写数据库的麻烦。<br>1.注册github<br>2.创建代码库<br><img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/how-to-create-reposity.png" alt="创建代码库"></p>
+<p>ps：若要创建的博客地址与用户名相同则仓库名应与用户名相同即为:username.github.io<br>3.生成github pages<br> 进入仓库setting-&gt;github pages-&gt;choose a theme<br>4.添加SSH Keys<br>进入个人主页Account Setting-&gt;SSH Keys将上述生成的SSH Keys的rsa_pub填入<br><img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/SSH-github-SSH-OK.png" alt="创建代码库"><br>5.测试<br>可以输入下面的命令，看看设置是否成功，git@github.com的部分不要修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">是下面的反馈：</span><br><span class="line">The authenticity of host &apos;github.com (207.97.227.239)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br><span class="line">输入yes就好，然后会看到：</span><br><span class="line">Hi cnfeat! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure></p>
+<p>6.修改配置文件，部署到github<br> 打开Hexo文件找到_config.yml找到deploy修改：（确定已安装插件 npm install hexo-deployer-git –save）<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line"> type: git</span><br><span class="line"> repository: https://github.com/Vaniot-s/vaniot-s.github.io.git ##你的仓库地址</span><br><span class="line"> branch: master</span><br></pre></td></tr></table></figure></p>
+<p> 生成静态文件及部署博客:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></p>
+<p> 7.在浏览器上输入自己的主页地址<br> <img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/blog-main.png" alt="在线预览"></p>
 
     </div>
 
@@ -179,6 +190,8 @@
 </article>
 
 <div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/12/30/git/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
     
     
 </div>
@@ -280,7 +293,7 @@
         
     <div class="widget">
         <h3 class="title">分类</h3> 
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/tool/"><i class="fa" aria-hidden="true">tool</i></a><span class="category-list-count">1</span></li></ul>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link current" href="/categories/tool/"><i class="fa" aria-hidden="true">tool</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/"><i class="fa" aria-hidden="true">web</i></a><span class="category-list-count">1</span></li></ul>
     </div>
 
 
@@ -288,7 +301,7 @@
         
     <div class="widget">
     <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">1</span></li></ul>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">2</span></li></ul>
     </div>
 
 
@@ -297,7 +310,7 @@
   <div class="widget">
     <h3 class="title">标签云</h3>
     <div class="content tag-cloud">
-        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a>
+        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/git/" style="font-size: 10px;">git</a>
     </div>
   </div>
 
@@ -351,6 +364,11 @@
     </div>
 </div>
 
+
+  <script src="/assets/highlight.pack.js?rev=@@hash"></script>
+  <script>
+     hljs.initHighlightingOnLoad(); //初始化代码高亮 
+  </script>
 
 
 
