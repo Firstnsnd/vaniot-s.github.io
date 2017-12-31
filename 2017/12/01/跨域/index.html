@@ -26,7 +26,7 @@
     <!--Title-->
 
 
-<title>sql | Vaniot&#39;s</title>
+<title>跨域 | Vaniot&#39;s</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Vaniot&#39;s" type="application/atom+xml">
@@ -126,9 +126,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="sql">
+        <h1 id="跨域">
             
-            sql
+            跨域
             
         </h1>
         <div class="post-meta">
@@ -136,7 +136,7 @@
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <span>basic</span>
+        <span>无</span>
     </span>
     
     
@@ -144,7 +144,7 @@
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            sql
+            null
             
         </span>
     </span>
@@ -152,7 +152,7 @@
     
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
-        <span class="date-meta">2017/12/30</span>
+        <span class="date-meta">2017/12/01</span>
     </span>
 </div>
 
@@ -161,7 +161,51 @@
     </div>
     
     <div class="post-body post-content">
-        
+        <p>前端跨域<br>1.jsonp<br>原理: 标签不受同源测略<br>的限制，可以载入任意地方javascript文件,不要求同源<br>请求的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script\&gt;</span><br><span class="line">    function getWeather(data) &#123;</span><br><span class="line">        console.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script\&gt;</span><br><span class="line">&lt;script src=&quot;http://x.y.com/xx.js&quot; &gt;</span><br><span class="line">http://x.y.com/xx.js 文件内容：(返回调用getWeatherca参数为json对象数据）</span><br></pre></td></tr></table></figure></p>
+<p>输出文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> getWeather(&#123;</span><br><span class="line">    &quot;城市&quot;: &quot;北京&quot;,</span><br><span class="line">    &quot;天气&quot;: &quot;大雾&quot;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>2.document.domain<br>使用条件:</p>
+<p>有其他页面windowd对象的引用<br>二级域名相同<br>协议相同<br>端口相同</p>
+<p>document.domain默认的值是整个域名,即使域名的二级域名一样，其document.domain是不相同的<br>将document.domain设置为二级域名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">//打开 http://wenku.baidu.com/，在 console 中输入代码：</span><br><span class="line"> document.domain = &apos;baidu.com&apos;;</span><br><span class="line">var otherWindow = window.open(&apos;http://zhidao.baidu.com/&apos;);//打开百度知道的页面</span><br></pre></td></tr></table></figure>
+<p>我们现在已经发现百度知道的网页已经打开了，在百度知道网页的 console 中输入以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.domain = &apos;baidu.com&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>现在回到百度文库的网页，我们就可以使用百度知道网页的 window 对象来操作百度知道的网页了。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var divs=otherWindow.document.getElementsByTagName(&apos;div&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>3.window.name<br>在浏览器同一个标签中跳转，其window.name不会变化。window.name是string类型。<br>随意打开一个页面，输入以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.name = &quot;My window&apos;s name&quot;;</span><br><span class="line">location.href = &quot;http://www.qq.com/&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>再检测 window.name :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">window.name; // My window&apos;s name</span><br><span class="line"> var iframe = document.getElementById(&apos;iframe&apos;);</span><br><span class="line">var data = &apos;&apos;;</span><br><span class="line">iframe.onload = function() &#123;</span><br><span class="line">    iframe.onload = function()&#123;</span><br><span class="line">        data = iframe.contentWindow.name;</span><br><span class="line">    &#125;</span><br><span class="line">    iframe.src = &apos;about:blank&apos;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>ps: about:blank，javascript: 和 data: 中的内容，继承了载入他们的页面的源。<br>postMessage [html5]<br>postMessage 无视协议，端口，域名的不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">windowObj.postMessage(message, targetOrigin);</span><br></pre></td></tr></table></figure>
+<p>windowObj: 发送消息的 Window 对象[1.文档窗口中的iframe 2.JavaScript打开的弹窗 3.当前文档窗口的父窗口 4.打开当前文档的窗口（var win = window.opener();）]。<br>message: 在最新的浏览器中可以是对象。<br>targetOrigin: 目标的源，* 表示任意(跳过发送消息u源的检测)。<br>接收消息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var windowObj = window; // 可以是其他的 Window 对象的引用</span><br><span class="line">var data = null;</span><br><span class="line">addEventListener(&apos;message&apos;, function(e)&#123;</span><br><span class="line">    if(e.origin == &apos;http://jasonkid.github.io/fezone&apos;) &#123;</span><br><span class="line">        data = e.data;     e.source.postMessage(&apos;Got it!&apos;, &apos;*&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>message 事件就是用来接收 postMessage 发送过来的请求的。函数参数的属性有以下几个：</p>
+<p>origin: 发送消息的 window 的源。<br>data: 数据。<br>source: 发送消息的 Window 对象。<br>服务器端的跨域<br>1.反向代理服务器<br>原理:将服务器配置为需要跨域的反向代理服务器，将其他域名的资源映射到自己的域名之下，让浏览器认为是同源的<br>2.CORS<br>浏览器支持</p>
+<table>
+<thead>
+<tr>
+<th>chorem</th>
+<th>firefox</th>
+<th>ie</th>
+<th>opera</th>
+<th>safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>3.5</td>
+<td>8 &amp; 9(XDomainRequest),</td>
+<td>10</td>
+<td>12</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>原理:服务器在响应头中设置相应的选项。<br>设置响应头信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: &lt;origin&gt; | * //origin: 被允许跨域访问这个资源的网站，* 代表全部网站</span><br><span class="line">Access-Control-Allow-Origin: http://jasonkid.github.io/fezone //允许 http://jasonkid.github.io/fezone 来跨域访问这个资源</span><br><span class="line">是否允许浏览器携带 Cookie 来访问这个资源。</span><br></pre></td></tr></table></figure>
+<p>Access-Control-Allow-Credentials: true | false<br>Access-Control-Allow-Credentials 属性要和 XMLHttpRequest 的 withCredentials 属性来配合使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">var url = &apos;http://foo.other/resources/credentialed-content/&apos;;</span><br><span class="line">    </span><br><span class="line">if(xhr) &#123;</span><br><span class="line">    xhr.open(&apos;GET&apos;, url, true);</span><br><span class="line">    xhr.withCredentials = true; // 设置带有 Cookie 的资源请求</span><br><span class="line">    xhr.onreadystatechange = handler;</span><br><span class="line">    xhr.send(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>能够成功使用带有 Cookie 的资源请求需要满足以下几个条件：</p>
+<p>XMLHttpRequest 对象中指定了 withCredentials = true<br>服务器响应头中 Access-Control-Allow-Credentials: true<br>服务器响应头中 Access-Control-Allow-Origin 不能为 *</p>
+<p>安全配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Expose-Headers</span><br><span class="line">Access-Control-Allow-Methods</span><br><span class="line">Access-Control-Allow-Headers</span><br></pre></td></tr></table></figure></p>
+
     </div>
 
     <div class="post-footer">   
@@ -178,10 +222,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2017/12/30/密码学/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+        <a href="/2017/12/29/搭建Hexo博客/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
     
     
-        <a href="/2017/12/30/利用vultr搭建ss/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+        <a href="/2017/12/01/php基础回顾/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
     
 </div>
 
