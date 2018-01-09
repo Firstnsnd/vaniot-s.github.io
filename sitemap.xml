@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://vaniot-s.github.io/2018/01/08/nginx/</loc>
+    
+    <lastmod>2018-01-09T13:49:49.104Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://vaniot-s.github.io/2017/12/29/%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2018-01-09T12:39:28.888Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://vaniot-s.github.io/2018/01/09/%E4%B8%89%E7%A7%8D%E9%82%AE%E4%BB%B6%E5%8D%8F%E8%AE%AE-STMP%E3%80%81POP3%E3%80%81IMAP/</loc>
     
     <lastmod>2018-01-09T09:01:15.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://vaniot-s.github.io/2018/01/08/nginx/</loc>
-    
-    <lastmod>2018-01-09T08:30:07.801Z</lastmod>
     
   </url>
   
