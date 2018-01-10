@@ -115,11 +115,11 @@ exit 0
 
 步骤:
 - 安装shadowsocks-qt5
-经过测试，可能人品问题我用其他shadowssocks版本均失败，shadowsocks-qt5是可视化的一个版本，可用。
+shadowsocks-qt5是可视化的一个版本，可用。
 友情提示：在apt-get这类指令中，习惯性加sudo，保证你有足够权限执行命令
 ```
 sudo add-apt-repository ppa:hzwhuang/ss-qt5（找软件）
-sudo apt-get update （更新你的软件库）
+sudo apt-get update（更新你的软件库）
 sudo apt-get install shadowsocks-qt5 (正式安装)
 ```
 - 配置客户端
