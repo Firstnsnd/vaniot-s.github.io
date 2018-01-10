@@ -7,3 +7,4 @@ public/
 .deploy*/
 /public
 /.deploy_git
+/_config.yml

@@ -96,24 +96,67 @@ Hi cnfeat! You've successfully authenticated, but GitHub does not provide shell 
  ```
  7.在浏览器上输入自己的主页地址
  ![在线预览](https://raw.githubusercontent.com/Vaniot-s/picture/master/blog-main.png)
- ### 四、更换hexo主题
- 1. 进入[Hexo主题官网](https://hexo.io/themes/)，选择喜欢的主题，进入到它的github地址，将其克隆到博客本地文件夹下的themes下：
-  ```
- git colne  https://github.com/shenliyang/hexo-theme-snippet.git
-  ```
-2.打开Hexo文件夹下的配置文件_config.yml，修改参数为：theme: hexo-theme-next,返回Hexo目录，右键Git Bash，输入
+ ### 四、多台电脑同步更新Hexo博客
+   1.首先在另一台电脑上配置hexo、node、git及ssh密钥并将其上传到github上（如上操作）
+   2.在github的存储博客仓库创建新的分支(如取名:hexo)用于存放源代码，可将该分支作为默认的分支。将仓库克隆下来,
+   ```
+   git clone https://github.com/Vaniot-s/vaniot-s.github.io.git
+   ```
+> .gitignore 文件作用是声明不被 git 记录的文件，blog 根目录下的 .gitignore 是 hexo 初始化带来的，可以先删除或者直接编辑，对 hexo 不会有影响。建议 .gitignore 内添加以下内容：
 ```
-hexo g
-hexo s
+/.deploy_git   //hexo 默认的. git 配置文件夹，不需要同步
+/public        // 根据source文件夹内容自动生成，不需要备份，不然每次改动内容太多
+/_config.yml   //配置文件，根据自己需要是否添加，考虑到有外泄的可能，不建议上传
 ```
-3.打开浏览器，输入 http://localhost:4000/ 即可看见主题已经更换
-部署到Github上
-打开Hexo文件夹，右键Git Bash，输入
+删除其中的文件除了.git，将博客的文件移入其中。执行提交的操作
+```
+git add .
+git commit -m "new post hexo theme sync solution"
+git push
+```
+ ### 五、更换hexo主题（多台电脑同步）
+ 1. 进入[Hexo主题官网](https://hexo.io/themes/)，选择喜欢的主题，第三方主题，与git中的submodule相关。按以下思路进行解决：进入到它的github地址，将其fork到你的的仓库，然后引入子模块，我这边不知道为什么有“already exists in the index”的问题，执行如下命令：
+```
+git rm -r --cached themes/hexo-theme-snippet
+ ```
+ 可能要修改自己的hexo-theme-snippet，为了不让它遗失，先剪贴出来，再添加submodlue：
+```
+git submodule add https://github.com/Vaniot-s/hexo-theme-snippet.git themes/hexo-theme-snippet
+```
+然后再把自己的配置覆盖fork下来的hexo-theme-snippet仓库。先push submodule，在theme/next目录下依次执行：
+```
+git add .
+git commit -m "modify themes"
+git push  //这是提交到fork后主题的仓库
+```
+2.打开Hexo文件夹下的配置文件_config.yml，修改参数为：theme: hexo-theme-snippet,返回Hexo目录，右键Git Bash，输入
+```
+  hexo g
+  hexo s
+```
+3.然后我们再更新vaniot-s.github.io仓库：
+```
+cd ../../ //切到仓库的根目录
+git add .
+git commit -m "update hexo-theme-snippet settings in blog sources branch"
+git push origin hexo //注意hexo分支
+```
+4.打开浏览器，输入 http://localhost:4000/ 即可看见主题已经更换.部署到Github上,打开Hexo文件夹，右键Git Bash，输入
 ```
 hexo clean   (必须要，不然有时因为缓存问题，服务器更新不了主题)
 hexo g -d
 ```
-### 五、Hexo写文章
+5.另一台电脑上的操作
+```
+it clone --recursive https://github.com/Vaniot-s/vaniot-s.github.io.git //clone 主仓库
+cd vaniot-s.github.io/
+git checkout hexo //切换到hexo，以后基本都是基于此分支，master分支用hexo -d
+cd themes/hexo-theme-snippet/
+git submodule init
+git submodule update //获取我的hexo-theme-snippet主题的配置
+```
+6.之后便是使用git pull拉取合并
+### 六、Hexo写文章
 1.Hexo支持[Markdown语法](http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C#title-24)创建Markdown的文章
 ```
 hexo new xxxxx
@@ -131,7 +174,7 @@ category_map:
 tag_map:
 ```
 ps:category_map: 是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径.但不是每个主题均可以设置
-### 六、配置评论
+### 七、配置评论
    开启Gitment评论，先去[这里](https://github.com/settings/applications/new) 注册一个新的 OAuth Application。其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 https://vaniot-s.github.io/ ）。 得到一个 client ID 和一个 client secret，这个将被用于之后的用户登录。打开主题的设置文件_config.ymal找到：主题评论
 ```
 gitment:
