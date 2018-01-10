@@ -108,7 +108,33 @@ ssserver -c /etc/shadowsocks.json -d start
 exit 0
 ```
 ### 二、客户端
-到这儿[客户端下载](https://github.com/shadowsocks),安装好客户端后，填入配置的参数，启动客户端
+1.windows,android,ios到这儿[客户端下载](https://github.com/shadowsocks),安装好客户端后，填入配置的参数，启动客户端
 > 若服务端安装的是python版，则windows下的ss客户端安装2.5.8
+
+2.ubuntu下安装ss客户端
+
+步骤:
+- 安装shadowsocks-qt5
+经过测试，可能人品问题我用其他shadowssocks版本均失败，shadowsocks-qt5是可视化的一个版本，可用。
+友情提示：在apt-get这类指令中，习惯性加sudo，保证你有足够权限执行命令
+```
+sudo add-apt-repository ppa:hzwhuang/ss-qt5（找软件）
+sudo apt-get update （更新你的软件库）
+sudo apt-get install shadowsocks-qt5 (正式安装)
+```
+- 配置客户端
+按供应商提供的账户信息配置好，如果信息正确，就会启动成功。杂项里头可以配置：设置成功自动启动。
+![shadosocks-qt5](https://raw.githubusercontent.com/Vaniot-s/picture/master/shodwsocks-qt5.jpg)
+- 配置浏览器
+在windows和mac下都不用配置，直接使用系统默认就好。
+![firefoxss](https://raw.githubusercontent.com/Vaniot-s/picture/master/firefoxss.png)
+2.使用firefox，打开【连接设置】。(chrome浏览器有一个swichysharp插件)
+3.一定选择要使用【手动配置代理】
+4.默认有个http代理127.0.0.1，这个一定要清空。 
+5.socks主机为socks5，地址和端口如图所填。
+>说明：
+1.在mac和windows下，可以使用pac模式，也就是在pac文件中设置哪些地址需要翻墙，不在列表内的地址就直连。
+2.在ubuntu下默认是全局模式，也就是一律走代理翻，浏览器访问墙内的速度慢点。
+3.当然我们也可以自己写pac，在浏览器设置中选择自动代理配置。不过貌似不能直接将windows下的搬过来。
 
 更多问题:来[逗比根据地 ](https://doub.io)
