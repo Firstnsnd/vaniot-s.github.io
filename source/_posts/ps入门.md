@@ -1,3 +1,9 @@
+---
+title: ps入门
+date: 2018-01-10 14:00:33
+tags: [photoshop,设计]
+categories: tool
+---
 ### PS入门
 #### 1.好习惯
       1.永远不破坏原始素材(复制图层ctrl+j)
