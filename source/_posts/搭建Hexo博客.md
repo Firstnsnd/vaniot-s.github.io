@@ -50,6 +50,7 @@ npm install hexo-renderer-marked@0.2 --save
 npm install hexo-renderer-stylus@0.2 --save
 npm install hexo-generator-feed@1 --save
 npm install hexo-generator-sitemap@1 --save
+npm install hexo-generator-feed
 ```
 在本地查看效果:
 ```
@@ -84,24 +85,25 @@ Hi cnfeat! You've successfully authenticated, but GitHub does not provide shell 
 ```
 6.修改配置文件，部署到github
  打开Hexo文件找到_config.yml找到deploy修改：（确定已安装插件 npm install hexo-deployer-git --save）
- ```
+```
  deploy:
   type: git
   repository: https://github.com/Vaniot-s/vaniot-s.github.io.git ##你的仓库地址
   branch: master
- ```
+```
  生成静态文件及部署博客:
- ```
+```
  hexo g -d
- ```
+```
  7.在浏览器上输入自己的主页地址
  ![在线预览](https://raw.githubusercontent.com/Vaniot-s/picture/master/blog-main.png)
- ### 四、多台电脑同步更新Hexo博客
+ 
+###  四、多台电脑同步更新Hexo博客
    1.首先在另一台电脑上配置hexo、node、git及ssh密钥并将其上传到github上（如上操作）
    2.在github的存储博客仓库创建新的分支(如取名:hexo)用于存放源代码，可将该分支作为默认的分支。将仓库克隆下来,
-   ```
+```
    git clone https://github.com/Vaniot-s/vaniot-s.github.io.git
-   ```
+```
 > .gitignore 文件作用是声明不被 git 记录的文件，blog 根目录下的 .gitignore 是 hexo 初始化带来的，可以先删除或者直接编辑，对 hexo 不会有影响。建议 .gitignore 内添加以下内容：
 ```
 /.deploy_git   //hexo 默认的. git 配置文件夹，不需要同步
@@ -114,11 +116,11 @@ git add .
 git commit -m "new post hexo theme sync solution"
 git push
 ```
- ### 五、更换hexo主题（多台电脑同步）
+### 五、更换hexo主题（多台电脑同步）
  1. 进入[Hexo主题官网](https://hexo.io/themes/)，选择喜欢的主题，第三方主题，与git中的submodule相关。按以下思路进行解决：进入到它的github地址，将其fork到你的的仓库，然后引入子模块，我这边不知道为什么有“already exists in the index”的问题，执行如下命令：
 ```
 git rm -r --cached themes/hexo-theme-snippet
- ```
+```
  可能要修改自己的hexo-theme-snippet，为了不让它遗失，先剪贴出来，再添加submodlue：
 ```
 git submodule add https://github.com/Vaniot-s/hexo-theme-snippet.git themes/hexo-theme-snippet
@@ -168,12 +170,13 @@ scaffolds目录下，是新建页面的模板，执行新建命令时，是根�
 # Category & Tag
 default_category: uncategorized
 category_map:
-	树莓派: raspberry
-	写作: writing
-	其他: others
+        web: web
+        基础: basic
+        工具: tool
+        资源: resource
 tag_map:
 ```
-ps:category_map: 是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径.但不是每个主题均可以设置
+>ps:category_map: 是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径.但不是每个主题均可以设置
 ### 七、配置评论
    开启Gitment评论，先去[这里](https://github.com/settings/applications/new) 注册一个新的 OAuth Application。其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 https://vaniot-s.github.io/ ）。 得到一个 client ID 和一个 client secret，这个将被用于之后的用户登录。打开主题的设置文件_config.ymal找到：主题评论
 ```
@@ -187,3 +190,4 @@ gitment:
   perPage: 
 ```
 thanks to [@imsun](https://imsun.net)
+************

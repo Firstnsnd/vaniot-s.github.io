@@ -1,0 +1,67 @@
+---
+title: linux常用命令
+date: 2018-01-12 14:18:19
+tags:
+categories:
+---
+## 权限
+### 用户
+每个用户都有对应ID(UID),至少归属于用户组(GID:同一用户组拥有相同的权利)。
+```
+查看id:id
+查看Uid：groups
+查看登录的用户：who
+查看更详细的登录信息：w
+调查用户：finger  //显示系统的登录用户
+          finger user //显示该用户更详细的信息
+```
+用户分类
+- 根用户：root对系统拥有绝对的控制权，可进行文件的任意操作
+- 系统用户：系统运行时必有的用户
+- 普通用户：真实用户，在授权的的目录中操作。
+用户的切换
+```
+用户的切换：su
+切换为root: su //切换用户为root,环境仍为当前用户
+            su -//切换为用户root，环境也为root
+退出root用户：exit
+```
+以root的身份执行命令：(未切换身份)
+使用：sudo
+
+sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sudo的权限，确定有权限后，要求使用用户自己的密码验证身份
+
+```
+以root的身份运行：visudo //进入修改配置文件
+在最后一行可加入：
+         user ALL=(ALL) ALL //用户user 可在任意地方(地一个ALL)执行任何人(第二个ALL)的任何命令(第三个ALL,拥有了系统全部权限)
+         user ALL=(ALL) NOPASSWD:ALL //用户使用sudo命令时不需要密码
+         user ALL=(ALL) NOPASSWD:/sbin/shutdown,/user/bin/reboot //用户在使用此命令时不需要密码
+         %group1 All=(ALL) ALL //给用户组group1赋予权限
+```
+对用户的操作
+1.增加用户删除用户
+```
+1.增加用户：useradd john (增加名为john的用户)
+            useradd -u 555 user (为用户user设置uid为555) 
+            useradd -g user user2 (为用户user2指定用户组为user1)
+   # 系统会在 /etc/passwd和/etc/shadow中分别记录用户名、密码，/etc/shadow默认只有root用户才有读的权限
+2.修改密码：password(修改当前用户的密码)  
+            password user(root修改user的密码) 
+3.修改用户:usermod
+            cat /etc/passwd | grep user //查看用户user的家目录,grep过滤名为user
+            usermod -d /home/user_new -m user //-m检查指定用户的家目录是否存在，无就创建 /home/user_new，并使用此目录为user的新家目录
+            cat /etc/passwd | grep user //查看用户user的家目录,grep过滤名为user
+      冻结帐号：
+            usermod -L user//冻结帐号user
+            usermod -U user //解锁帐号user
+4.删除用户
+            userdel user //删除用户只删除/etc/passwd和/etc/shadow中的用户相关文件
+            userdel user  -r //删除用户的所有个相关文件
+5.增加用户组
+            groupadd group1 //增加名为group1 的用户组
+            cat /etc/group //查看用户组的信息
+6.删除有用户组
+            groupdel group1
+```
+### 文件操作
