@@ -10,3 +10,4 @@ categories: basic
          ./configure用于检测安装平台的目标特征，是个shell脚本，会检测是否有gcc和cc
         
          >当不存在时需先安装linux模块
+         
