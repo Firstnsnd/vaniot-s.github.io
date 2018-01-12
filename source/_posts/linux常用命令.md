@@ -1,11 +1,11 @@
 ---
 title: linux常用命令
 date: 2018-01-12 14:18:19
-tags:
-categories:
+tags: linux
+categories: basic
 ---
 ## 权限
-### 用户
+###用户
 每个用户都有对应ID(UID),至少归属于用户组(GID:同一用户组拥有相同的权利)。
 ```
 查看id:id
@@ -64,4 +64,4 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
 6.删除有用户组
             groupdel group1
 ```
-### 文件操作
+###文件操作
