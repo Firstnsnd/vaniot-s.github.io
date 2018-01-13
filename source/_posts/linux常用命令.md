@@ -15,7 +15,7 @@ categories: basic
 调查用户：finger  //显示系统的登录用户
           finger user //显示该用户更详细的信息
 ```
-用户分类
+#### 用户分类
 - 根用户：root对系统拥有绝对的控制权，可进行文件的任意操作
 - 系统用户：系统运行时必有的用户
 - 普通用户：真实用户，在授权的的目录中操作。
@@ -32,15 +32,15 @@ categories: basic
 sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sudo的权限，确定有权限后，要求使用用户自己的密码验证身份
 
 ```
-以root的身份运行：vi sudo //进入修改配置文件
+以root的身份运行：visudo //进入修改配置文件,在编辑保存后会自动检查语法设置，防止配置错误
 在最后一行可加入：
          user ALL=(ALL) ALL //用户user 可在任意地方(地一个ALL)执行任何人(第二个ALL)的任何命令(第三个ALL,拥有了系统全部权限)
          user ALL=(ALL) NOPASSWD:ALL //用户使用sudo命令时不需要密码
          user ALL=(ALL) NOPASSWD:/sbin/shutdown,/user/bin/reboot //用户在使用此命令时不需要密码
          %group1 All=(ALL) ALL //给用户组group1赋予权限
 ```
-对用户的操作
-1.增加用户删除用户
+#### 对用户的操作
+###### 1.增加用户删除用户
 ```
 1.增加用户：useradd john (增加名为john的用户)
             useradd -u 555 user (为用户user设置uid为555) 
@@ -64,7 +64,7 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
 6.删除有用户组
             groupdel group1
 ```
-2.用户信息
+##### 2.用户信息
 ```
 1.查看当前系统的用户：users
           who //查看更多详细的信息
@@ -82,4 +82,14 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
 --|--|--|--|--|--|--|--
 用户名|终端|网络登录时，显示主机名或ip地址|用户登录时间|用户闲置时间|与终端相关所有运行进程消耗的CPU时间总量|当前WHAT列所对应的进程所消耗的CPU的时间总量|用户当前运行的进程
 
+```
+2. 调查用户：finger
+     finger //显示系统中的登录用户
+     finger vaniot //显示用户的详细信息
+
+```
+
+##### 3.设置时间计划
+   1.特定的时间执行一次：at
+   
 ### 文件操作
