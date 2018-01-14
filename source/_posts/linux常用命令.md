@@ -88,5 +88,34 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
    ><EOT>为键盘ctrl+d输入
    
    - 设置具体时间自动关机
-   ![设置具体时间自动关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13 23-08-31.png)
+   ![设置具体时间自动关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13%2023-39-07.png)
+   
+   2.周期性执行任务：cron
+   - 
 ### 文件操作
+1.linux系统的文件结构FHS(文件层次标准)
+
+目录|目录系统
+--|--
+/bin|常见的用户指令
+/boot|内核启动文件
+/dev|设备文件
+/etc|系统和服务的配置文件
+/home|系统默认的普通用户的家目录
+/lib|系统函数库目录
+/lost+found|ext3文件系统需要的目录，用于磁盘检查
+/mnt|系统加载文件系统时常用的挂载点
+/opt|第三方软件安装目录
+/proc|虚拟文件系统
+/root|root用户的家目录
+/sbin|存放系统管理命令
+/tmp|临时文件的存放目录
+/usr|存放与用户直接相关的文件和目录
+/media|系统用来挂载光驱等临时文件的挂载点
+
+
+
+
+
+
+
