@@ -83,12 +83,12 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
 ```
 ##### 3.设置时间计划
    1.特定的时间执行一次：at
-       - 设置两分钟后关机
-         
-       ![设置两分钟后关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13%2023-08-31.png)
-   ><EOT>为键盘ctrl+d输入
    
-       - 设置具体时间自动关机
+   -  设置两分钟后关机
+   ![设置两分钟后关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13%2023-08-31.png)
+   ><EOT>为键盘ctrl+d输入
+ 
+   - 设置具体时间自动关机
        ![设置具体时间自动关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13%2023-39-07.png)
    
 2.周期性执行任务：cron
