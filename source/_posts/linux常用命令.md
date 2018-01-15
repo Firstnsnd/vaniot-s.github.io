@@ -92,7 +92,13 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
        ![设置具体时间自动关机](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-13%2023-39-07.png)
    
 2.周期性执行任务：cron
-   - 
+   - cron的启动，停止，状态
+   ```
+   service cron  status //查看cron 进程的状态
+   service cron start  //启动cron进程
+   service cron stop //停止cron进程
+   ```
+   
 ### 文件操作
 1.linux系统的文件结构FHS(文件层次标准)
 
