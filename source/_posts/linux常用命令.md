@@ -93,32 +93,36 @@ sudo时，系统先会检查/etc/suddoers，判断当前用户是否有执行sud
    
 2.周期性执行任务：cron
 
-- cron的启动，停止，状态
+(1) cron的启动，停止，状态 
+
 ```
    service cron  status //查看cron 进程的状态
    service cron start  //启动cron进程
    service cron stop //停止cron进程
-``` 
-- 使用crontab设置计划命令
+```
+
+(2)使用crontab设置计划命令
+
 ```
 crontab -l //查看设置的命令
 crontab -r  //删除所有的任务
 crontab -e //编辑任务
 crontab -u vaniot -l //查看用户vaniot的任务
 ```
+
 >crontab参数的基本格式
 
 1|2|3|4|5|6
 --|--|--|--|--|--
 分钟(0-59) \*和*/1表示每分钟|小时(0-23)|日期(1-31)|月份(1~12)|星期几(0~6)|执行命令command
    
+   
 ```
 # 每小时重启httpd进程
 * * * * * *  service httpd restart
-*/1 * * * * * service httpd restart
-
+*/1 * * * * *service httpd restart
 # 从23点到3点，每小时重启httpd进程
-* 23-3/1 * * * * service httpd restart
+* 23-3/1 * * * service httpd restart
 ```
 - /etc/crontab的管理
  系统的例行任务
