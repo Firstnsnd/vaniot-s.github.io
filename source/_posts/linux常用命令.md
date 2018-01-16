@@ -127,7 +127,7 @@ crontab -u vaniot -l //查看用户vaniot的任务
 - /etc/crontab的管理
  系统的例行任务
  ![crontab管理](https://github.com/Vaniot-s/picture/blob/master/2018-01-15%2021-16-37.png?raw=true)
-### 文件操作
+### 文件管理
 1.linux系统的文件结构FHS(文件层次标准)
 
 目录|目录系统
