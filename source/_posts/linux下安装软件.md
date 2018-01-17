@@ -36,4 +36,10 @@ categories: basic
   echo "export PATH=$PATH:/home/vaniot" >>/etc/rc.local
   ```
   
+  源码编译安装软件原理:
+       源代码->源码编译生成可执行的文件->复制该文件到任一PATH变量包含的目录
 ## 二、源码包编译安装
+### 1.典型源码编译安装软件
+   (1).运行configure命令，结合必要的参数生成Makefile;
+   (2).运行make命令生成各类模板和主程序
+   (3).运行make install命令将必要的文章复制到安装目录中
