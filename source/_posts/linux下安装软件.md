@@ -14,13 +14,13 @@ categories: basic
     ```
        vi HelloWorld.c
      ```
-     2.编写程序
+   2.编写程序
     ![c语言输出hello world](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-00-27.png)
-    3.使用gcc编译为二进制文件
+ 3.使用gcc编译为二进制文件
     ```
     gcc HelloWorld.c -o HelloWorld
     ```
-    4.运行程序
+  4.运行程序
      (1)使用路径
      ![输入路径运行程序](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-33-27.png)
      (2)利用环境变量
@@ -43,3 +43,4 @@ categories: basic
    (1).运行configure命令，结合必要的参数生成Makefile;
    (2).运行make命令生成各类模板和主程序
    (3).运行make install命令将必要的文章复制到安装目录中
+   
