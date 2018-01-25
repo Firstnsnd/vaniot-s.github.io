@@ -226,5 +226,5 @@ article_emoji:
 ```
 I fell good! :simple_smile:
 ```
-输出:
-I fell good! :simple_smile:
+文章生成后，输出:
+I fell good! :smile:
