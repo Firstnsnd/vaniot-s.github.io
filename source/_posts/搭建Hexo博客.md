@@ -110,6 +110,7 @@ Hi cnfeat! You've successfully authenticated, but GitHub does not provide shell 
 /public        // 根据source文件夹内容自动生成，不需要备份，不然每次改动内容太多
 /_config.yml   //配置文件，根据自己需要是否添加，考虑到有外泄的可能，不建议上传
 ```
+
 删除其中的文件除了.git，将博客的文件移入其中。执行提交的操作
 ```
 git add .
@@ -176,7 +177,8 @@ category_map:
         资源: resource
 tag_map:
 ```
->ps:category_map: 是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径.但不是每个主题均可以设置
+>category_map: 是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径.但不是每个主题均可以设置
+
 ### 七、配置评论
    开启Gitment评论，先去[这里](https://github.com/settings/applications/new) 注册一个新的 OAuth Application。其他内容可以随意填写，但要确保填入正确的 callback URL（一般是评论页面对应的域名，如 https://vaniot-s.github.io/ ）。 得到一个 client ID 和一个 client secret，这个将被用于之后的用户登录。打开主题的设置文件_config.ymal找到：主题评论
 ```
@@ -190,4 +192,39 @@ gitment:
   perPage: 
 ```
 thanks to [@imsun](https://imsun.net)
-************
+### 八、hexo文章中引入emoji
+#### 1.安装
+
+在博客目录下运行：
+```
+npm install https://github.com/frapples/hexo-article-emoji --save
+#大陆用户最好使用阿里的镜像源：
+npm install https://github.com/frapples/hexo-article-emoji --save --registry=https://registry.npm.taobao.org
+```
+之后，你需要把 emoji 的图片资源复制到你的 source 文件夹去，默认会复制到你的 source/images/emoji 文件夹。 在博客目录执行：
+```
+hexo article-emoji install
+#实际上 emoji 图片有两个版本,默认只会复制精简版，复制完整版
+hexo article-emoji install full
+```
+移除上面命令安装的图片，其实也就是删除 source/images/emoji 文件夹：
+```
+hexo article-emoji remove
+```
+#### 2.配置
+编辑 hexo 的配置文件 _config.yml，找到一下选项，改为 true ：
+```
+post_asset_folder: true
+```
+使用完整版的 emoji 表情，你需要在 _config.yml 加入：
+```
+article_emoji:
+  full: true
+```
+#### 3.使用
+[这里](http://www.webpagefx.com/tools/emoji-cheat-sheet/)附上了 emoji 的语法和表情的对照表。输入：
+```
+I fell good! :simple_smile:
+```
+输出:
+I fell good! :simple_smile:
