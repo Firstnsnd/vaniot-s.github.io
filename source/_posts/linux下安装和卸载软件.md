@@ -1,9 +1,20 @@
 ---
-title: linux下安装软件
+title: linux下安装和卸载软件
 date: 2018-01-16 15:32:23
 tags: linux
 categories: basic
 ---
+linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:
+
+- 程序的文档->/usr/share/doc; /usr/local/share/doc
+- 程序->/usr/share; /usr/local/share
+- 程序的启动项->/usr/share/apps; /usr/local/share
+- 程序的语言包->/usr/share/locale; /usr/local/share/locale
+- 可执行文件->/usr/bin; /usr/local/bin
+- 配置文件-> /etc
+- lib文件->/usr/lib
+例如:系统安装软件一般在/usr/share，可执行的文件在/usr/bin，配置文件可能安装到了/etc下等。
+
 编程语言的分类：
 1.编译型语言: 在程序执行前，会编译成机器语言，再次执行不会编译
 2.解释型语言: 在程序执行时翻译为机器语言
@@ -53,6 +64,7 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 ```
 >更新node和npm
+
 升级npm为最新版本
 ```
 sudo npm install npm@latest -g
