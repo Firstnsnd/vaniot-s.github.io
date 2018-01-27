@@ -44,3 +44,29 @@ categories: basic
    (2).运行make命令生成各类模板和主程序
    (3).运行make install命令将必要的文章复制到安装目录中
    
+#### 使用ubuntu自带apt-get安装加Node.js 
+在终端中执行：
+```
+sudo add-apt-repository ppa:chris-lea/node.js //ubuntu自带的node版本太老，PPA安装最新版的Node.js，
+sudo apt-get update
+sudo apt-get install nodejs
+sudo apt-get install npm
+```
+>更新node和npm
+升级npm为最新版本
+```
+sudo npm install npm@latest -g
+```
+安装用于安装nodejs的模块n
+```
+sudo npm install -g n
+```
+然后通过n模块安装指定版本的nodejs，n模块更多介绍请参考[官方文档](https://www.npmjs.com/package/n)
+```
+//安装官方最新版本
+sudo n latest
+//安装官方稳定版本
+sudo n stable
+//安装官方最新LTS版本
+sudo n lts
+```
