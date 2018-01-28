@@ -21,99 +21,57 @@ dpkg(跟red hat的rpm非常相似)和apt-get进行安装软件，dpkg与apt-get�
 - dpkg是用来安装.deb文件,不会解决模块的依赖关系,不会关心ubuntu的软件仓库内的软件,可以用于安装本地的deb文件。
 - apt会解决和安装模块的依赖问题,并会咨询软件仓库, 不会安装本地的deb文件, apt是建立在dpkg之上的软件管理工具。
 ### 1.dpkg
-（1）安装软件
-
-          命令行：dpkg -i <.deb file name>
-          示例：dpkg -i remarkable_1.87_all.deb
-（2）安装一个目录下面所有的软件包
-
-          命令行：dpkg -R
-          示例：dpkg -R /usr/local/src
-（3）释放软件包，但是不进行配置
-
-        命令行：dpkg –-unpack package_file 如果和-R一起使用，参数可以是一个目录
-        示例：dpkg –-unpack remarkable_1.87_all.deb
-（4）重新配置和释放软件包
-
-        命令行：dpkg –configure package_file
-        如果和-a一起使用，将配置所有没有配置的软件包
-        示例：dpkg –configure remarkable_1.87_all.deb
-（5）删除软件包（保留其配置信息）
-
-        命令行：dpkg -r
-        示例：dpkg -r remarkable_1.87_all
-（6）替代软件包的信息
-
-        命令行：dpkg –update-avail <Packages-file>
-（7）合并软件包信息 
-
-        dpkg –merge-avail <Packages-file>
-（8）从软件包里面读取软件的信息
-
-        命令行：dpkg -A package_file
-（9）删除一个包（包括配置信息）
-
-        命令行：dpkg -P
-（10）丢失所有的Uninstall的软件包信息
-
-        命令行：dpkg –forget-old-unavail
-（11）删除软件包的Avaliable信息
-
-        命令行：dpkg –clear-avail
-（12）查找只有部分安装的软件包信息
-
-        命令行：dpkg -C
-（13）比较同一个包的不同版本之间的差别
-
-        命令行：dpkg –compare-versions ver1 op ver2
-（14）显示帮助信息
-
-        命令行：dpkg –help
-（15）显示dpkg的Licence
-
-        命令行：dpkg –licence (or) dpkg –license
-（16）显示dpkg的版本号
-
-        命令行：dpkg --version
-（17）建立一个deb文件
-
-        命令行：dpkg -b directory [filename]
-（18）显示一个Deb文件的目录
-
-        命令行：dpkg -c filename
-（19）显示一个Deb的说明
-
-        命令行：dpkg -I filename [control-file]
-（20）搜索Deb包
-
-        命令行：dpkg -l package-name-pattern
-        示例：dpkg -l vim
-（21）显示所有已经安装的Deb包，同时显示版本号以及简短说明
-
-         命令行：dpkg -l
-（22）报告指定包的状态信息
-
-        命令行：dpkg -s package-name
-        示例：dpkg -s ssh
-（23）显示一个包安装到系统里面的文件目录信息(使用apt-get install命令安装)
-
-        命令行：dpkg -L package-Name
-        示例：dpkg -L apache2
-（24）搜索指定包里面的文件（模糊查询）
-
-        命令行：dpkg -S remarkable
-（25）显示包的具体信息
-
-        命令行：dpkg -p package-name
-        示例：dpkg -p remarkable
-   (26)重新配制一个已经安装的包裹，如果它使用的是 debconf
-   
-          dpkg-reconfigure --frontend=dialog debconf //重新配制 debconf，使用一个 dialog 前端
-    (27)获取当前状态 
-    
-        dpkg --get-selections *wine*
-        
+```
+dpkg -i remarkable_1.87_all.deb //安装软件
+dpkg -R /usr/local/src  //安装一个目录下面所有的软件包
+dpkg –-unpack remarkable_1.87_all.deb //释放软件包，但是不进行配置,如果和-R一起使用，参数可以是一个目录
+dpkg –configure remarkable_1.87_all.deb //重新配置和释放软件包. 如果和-a一起使用，将配置所有没有配置的软件包
+dpkg -r remarkable_1.87_all ///删除软件包（保留其配置信息）
+dpkg –update-avail <Packages-file> //替代软件包的信息
+dpkg –merge-avail <Packages-file> //合并软件包信息 
+dpkg -A package_file //从软件包里面读取软件的信息
+dpkg -P //删除一个包（包括配置信息）
+dpkg –forget-old-unavail //丢失所有的Uninstall的软件包信息
+dpkg –clear-avail //删除软件包的Avaliable信息
+dpkg -C  //查找只有部分安装的软件包信息
+dpkg –compare-versions ver1 op ver2  //比较同一个包的不同版本之间的差别
+dpkg –help  //显示帮助信息
+dpkg –licence (or) dpkg –license //显示dpkg的Licence
+dpkg --version  //显示dpkg的版本号
+dpkg -b directory [filename]  //建立一个deb文件
+dpkg -c filename //显示一个Deb文件的目录
+dpkg -I filename [control-file] //显示一个Deb的说明
+dpkg -l vim  //搜索Deb包
+dpkg -l //显示所有已经安装的Deb包，同时显示版本号以及简短说明
+dpkg -s ssh  //报告指定包的状态信息
+dpkg -L apache2 //显示一个包安装到系统里面的文件目录信息(使用apt-get install命令安装)
+dpkg -S remarkable //搜索指定包里面的文件（模糊查询）
+dpkg -p remarkable //显示包的具体信息
+dpkg-reconfigure --frontend=dialog debconf //重新配制 debconf，使用一个 dialog 前端 重新配制一个已经安装的包裹，如果它使用的是 debconf
+ dpkg --get-selections *wine*  //获取当前状态 
+```
 ### 2.apt-get
+```
+apt-get install packagename  //安装一个新软件包（参见下文的aptitude）
+apt-get remove packagename  //卸载一个已安装的软件包（保留配置文档）
+apt-get remove --purge packagename  //卸载一个已安装的软件包（删除配置文档）
+apt-get autoremove packagename  //删除包及其依赖的软件包
+apt-get autoremove --purge packagname  //删除包及其依赖的软件包+配置文件，比上面的要删除的彻底一点
+dpkg --force-all --purge packagename  //有些软件很难卸载，而且还阻止别的软件的应用，就能够用这个，但是有点冒险。
+apt-get autoclean //apt会把已装或已卸的软件都备份在硬盘上，所以假如需要空间的话，能够让这个命令来删除您已卸载掉的软件的备份。
+apt-get clean  //这个命令会把安装的软件的备份也删除，不会影响软件的使用。
+apt-get upgrade  //更新软件包，apt-get upgrade不仅可以从相同版本号的发布版中更新软件包，也可以从新版本号的发布版中更新软件包，尽管实现后一种更新的推荐命令为apt-get dist-upgrade。
+在运行apt-get upgrade命令时加上-u选项很有用（即：apt-get -u upgrade)。这个选项让APT显示完整的可更新软件包列表。不加这个选项，你就只能盲目地更新。APT会下载每个软件包的最新更新版本，然后以合理的次序安装它们。注意在运行该命令前应先运行 apt-get update更新数据库，更新任何已安装的软件包。[2] 
+apt-get dist-upgrade  //将系统升级到新版本。
+apt-cache search string  //在软件包列表中搜索字符串。
+aptitude  //周详查看已安装或可用的软件包。和apt-get类似，aptitude能够通过命令行方式调用，但仅限于某些命令——最常见的有安装和卸载命令。
+由于aptitude比apt-get了解更多信息，能够说他更适合用来进行安装和卸载。
+apt-cache showpkg pkgs  //显示软件包信息。
+apt-cache dumpavail //打印可用软件包列表。
+apt-cache show pkgs  //显示软件包记录，类似于dpkg –print-avail。
+apt-cache pkgnames  //打印软件包列表中任何软件包的名称。
+apt-file search filename  //查找包含特定文档的软件包（不一定是已安装的），这些文档的文档名中含有指定的字符串。apt-file是个单独的软件包。必须先使用apt-get install来安装他，然后运行apt-file update。如apt-file search filename输出的内容太多，您能够尝试使用apt-file search filename | grep -w filename（只显示指定字符串作为完整的单词出现在其中的那些文档名）或类似方法.
+```
 ## 二、源码包编译安装
 ###  1、编译、安装、运行程序
 编程语言的分类：
