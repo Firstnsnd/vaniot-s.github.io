@@ -6,6 +6,7 @@ categories: basic
 ---
 linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:
 
+
 - 程序的文档->/usr/share/doc; /usr/local/share/doc
 - 程序->/usr/share; /usr/local/share
 - 程序的启动项->/usr/share/apps; /usr/local/share
@@ -71,10 +72,40 @@ apt-cache show pkgs  //显示软件包记录，类似于dpkg –print-avail。
 apt-cache pkgnames  //打印软件包列表中任何软件包的名称。
 apt-file search filename  //查找包含特定文档的软件包（不一定是已安装的），这些文档的文档名中含有指定的字符串。apt-file是个单独的软件包。必须先使用apt-get install来安装他，然后运行apt-file update。如apt-file search filename输出的内容太多，您能够尝试使用apt-file search filename | grep -w filename（只显示指定字符串作为完整的单词出现在其中的那些文档名）或类似方法.
 ```
->example:ubuntu使用apt-get搭配java环境
+#### **example**
+>ubuntu使用apt-get搭配java环境
 
         apt-get install default-jdk
         apt-get install default-jre
+        
+> 使用ubuntu自带apt-get安装加Node.js 
+
+在终端中执行：
+```
+sudo add-apt-repository ppa:chris-lea/node.js //ubuntu自带的node版本太老，PPA安装最新版的Node.js，
+sudo apt-get update
+sudo apt-get install nodejs
+sudo apt-get install npm
+```
+>更新node和npm
+
+升级npm为最新版本
+```
+sudo npm install npm@latest -g
+```
+安装用于安装nodejs的模块n
+```
+sudo npm install -g n
+```
+然后通过n模块安装指定版本的nodejs，n模块更多介绍请参考[官方文档](https://www.npmjs.com/package/n)
+```
+//安装官方最新版本
+sudo n latest
+//安装官方稳定版本
+sudo n stable
+//安装官方最新LTS版本
+sudo n lts
+```
 ## 二、源码包编译安装
 ###  1、编译、安装、运行程序
 编程语言的分类：
@@ -144,34 +175,8 @@ apt-file search filename  //查找包含特定文档的软件包（不一定是�
    (1).运行configure命令，结合必要的参数生成Makefile;
    (2).运行make命令生成各类模板和主程序
    (3).运行make install命令将必要的文章复制到安装目录中
-   
-#### 使用ubuntu自带apt-get安装加Node.js 
-在终端中执行：
-```
-sudo add-apt-repository ppa:chris-lea/node.js //ubuntu自带的node版本太老，PPA安装最新版的Node.js，
-sudo apt-get update
-sudo apt-get install nodejs
-sudo apt-get install npm
-```
->更新node和npm
+####  **从源码编译安装**
 
-升级npm为最新版本
-```
-sudo npm install npm@latest -g
-```
-安装用于安装nodejs的模块n
-```
-sudo npm install -g n
-```
-然后通过n模块安装指定版本的nodejs，n模块更多介绍请参考[官方文档](https://www.npmjs.com/package/n)
-```
-//安装官方最新版本
-sudo n latest
-//安装官方稳定版本
-sudo n stable
-//安装官方最新LTS版本
-sudo n lts
-```
 ## 三、查找软件安装的位置
 1.find命令
 
