@@ -6,7 +6,6 @@ categories: basic
 ---
 linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:
 
-
 - 程序的文档->/usr/share/doc; /usr/local/share/doc
 - 程序->/usr/share; /usr/local/share
 - 程序的启动项->/usr/share/apps; /usr/local/share
@@ -107,12 +106,15 @@ sudo n stable
 sudo n lts
 ```
 ## 二、源码包编译安装
-###  1、编译、安装、运行程序
+
 编程语言的分类：
 1.编译型语言: 在程序执行前，会编译成机器语言，再次执行不会编译
 2.解释型语言: 在程序执行时翻译为机器语言
 >ps:脚本语言：是一种解释性语言，不需要编译，由相应的脚本引擎解释执行
 
+- 已经编译的二进制包 ——统称 binary，后缀可以是 .bin 或者.sh或者没有
+- 不需要编译即可运行的比如Python 源代码——即 source code，使用python *.py 调用 
+###  1、编译、安装、运行程序
    1.编写c语言程序
     
         vi HelloWorld.c
@@ -196,4 +198,18 @@ sudo n lts
  6.type命令
  
         type node
+ 7.软件相关名称
+        dpkg --get-selections | grep ‘软件相关名称’
+## 四、卸载方法
+-  编译安装后卸载可以试用
+
+         sudo make uninstall  //若程序维护者嵌入了相关命令
+ >使用checkinstall处理编译的包安装则使用的deb/apt处理步骤
+
+- 删除软件
+
+         sudo apt-get remove –purge 软件名
+        sudo apt-get autoremove  --purge 软件名称  // 删除系统不再使用的孤立软件
+        sudo apt-get autoclean 软件名称                      // 清理旧版本的软件缓存
+        dpkg -l |grep ^rc|awk ‘{print $2}’ |sudo xargs dpkg -P     ///清除残余的配置文件
  
