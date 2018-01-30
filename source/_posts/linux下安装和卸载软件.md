@@ -178,6 +178,14 @@ sudo n lts
    (2).运行make命令生成各类模板和主程序
    (3).运行make install命令将必要的文章复制到安装目录中
 ####  **从源码编译安装**
+  1.建造基本编译环境：
+
+        sudo apt-get install build-essential tcl  
+   >tcl包执行make test,用于在执行make后,检验make的过程是否有错
+   
+  - 为编译的软件安装合适的依赖，若是apt关系的源里有这个软件，或找到依赖相同的软件，使用apt-get build-dep 补齐依赖关系 如nginx可以使用
+
+        sudo apt-get build-dep nginx
 
 ## 三、查找软件安装的位置
 1.find命令
