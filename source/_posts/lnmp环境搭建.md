@@ -152,6 +152,7 @@ server {
 	# 修改为 Laravel 转发规则，否则PHP无法获取$_GET信息，提示404错误
     location / {
         try_files $uri $uri/ /index.php?$query_string;        
+        add_header 'Access-Control-Allow-Origin' 'http://localhost:8080/';# 前后段分离时允许跨域请求
     }
 
 	# PHP 支持
@@ -164,7 +165,7 @@ server {
     }
 }
 ```
-修改完成，我们需要重启下 nginx 服务：
+修改完成，要重启下 nginx 服务：
 
         sudo nginx -t
         sudo service nginx restart
