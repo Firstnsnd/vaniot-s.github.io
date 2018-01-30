@@ -169,3 +169,5 @@ server {
 
         sudo nginx -t
         sudo service nginx restart
+   在浏览器中打开localhost:
+   ![laravel](https://github.com/Vaniot-s/picture/blob/master/php/lnmp/laravel.png?raw=true)
