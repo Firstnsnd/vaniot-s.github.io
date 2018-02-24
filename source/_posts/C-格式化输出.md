@@ -37,7 +37,7 @@ categories: basic
   width(n)|setw(n)|设置字段的宽度为n位
   fill(c)|setfill(c)|设置填充字符c
   setf()|setiosflags()|设置输出格式状态，括号中应给出格式状态设置标志，内容与控制符setiosflags括号中的内容相同
-  unsetf()|resetioflags()|终止已设置的输出格式状态，在括号中给出设置输出状态的标志符
+  unsetf()|resetioflags()| 终止已设置的输出格式状态，在括号中给出设置输出状态的标志符
 设置格式状态的格式标志：
      流成员函数setf和控制符setiosflags括号中的参数表示格式状态，它是通过格式标志来指定的。格式标志在类ios中被定义为枚举值。因此在引用这些格式标志时要在前面加上类名ios和域运算符“::
  
