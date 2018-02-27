@@ -117,7 +117,7 @@ git add .
 git commit -m "new post hexo theme sync solution"
 git push
 ```
-### 五、更换hexo主题（多台电脑同步）
+### 五、更换hexo主题（多台电脑同步时的操作）
  1. 进入[Hexo主题官网](https://hexo.io/themes/)，选择喜欢的主题，第三方主题，与git中的submodule相关。按以下思路进行解决：进入到它的github地址，将其fork到你的的仓库，然后引入子模块，我这边不知道为什么有“already exists in the index”的问题，执行如下命令：
 ```
 git rm -r --cached themes/hexo-theme-snippet
@@ -151,7 +151,7 @@ hexo g -d
 ```
 5.另一台电脑上的操作
 ```
-it clone --recursive https://github.com/Vaniot-s/vaniot-s.github.io.git //clone 主仓库
+git clone --recursive https://github.com/Vaniot-s/vaniot-s.github.io.git //clone 主仓库
 cd vaniot-s.github.io/
 git checkout hexo //切换到hexo，以后基本都是基于此分支，master分支用hexo -d
 cd themes/hexo-theme-snippet/
