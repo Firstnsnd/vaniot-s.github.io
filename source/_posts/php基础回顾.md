@@ -153,5 +153,12 @@ ZEND_API void zend_make_printable_zval(zval *expr, zval *expr_copy, int *use_cop
 总结:浮点型 > 整型 > 字符串
 
 PHP是一个弱类型语言，比较的过程中是带有隐式转换的，因为你可以用一个字符串和整数进行比较，字符串会自动转化为整数,使用“===”比较符则可以避免,如果生产环境版本足够高的话，最好使用hash_equals()。
+3.isset、empty、is_null的区别
+- isset()如果 变量 存在(非NULL)则返回 TRUE，否则返回 FALSE(包括未定义)。变量值设置为：null，返回也是false;unset一个变量后，变量被取消了。
+- empty()变量 是非空或非零的值，则 empty() 返回 FALSE。换句话说，""、0、"0"、NULL、FALSE、array()、var \$var、未定义; 以及没有任何属性的对象都将被认为是空的，如果 var 为空，则返回 TRUE
+- is_null()检测传入值【值，变量，表达式】是否是null,只有一个变量定义了，且它的值是null，它才返回TRUE . 其它都返回 FALSE
+>当要 判断一个变量是否已经声明的时候 可以使用 isset 函数 
+当要 判断一个变量是否已经赋予数据且不为空 可以用 empty 函数 
+当要 判断 一个变量 存在且不为空 先isset 函数 再用 empty 函数
 
-3.php的垃圾回收
+4.php的垃圾回收

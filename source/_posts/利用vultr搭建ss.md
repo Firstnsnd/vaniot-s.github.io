@@ -90,23 +90,15 @@ ssserver -c /etc/shadowsocks.json -d stop
 ```
 vim /etc/rc.local
 ```
- 加上如下命令：
+在 exit 0 这一行的上边加入如下
 ```
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-ssserver -c /etc/shadowsocks.json -d start
-exit 0
+/usr/local/bin/ssserver –c /etc/shadowsocks.json
 ```
+或者 不用配置文件 直接加入命令启动如下：
+```
+/usr/local/bin/ssserver -p 8388 -k password -m aes-256-cfb -d start
+```
+到此重启服务器后，会自动启动。
 ### 二、客户端
 1.windows,android,ios到这儿[客户端下载](https://github.com/shadowsocks),安装好客户端后，填入配置的参数，启动客户端
 > 若服务端安装的是python版，则windows下的ss客户端安装2.5.8
