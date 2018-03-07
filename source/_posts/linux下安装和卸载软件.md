@@ -70,6 +70,9 @@ apt-cache dumpavail pkgs //打印可用软件包列表。
 apt-cache show pkgs  //显示软件包记录，类似于dpkg –print-avail。
 apt-cache pkgnames  //打印软件包列表中任何软件包的名称。
 apt-file search filename  //查找包含特定文档的软件包（不一定是已安装的），这些文档的文档名中含有指定的字符串。apt-file是个单独的软件包。必须先使用apt-get install来安装他，然后运行apt-file update。如apt-file search filename输出的内容太多，您能够尝试使用apt-file search filename | grep -w filename（只显示指定字符串作为完整的单词出现在其中的那些文档名）或类似方法.
+apt-cache search sorftname //查找包含特定文档的软件包
+apt-cache madusion sorftname //查找包含特定文档的软件包
+apt-cache policy sorftname //查找包含特定文档的软件包
 ```
 #### **example**
 >ubuntu使用apt-get搭配java环境
