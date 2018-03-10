@@ -1,7 +1,7 @@
 ---
 title: websocket基础(一)
 date: 2018-01-01 16:45:37
-tags: [websocket,web即时通信]
+tags: [WebSocket,web即时通信]
 categories: web
 ---
 WebSocket:全双工、双向、单套接字连接，异步、双向通信模式
