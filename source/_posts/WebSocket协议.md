@@ -42,3 +42,24 @@ Upgrade:WebSocket
 ```
 1.计算响应键值
   WebSocket服务器必须响应一个计算出的键值，表明服务器理解WebSocket协议。响应函数从客户端发送的Sec-WebSocket-Key首标中取得键值，并在Sec-WebSocket-Accept首标中返回根据客户端预期计算的键值。
+  
+  用Node.js加密API计算响应键值
+  ```
+    var KEY_SUFFIX="258eAFA5-E914-47DA-95CA-C5ab0dc85b11";//协议规范中包含的固定键值后缀
+    var hashWebSocketKey=function(key){
+    var sha1=crypto.createHash("sha1");
+    sha1.update(key+KEY_SUFFIX,"ascii");
+    return sha1.digest("base64");
+    }
+  ```
+  WebSocket Sec-首标和描述(RFC6455)
+  
+  首标|描述
+  --|--
+  Sec-WebSocket-Key|只能在HTTP请求中出现一次，用于从客户端到服务端的WebSocket初始握手，避免跨协议攻击
+  Sec-WebSocket-Accept|只能在HTTP请求中出现一次，用于从客户端到服务端的WebSocket初始握手，确认服务器理解WebSocket协议
+  Sec-WebSocket-Extensions|可能在HTTP请求中出现多次，但在HTTP响应中只能出现一次，用于从客户端到服务端的WebSocket初始握手，然后用于从服务端到客户端的响应，这个首标帮助客户和服务端商定一组连接期间使用的协议级扩展
+  Sec-WebSocket-Protocol|用于从客户端到服务器的WebSocket初始握手，然后用于从服务器到客户端的响应。这个首标通告客户端应用程序可使用的协议。服务期使用相同的首标，在这些协议中的最多选择一个
+  Sec-WebSocket-Version|用于客户端到服务器的WebSocket初始握手，表示版本的兼容性。RFC6455版本总是13，服务器如果不支持客户端请求的协议版本，则用这个首标响应。在这种情况下，服务器发送的首标中列出了他支持的版本
+  
+  
