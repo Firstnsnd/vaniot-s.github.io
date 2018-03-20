@@ -6,7 +6,6 @@ categories: web
 ---
 # 安装与配置
 ## 下载Redis
-
 [官方网站](http://redis.io)及[官方下载](http://redis.io/download) 根据需要下载不同版本。
 >官网上没有windows版本的，如果需要在windows下安装redis的话需要到github上下载。
 [windows版](https://github.com/MSOpenTech/redis/releases)
@@ -31,9 +30,78 @@ D:\Redis\redis，在D:\Redis\redis\bin\release下有两个zip包一个32位一�
 ![redis-run](https://raw.githubusercontent.com/Vaniot-s/picture/master/redis/_client_run.jpeg)
 ### 运行示例
 ![redis-test](https://github.com/Vaniot-s/picture/blob/master/redis/redis_test.jpeg?raw=true)
+
+## linux安装
+下载地址[](http://redis.io/download)，下载最新文档版本,下载并安装：
+
+```
+  $ wget http://download.redis.io/releases/redis-2.8.17.tar.gz
+  $ tar xzf redis-2.8.17.tar.gz
+  $ cd redis-2.8.17
+  $ make
+  $ make test //运行测试，确认Redis功能是否正常
+```
+make完后 redis-2.8.17目录下会出现编译后的redis服务程序redis-server,还有用于测试的客户端程序redis-cli,两个程序位于安装目录 src 目录下：
+
+下面启动redis服务.
+```
+$ cd src
+$ ./redis-server
+```
+> 这种方式启动redis 使用的是默认配置,也可以通过启动参数告诉redis使用指定配置文件使用下面命令启动。
+```
+$ cd src
+$ ./redis-server redis.conf
+```
+redis.conf是一个默认的配置文件,可以根据需要使用自己的配置文件。
+启动redis服务进程后，就可以使用测试客户端程序redis-cli和redis服务交互了。 比如：
+```
+$ cd src
+$ ./redis-cli
+redis> set foo bar
+OK
+redis> get foo
+"bar"
+```
+将可执行文件放置在$PATH环境目录下，便于以后执行程序时可以不用输入完整的路径
+```
+$　cp redis-server /usr/local/bin/
+$　cp redis-cli /usr/local/bin/
+```
+查看redis:
+```
+$  ps -ef | grep redis
+```
+ 通过端口号检查Redis服务器状态
+```
+$ netstat -nlt|grep 6379
+```
+## Ubuntu下安装
+在 Ubuntu 系统安装 Redis 可以使用以下命令:
+```
+$sudo apt-get update
+$sudo apt-get install redis-server
+```
+启动 Redis
+```
+$ redis-server
+```
+查看 redis 启动
+```
+$ redis-cli
+```
+以上命令将打开以下终端：
+```
+redis 127.0.0.1:6379>
+```
+127.0.0.1 是本机 IP ，6379 是 redis 服务端口。现在我们输入 PING 命令。
+```
+redis 127.0.0.1:6379> ping
+PONG
+```
 ## 配置PHP-Redis的扩展
 ### 下载dll文件 
-本人用的是php5.5.12，网上很多教程中的下载链接都不适合。于是又要另辟蹊径，下面给出链接，根据对应的php版本以及对应的电脑配置下载就行
+根据对应的php版本以及对应的电脑配置下载就行
 
     php_redis-5.5-vc11-ts-x86-00233a.zip http://d-h.st/4A5
     php_igbinary-5.5-vc11-ts-x86-c35d48.zip http://d-h.st/QGH
