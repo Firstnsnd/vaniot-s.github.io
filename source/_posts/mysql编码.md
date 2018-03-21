@@ -23,7 +23,7 @@ show create database your_database_name;
 ```
 alter database `file` default character set utf8 collate utf8_general_ci;
 ```
-> 在mysql中反引号 `` 用于用于用户自定义的量，而单引号'' 用于系统变量
+> 在mysql中反引号 \`\` 用于用于用户自定义的量，而单引号'' 用于系统变量
 
 3.修改数据表编码
 ```
