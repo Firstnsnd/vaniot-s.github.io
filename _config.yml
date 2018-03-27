@@ -3,17 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-keywords:
-author: John Doe
-language:
+title: Vaniot
+subtitle: blog
+description: my static blog
+author: Vaniot
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://vaniot-s.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -56,6 +55,10 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map:
+        web: web
+        基础: basic
+        工具: tool
+        资源: resource
 tag_map:
 
 # Date / Time format
@@ -73,9 +76,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: hexo-theme-hiker
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repository: git@github.com:Vaniot-s/vaniot-s.github.io.git
+  branch: master
