@@ -11,6 +11,7 @@ categories: basic
       #include<iostream>  标准输入输出流
       #include<fstream>  文件输入输出流
       #include<sstream>  字符串输入输出流
+      <!--more-->
    3 字符串 
       #include<string>
    4 函数对象 

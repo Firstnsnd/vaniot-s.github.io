@@ -14,6 +14,7 @@ apt-get update
 ```
 apt-get install python-pip
 ```
+<!--more-->
 3.安装shadowsocks
 ```
 pip install shadowsocks

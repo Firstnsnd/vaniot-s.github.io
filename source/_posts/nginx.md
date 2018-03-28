@@ -8,6 +8,7 @@ categories: web
 |nginx|iis|apache|tomcat|Lighthttpd
 --|--|--|--|--
 用途|http server、反向代理(reverse proxy)、IMAP/POP3代理,nginx官方网站 http://www.nginx.org |Microsoft公司的WEB服务器产品，支持Gopher Server、FTP Server、HTTP Server、NNTP Server、SMTP Server 官方网站 http://www.iis.net |拓展功能最丰富，工具特性最全，官方网站：http://httpd.apache.org |apache的拓展部分，为运行JSP和Servlet提供服务|开源轻量级web服务器软件，支持[FastCGI](https://zh.wikipedia.org/wiki/FastCGI),Output Compress,URL重写
+<!--more-->
 ### 二.Nginx的功能特性
 #### 1.基本的HTTP服务 
    - 处理静态文件，处理索引文件及支持自动索引

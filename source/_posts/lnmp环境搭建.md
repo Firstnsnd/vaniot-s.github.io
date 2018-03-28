@@ -21,6 +21,7 @@ nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.
 sudo /etc/init.d/nginx start
 sudo service nginx start
 ```
+<!--more-->
 ### 二、安装php与php-fpm
 nginx安装完毕后，安装php与php-fpm，使用如下命令，如下：
 ```

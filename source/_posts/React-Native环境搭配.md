@@ -12,7 +12,7 @@ categories: web
 npm config set registry https://registry.npm.taobao.org --global
 npm config set disturl https://npm.taobao.org/dist --global
 #### 3.安装C++环境
-
+<!--more-->
 推荐从itellyou下载并安装Visual Studio 2013或2015。也可选择Windows SDK、cygwin或mingw等其他C环境。编译node.js的C模块时需要用到。 如果使用VS2015，你需要在命令行中设置npm config set msvs_version 2015 --global
 
 #### 4.安装Python

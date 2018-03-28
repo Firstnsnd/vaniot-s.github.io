@@ -8,6 +8,7 @@ categories: web
 1.安装git,[下载地址](https://git-scm.com/downloads 'git')。
 git中文教程[Pro git](http://git.oschina.net/progit/ )
 2.配置用户信息：
+
 ```
 $ git config --global user.name "vaniot"//用户名
 $ git config --global user.email  "vaniot@gmail.com"//填写自己的邮箱
@@ -24,6 +25,7 @@ $ssh-keygen -t rsa -C "your_email@example.com"
 #这将按照你提供的邮箱地址，创建一对密钥
 #在此过程中会要求输入密码可选择不输入，及特定的文件名不输入则在默认的位置存储如/c/Users/you/.ssh/github_rsa
 ```
+<!--more-->
 ### 二、安装node.js及hexo在本地
 [官网下载](https://nodejs.org/en/download/ "node.js")
 安装完node后,打开git安装hexo命令工具

@@ -13,6 +13,7 @@ categories: web
 ## windows下安装Redis
 根据网上的教程，下载完成后解压到硬盘下比如
 D:\Redis\redis，在D:\Redis\redis\bin\release下有两个zip包一个32位一个64位，根据自己windows的位数 解压到D:\Redis\redis根目录下。但是我在该目录下找不到相应的压缩文件，于是乎需要另辟蹊径。
+<!--more-->
 ### 下载解压软件放在bin目录下(github)
 [下载](https://github.com/ServiceStack/redis-windows)后解压，可根据相应的版本解压相应的压缩文件到bin目录下
 文件目录：

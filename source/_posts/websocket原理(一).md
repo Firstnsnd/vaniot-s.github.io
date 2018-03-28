@@ -12,6 +12,7 @@ WebSocket:全双工、双向、单套接字连接，异步、双向通信模式
 ```
 var ws=new WebSocket("ws:xxx.com"[,"protocol"])
 ```
+<!--more-->
 构造函数：在第一次WebSocket连接握手时，客户发送带有协议名称的Sec-WebSocket-Protocol首标,服务器选择0个或者1个协议。
 - 参数一：URL(必须)，指向连接目标的URL
     - ws客户端与与服务端非加密流量

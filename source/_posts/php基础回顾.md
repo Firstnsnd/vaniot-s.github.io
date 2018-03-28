@@ -17,6 +17,7 @@ printf()|	printf(“arg1”,arg2)执行格式化输出，arg1规定了按什么�
 sprintf()|	sprintf(“arg1”,arg2)执行格式化输出，arg1规定了按什么格式输出，arg2为输出的变量将输出的内容格式化，赋值给变量并不直接输出
 var_export（）|	输出变量的结构信息，输出的是php的合法代码，将函数的第二个参数设置为 TRUE，从而返回变量的表示。
 var_dump()|	用于显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。它是直接将结果输出到浏览器的，如果需要将结果保存到一个string变量中，可使用输出控制函数来捕获当前函数的输出。
+<!--more-->
 printf()格式化输出的命令及说明：
 
 命令|说明
@@ -141,8 +142,6 @@ ZEND_API void zend_make_printable_zval(zval *expr, zval *expr_copy, int *use_cop
     *use_copy = 1;
 }
 ```
-参考来源
-
 类似的还有求和操作”+”。
 
 第一个操作数类型|	第二个操作数类型|	类型转换

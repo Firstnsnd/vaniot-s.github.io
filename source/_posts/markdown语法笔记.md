@@ -12,6 +12,7 @@ categories: tool
   2.显示&lt;&gt;
     
       输入&lt;和&gt;
+      <!--more-->
 ## 二、表格
       makrdown中的表格和并只能由html代码实现
 ## 三、数学

@@ -15,6 +15,7 @@ show variables like 'char%';
 set character_set_database = utf8;
  set character_set_server = utf8;
 ```
+<!--more-->
 2.查看建库语句
 ```
 show create database your_database_name;
