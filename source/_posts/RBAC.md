@@ -2,7 +2,7 @@
 title: RBAC权限管理
 mathjax: true
 date: 2018-03-16 20:58:28
-tags: 权限管理
+tags: [权限管理,数据库设计]
 categories: web
 ---
 ##  RBAC权限
