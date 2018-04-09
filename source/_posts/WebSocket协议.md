@@ -52,7 +52,7 @@ Upgrade:WebSocket
     return sha1.digest("base64");
     }
   ```
-  WebSocket Sec-首标和描述(RFC6455)
+  WebSocket Sec-首标和描述([RFC6455](https://tools.ietf.org/html/rfc6455))
   
   首标|描述
   --|--

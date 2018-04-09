@@ -4,7 +4,7 @@ date: 2018-03-27 13:12:02
 tags: [socket,php]
 ---
 ## Socket函数
-### 一、socket
+### socket
 #### socket_create
   函数 `resource socket_create(int $domain,int $type,int $protocol)`
 - domain: AF_INET、AF_INET6、AF_UNIX，\*AF (address family)地址族*。
@@ -48,8 +48,8 @@ $socket_close($conn);
 ```
 php server.php
 ```
-## 二、socket_stream
-### stream_socket_server
+### socket_stream
+#### stream_socket_server
 一次性创建、绑定端口、监听端口
 函数: `resource stream_socket_server ( string $local_socket [, int &$errno [, string &$errstr [, int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN [, resource $context ]]]] )`
 - local_socket: 协议名://地址:端口号
@@ -57,8 +57,8 @@ php server.php
 - errstr: 错误信息
 - flags: 只使用该函数的部分功能
 - context: 使用stream_context_create函数创建的资源流上下文
-### stream_socket_accept
-函数原型: `resource stream_socket_accept ( resource $server_socket [, float $server_socket[,float timeout = ini_get("default_socket_timeout") [, string &$peername ]] )`
+#### stream_socket_accept
+函数: `resource stream_socket_accept ( resource $server_socket [, float $server_socket[,float timeout = ini_get("default_socket_timeout") [, string &$peername ]] )`
 
 - server_socket: 使用stream_socket_server创建的stream资源
 - timeout: 超时时间
@@ -75,3 +75,8 @@ for ( ; ; ) {
     fclose($conn);
 }
 ```
+<b>Note:stream_socket_server和socket_create创建的不是同一种资源，stream_socket_server创建的是stream资源，可以用fwrite、fread、fclose操作该资源. socket_create创建的是socket资源，不是stream资源，所以socket_create创建的资源只能用socket_write、socket_read、socket_close来操作
+</b>
+## 多进程
+### 多进程函数
+#### pcntl_fork
