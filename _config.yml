@@ -8,7 +8,7 @@ subtitle: blog
 description: my static blog
 author: Vaniot
 language: zh-CN
-timezone:
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -49,16 +49,16 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 20
   order_by: -date
   
 # Category & Tag
 default_category: uncategorized
 category_map:
-        web: web
-        基础: basic
-        工具: tool
-        资源: resource
+#         web: web
+#         基础: basic
+#         工具: tool
+#         资源: resource
 tag_map:
 
 # Date / Time format
