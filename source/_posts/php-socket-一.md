@@ -82,11 +82,14 @@ for ( ; ; ) {
     fclose($conn);
 }
 ```
-><b>Note:</b>stream_socket_server和socket_create创建的不是同一种资源,stream_socket_server创建的是stream资源，可以用fwrite、fread、fclose操作该资源. socket_create创建的是socket资源，不是stream资源，所以socket_create创建的资源只能用socket_write、socket_read、socket_close来操作
+<b>Note:</b>stream_socket_server和socket_create创建的不是同一种资源,stream_socket_server创建的是stream资源，可以用fwrite、fread、fclose操作该资源. socket_create创建的是socket资源，不是stream资源，所以socket_create创建的资源只能用socket_write、socket_read、socket_close来操作
 
 ## 多[进程]()
 ### 多进程函数
 #### pcntl_fork
 函数：`int pcntl_fork(void)`;
-pcntl_fork 会复制当前进程产生另一个进程，称为当前进程的子进程。父进程和子进程都会在该函数后继续运行，该函数在父进程和子进程中的返回值不相同，在父进程中返回的是 fork 出的子进程的进程ID，而在子进程中返回的是 0;
+pcntl_fork 会复制当前进程产生另一个进程，称为当前进程的子进程。父进程和子进程都会在该函数后继续运行，该函数在父进程和子进程中的返回值不相同，在父进程中返回的是 fork 出的子进程的进程ID，而在子进程中返回的是0，创建子进程失败时返回-1,创建成功的子进程会复制父进程的数据(堆、栈、静态数据)
 
+#### pcntl_waitpid 等待返回fork的子进程状态
+函数：`int pcntl_waitpid(int $pid,int &$status[,int $options=0])`
+挂起当前进程的执行一直到 pid 指定的进程退出，亦或接收一个信号中断当前进程、调用一个信号处理函数。
