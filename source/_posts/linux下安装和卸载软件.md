@@ -85,6 +85,7 @@ apt-cache policy sorftname //查找包含特定文档的软件包
 
 在终端中执行：
 ```
+# 当add-apt-repository 命令不能找到时先执行，apt-get software-properties-common
 sudo add-apt-repository ppa:chris-lea/node.js //ubuntu自带的node版本太老，PPA安装最新版的Node.js，
 sudo apt-get update
 sudo apt-get install nodejs

@@ -6,18 +6,18 @@ categories: web
 ---
 ### 一、安装nginx
 首先来安装nginx，使用如下命令：
-```
+```shell
 sudo apt-get -y install nginx
 ```
 查看nginx安装的文件。使用如下命令进行查看，如下：
 
-```
+```shell
 dpkg -S nginx
 ```
 nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.conf也是在该目录下。
 除此之外，nginx的默认网站目录在/usr/share/nginx/html下，默认nginx网站配置文件为/etc/nginx/sites-available/目录下的default文件。
 启动nginx，可以使用如下命令：
-```
+```shell
 sudo /etc/init.d/nginx start
 sudo service nginx start
 ```
@@ -26,6 +26,14 @@ sudo service nginx start
 nginx安装完毕后，安装php与php-fpm，使用如下命令，如下：
 ```
 sudo apt-get -y install php7.1 php7.1-fpm php7.1-cli
+```
+
+>安装较低版本的php
+
+```shell
+add-apt-repository ppa:ondrej/php
+apt-get update
+apt-get install php5.6
 ```
 ### 三、nginx与php-fpm集成
 nginx与php安装完毕后，开始把nginx与php集成。其实nginx与php集成是通过fastcgi来实现，而fastcgi一般使用的是php-fpm。
