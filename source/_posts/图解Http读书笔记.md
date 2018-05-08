@@ -4,9 +4,8 @@ date: 2018-01-21 20:34:07
 tags: [http,计算机网络]
 categories: basic
 ---
-### 1. 网络基础
+## 1. 网络基础
 TCP/IP协议族:
-
 - 1.IEEE 802.3
 - 2.FDDI
 - 3.ICMP
@@ -19,7 +18,7 @@ TCP/IP协议族:
 - 10.UDP
 -  11.SNMP
 
-#### TCP/IP分层管理
+### TCP/IP分层管理
  OSI4层:应用层、传输层、网络层、数据链路层
 <!--more-->
 应用层：决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
@@ -182,6 +181,7 @@ multipart/byteranges 状态码206(partial Content,部分内容)响应报文包�
 8
 9
 10
+```
 Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
 --THIS_STRING_SEPARATES//部分开始
 Content-Type:application/pdf
@@ -192,28 +192,26 @@ Content-type:text/pdf
 Content-Range:bytes 7000-7999/8000
 ...(范围指定的数据)...
 --THIS_STRING_SEPARATES--//对象结束标识符
+```
 获取部分内容的范围
-1
-2
-3
-4
-5
-6
+```
 5001-10000字节
  Range:byte=5001-10000
 5001后的全部字节
  Range:byte=5001-
+ ```
 多重范围
 Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 内容协商：客户端与服务端就响应的资源内容进行交涉，然后客户端提供给客户端最为合适的资源。
 
 请求报文的首部进行
-
+```
 Accept
 Accept-Charset
 Accept-Encoding
 Accept-Language
 Content-Language
+```
 内容协商技术的分类：
 
 服务端驱动协商：服务器以请求的首部字段为参考，在服务端进行处理
