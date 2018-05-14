@@ -13,8 +13,8 @@ catrgories: web
  安装使用Composer命令安装扩展包:
  ```
   composer require dingo/api:1.0.x@dev
-  ```
-  <--more-->
+ ```
+<!--more-->
 ##### Laravel基础配置
  在laravel框架下，注册服务提供者。config/app.php中的providers数组中添加如下代码
  ```
@@ -45,6 +45,7 @@ $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 - x:未注册的，树用于本地或私有环境
 - prs:个人树，用于非商业销售的项目
 - vnd:供应商树，主要用于公开的及商业销售的项目
+
 ```
 API_STANDARD_TREE=vnd
 ```
@@ -79,7 +80,7 @@ API_NAME=My API
 API_CONDITIONAL_REQUEST=false
 ```
 #### Strict模式
-Strict模式要求客户端发送Accept头而不是默认在配置文件中指定的版本。即不能通过Web浏览器浏览API。当Strict开启且是用了无效的Accept头 ，API会跑出Symfony\Component\HttpKenel\Exception\BadRequestHttpException异常。
+Strict模式要求客户端发送Accept头而不是默认在配置文件中指定的版本。即不能通过Web浏览器浏览API。当Strict开启且是用了无效的Accept头 ，API会抛出Symfony\Component\HttpKenel\Exception\BadRequestHttpException异常。
 ```
 API_STRICT=false
 ```
@@ -87,4 +88,4 @@ API_STRICT=false
  开启调试模式，生成的错误信息将会被扩展包放到`debug`键中，并与堆栈跟踪信息一起显示
  ```
  API_DEBUG=true
- ```
+```
