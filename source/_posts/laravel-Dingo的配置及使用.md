@@ -39,6 +39,7 @@ $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
    - `.env`文件实现大部分配置。
    -  (Laravel)发布的配置文件或(Lumen)`bootstrap/app.php`中配置
    - AppserviceProvider的boot方法
+
 ### env中的配置
 #### 标准树(API_STANDRDS_TRUE)
 标准树有三个不同的值
