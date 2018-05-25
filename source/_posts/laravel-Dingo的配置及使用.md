@@ -15,6 +15,7 @@ catrgories: web
   composer require dingo/api:1.0.x@dev
   ```
   <!--more-->
+
 ##### Laravel基础配置
  在laravel框架下，注册服务提供者。config/app.php中的providers数组中添加如下代码
  ```
@@ -36,12 +37,15 @@ $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 
 ## 二、使用的基础配置
  安装的过程中功能都已预先配置完成，更多的配置可在：
-   - `.env`文件实现大部分配置，其中配置形式为`API_XXXX=XX`。
+ 
+ -  `.env`文件实现大部分配置，其中配置形式为`API_XXXX=XX`。
    -  (Laravel)发布的配置文件或(Lumen)`bootstrap/app.php`中配置
    - AppserviceProvider的boot方法
 
 ### 标准树(API_STANDRDS_TRUE)
+
 标准树有三个不同的值
+
 - x:未注册的，树用于本地或私有环境
 - prs:个人树，用于非商业销售的项目
 - vnd:供应商树，主要用于公开的及商业销售的项目
@@ -79,16 +83,19 @@ API_NAME=My API
 ```
 API_CONDITIONAL_REQUEST=false
 ```
+
 ### Strict模式
 Strict模式要求客户端发送Accept头而不是默认在配置文件中指定的版本。即不能通过Web浏览器浏览API。当Strict开启且是用了无效的Accept头 ，API会跑出Symfony\Component\HttpKenel\Exception\BadRequestHttpException异常。
+
 ```
 API_STRICT=false
 ```
 #### 调试模式
  开启调试模式，生成的错误信息将会被扩展包放到`debug`键中，并与堆栈跟踪信息一起显示
- ```
+ 
+```
  API_DEBUG=true
- ```
+```
  
 ### 认证提供者
 
@@ -145,3 +152,5 @@ $app['Dingo\Api\Exception\Handler']->setErrorFormat([
 ]);
 ```
 ## 二、使用API路由(API Endpoint)
+
+
