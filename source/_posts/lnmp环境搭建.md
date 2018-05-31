@@ -137,14 +137,14 @@ Composer 安装完成。
 
         composer create-project laravel/laravel --prefer-dist  //默认的国外镜像
         
-    使用国内镜像源:
+  使用国内镜像源:
     ①、修改 composer 的全局配置文件，打开命令行并执行如下命令：
    
         composer config -g repo.packagist composer https://packagist.phpcomposer.com  
-       然后输入安装命令：
+  然后输入安装命令：
 
         composer create-project --prefer-dist laravel/laravel blog  
-    ②、修改当前项目的 composer.json 配置文件，打开命令行窗口，进入你的项目的根目录（ composer.json 文件所在目录），执行如下命令：
+  ②、或者修改当前项目的 composer.json 配置文件，打开命令行窗口，进入你的项目的根目录（ composer.json 文件所在目录），执行如下命令：
 
         composer config repo.packagist composer https://packagist.phpcomposer.com  
 更改网站目录所属组：
