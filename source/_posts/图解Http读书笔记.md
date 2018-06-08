@@ -169,17 +169,6 @@ Content-type:text/plain
 ...(file.txt的数据)...
 --AaB03x--//对象结束标识符
 multipart/byteranges 状态码206(partial Content,部分内容)响应报文包含了多个范围内容时使用
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
 ```
 Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
 --THIS_STRING_SEPARATES//部分开始
@@ -189,16 +178,14 @@ Content-Range:bytes 500-999/8000
 --THIS_STRING_SEPARATES
 Content-type:text/pdf
 Content-Range:bytes 7000-7999/8000
-...(范围指定的数据)...
+(范围指定的数据)
 --THIS_STRING_SEPARATES--//对象结束标识符
-```
 获取部分内容的范围
-```
 5001-10000字节
  Range:byte=5001-10000
 5001后的全部字节
  Range:byte=5001-
- ```
+```
 多重范围
 Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 内容协商：客户端与服务端就响应的资源内容进行交涉，然后客户端提供给客户端最为合适的资源。
