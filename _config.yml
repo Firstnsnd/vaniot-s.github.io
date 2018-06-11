@@ -84,7 +84,7 @@ math:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hiker
+theme: hexo-theme-hiker
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
