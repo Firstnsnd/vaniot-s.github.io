@@ -1,5 +1,5 @@
 ---
-title: lnmp环境搭建
+title: LNMP环境搭建
 date: 2018-01-10 14:00:33
 tags: [nginx,php,mysql]
 categories: web
