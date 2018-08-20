@@ -1,0 +1,3 @@
+[submodule "themes/hexo-theme-hiker"]
+	path = themes/hexo-theme-hiker
+	url = https://github.com/vaniot-s/hexo-theme-hiker.git
