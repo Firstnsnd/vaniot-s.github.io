@@ -52,3 +52,12 @@ docker image ls -f since=ubnutu:18.04 #列出在ubuntu：18.04之后创建的镜
 docker image lf -f before=ubuntu:18.04 # 列出在ubuntu:18.04之前创建的镜像
 docker image ls -f label=test #根据Label 过滤，如果镜像创建时定义了
 ```
+- 特定的格式显示
+利用参数筛选出镜像的特定的信息,或使用go的模板语法[go的模板语法](https://gohugo.io/templates/introduction/) 指定显示的镜像的信息。
+```shell
+docker image ls  -q # 只显示镜像的id
+docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果，并且只包含镜像ID和仓库名
+docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，不过自己定义列
+```
+
+*根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来
