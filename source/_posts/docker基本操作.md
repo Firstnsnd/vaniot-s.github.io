@@ -110,7 +110,52 @@ docker commit -a "vaniot a developer" -m "change the content of index.html" webs
 docker history nginx:v2.0 #查看nginx:v2.0的变化
 ```
 ### Dockerfie定制镜像
-Dockerfile是一个文本文件，包含了许多的指令，将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+Dockerfile是一个文本文件，包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+- FROM 指定基础镜像
 
+`FROM` 为`Dockerfile`指定了镜像的基础，之后的操作均在其的基础之上进行。
+> Docker中存在一个空白的镜像名为`scratch`,以此镜像为基础，则说明之后的指令将作为镜像的第一层开始。
+```shell
+FROM scratch
+```
+- RUN 执行命令
 
-*根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来
+   RUN用于执行命令的两种格式：
+
+   * shell:`RUN<命令>`,类似与命令行中输入命令
+     ```shell
+      RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+     ```
+   * exec: RUN ["可执行文件", "参数1", "参数2"]
+>ps 每一个RUN都会创建一层，对于一层中不使用多个`RUN`，Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易。镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉.
+```shell
+FROM debian:jessie
+
+RUN buildDeps='gcc libc6-dev make' \
+    && apt-get update \
+    && apt-get install -y $buildDeps \
+    && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \
+    && mkdir -p /usr/src/redis \
+    && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
+    && make -C /usr/src/redis \
+    && make -C /usr/src/redis install \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm redis.tar.gz \
+    && rm -r /usr/src/redis \
+    && apt-get purge -y --auto-remove $buildDeps #执行清理工作
+```
+
+<i>example:</i> 构建nginx
+```shell 
+mkdir nginx #构建空的文件夹
+cd nginx 
+touch Dockerfile 
+#在Dockerfile中写入
+FROM nginx
+RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+#构建镜像
+docker build -t nginx:v3 . #构建镜像 `.`不能缺少
+docker run  -d -p 8099:80 nginx:v3.0 #创建容器
+```
+> 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎和客户端工具。
+> 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
