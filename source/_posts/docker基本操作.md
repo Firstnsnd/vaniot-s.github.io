@@ -157,5 +157,8 @@ RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
 docker build -t nginx:v3 . #构建镜像 `.`不能缺少
 docker run  -d -p 8099:80 nginx:v3.0 #创建容器
 ```
-> 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎和客户端工具。
+> 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎(服务端守护进程)和客户端工具。Docker 的引擎提供了一组 REST API([ Docker Remote API](https://docs.docker.com/develop/sdk/)),客户端工具通过API与Docker引擎交互。使用的远程调用形式在服务端（Docker 引擎）完成。`docker build `命令在服务端构建镜像。用户会指定构建镜像上下文的路径，docker build 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。
+
+
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
