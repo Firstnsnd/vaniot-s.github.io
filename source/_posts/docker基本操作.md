@@ -16,7 +16,7 @@ docker pull ubuntu:18.04
 ### 运行
 已获取的镜像，作为容器的基础启动
 ```shell
-docker run -it --rm ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 bash进入shell
+docker run -it --rm --name ubuntu ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 --name 命名为ubuntu bash进入shell
 ```
 <!--more-->
 ### 查看镜像
@@ -60,7 +60,7 @@ docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果�
 docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，自己定义列
 ```
 ### 删除镜像
-删除本地镜像
+- 删除本地镜像
 ```shell
 docker image rm --help #查看删除的命令参数
 docker image rm [OPTIONS] IMAGE [IMAGE...] 
@@ -69,5 +69,48 @@ docker image rm [OPTIONS] IMAGE [IMAGE...]
 #   -f, --force Force removal of the image
 #   --help       Print usage 
 #   --no-prune   Do not delete untagged parents
+docker image rm 501 #使用镜像的短id删除镜像
+docker image rm centos #使用镜像名(<仓库名>:<标签>)删除镜像
+docker image ls --digests #查看镜像并列出摘要
+docker image rm  node@sha256:b4f0e0bdeb578043c1ea6862f0d40cc4afe32a4a582f3be235a3b164422be228 #使用镜像摘要删除镜像
+``` 
+- Untagged 和 Deleted
+删除标签镜像时，首先会将目标镜像的标签取消，当还有其他的标签指向该镜像时，并不会执行Delete操作。当镜像的层被其他镜像依赖，或有以该镜像为基础的容器，均不会触发Delete操作。
+- 使用docker image ls 配合删除
+根据查询的结果成批的删除镜像列表
+```shell
+docker image rm $(docker image ls -q redis)
+docker image rm $(docker image ls -q -f before =mongo:3.2)
 ```
+> CentOS/RHEL 的用户需要注意的事项 ??? [详见](https://yeasy.gitbooks.io/docker_practice/content/image/rm.html#untagged-%E5%92%8C-deleted)
+
+### 镜像的构成
+docker可用于定制镜像，但一般不用于定制镜像，`docker commit`会将上一层的镜像跟随当前的存储成而变得臃肿，`docker commit`生成的尽享对于其他是黑箱操作，不可重复。`docker commit`一般用于入侵后的现场的保护。
+``` shell
+docker run --name webserver -d -p 8099:80 nginx
+#启动 nginx 容器并将其映射到本地的8099端口 用浏览器打开http:localhost:8099 输出 welcome to Nginx
+docker exec -it webserver bash #交互的方式进入容器
+
+#修改页面的内容
+root@b406af708fb8:/# echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+root@b406af708fb8:/# exit
+#用浏览器打开http:localhost:8099 输出 Hello Docker
+docker diff webserver #查看具体的改动
+docker commit --help #查看 commit 的参数
+#	docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+# Create a new image from a container's changes
+# Options:
+#   -a, --author string    Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+#   -c, --change list      Apply Dockerfile instruction to the created image (default [])
+#       --help             Print usage
+#   -m, --message string   Commit message
+#   -p, --pause            Pause container during commit (default true)
+
+docker commit -a "vaniot a developer" -m "change the content of index.html" webserver nginx:v2.0 #提交生成新的镜像
+docker history nginx:v2.0 #查看nginx:v2.0的变化
+```
+### Dockerfie定制镜像
+Dockerfile是一个文本文件，包含了许多的指令，将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+
+
 *根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来
