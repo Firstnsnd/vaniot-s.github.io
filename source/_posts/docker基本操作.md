@@ -57,7 +57,17 @@ docker image ls -f label=test #根据Label 过滤，如果镜像创建时定义�
 ```shell
 docker image ls  -q # 只显示镜像的id
 docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果，并且只包含镜像ID和仓库名
-docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，不过自己定义列
+docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，自己定义列
 ```
-
+### 删除镜像
+删除本地镜像
+```shell
+docker image rm --help #查看删除的命令参数
+docker image rm [OPTIONS] IMAGE [IMAGE...] 
+#Aliases: rm, rmi, remove
+#Options: 
+#   -f, --force Force removal of the image
+#   --help       Print usage 
+#   --no-prune   Do not delete untagged parents
+```
 *根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来
