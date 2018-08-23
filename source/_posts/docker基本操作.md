@@ -129,7 +129,9 @@ FROM scratch
       RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
      ```
    * exec: RUN ["可执行文件", "参数1", "参数2"]
->ps 每一个RUN都会创建一层，对于一层中不使用多个`RUN`，Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易。镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉.
+   
+><b>ps:</b> 每一个RUN都会创建一层，对于一层中不使用多个`RUN`，Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易。镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉.
+
 ```shell
 FROM debian:jessie
 
@@ -179,15 +181,32 @@ docker build - < Dockerfile # cat Dockerfile | docker build -
 ```shell
  docker build - < context.tar.gz
 ```
-#### Dockerfile指令
-- Copy
+#### Dockerfile指令详解
+- Copy复制文件
+  
+  格式有如下两种:
+  
+   - COPY <源路径> ... <目标路径>(类似于命令行)
+   - COPY ["<源路径1>",... "<目标路径>"] (类似于函数调用)
+  `<源路径>`可以是多个或者满足Go`[filepath.Match](https://golang.org/pkg/path/filepath/#Match)`规则的通配符，`<目标路径>` 可以是容器内的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 WORKDIR 指令来指定）。目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。
+   ```shell
+    COPY package.json /usr/src/app/ #将构建上下文目录中<源路径>的文件/目录复制到新一层的镜像内的<目标路径>位置
+    COPY hom* /mydir/
+    COPY hom?.txt /mydir/
+   ```
+   > 使用 `COPY` 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。
+- ADD 复制文件
 
+  `ADD` 和 `COPY` 的格式和性质基本一致，`ADD`可执行更加复杂的更能，`ADD`允许`<源路径>`为`URL`，`Docker`引擎会下载该链接的文件到`<目标文件>`并将权限设置为600(若要修改权限需要额外的加一层`RUN`进行权限的修改),对于下载的压缩包，解压也需要一层`RUN`指令进行解压(`<源路径>`为一个 tar 压缩文件的话，压缩格式为 gzip, bzip2 以及 xz 的情况下，ADD 指令将会自动解压缩这个压缩文件到`<目标路径>`去)
+```shell
+FROM scratch
+ADD ubuntu-xenial-core-cloudimg-amd64-root.tar.gz / #自动解压ubuntu镜像
+```
+> ADD 指令会令镜像构建缓存失效，所有的文件复制均使用 COPY 指令，仅在需要自动解压缩的场合使用 ADD。
 
+- CMD 容器的启动
 
-
-
-
-
+> **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
 
 
 
