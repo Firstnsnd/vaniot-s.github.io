@@ -111,31 +111,31 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
 ```
 ### Dockerfie定制镜像
 #### Dockerfile概述
-Dockerfile是一个文本文件，包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+  Dockerfile是一个文本文件，包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
 #### 从dcoker引擎中获取
 - FROM 指定基础镜像
 
-`FROM` 为`Dockerfile`指定了镜像的基础，之后的操作均在其的基础之上进行。
-> Docker中存在一个空白的镜像名为`scratch`,以此镜像为基础，则说明之后的指令将作为镜像的第一层开始。
-```shell
-FROM scratch
-```
+  `FROM` 为`Dockerfile`指定了镜像的基础，之后的操作均在其的基础之上进行。
+  > Docker中存在一个空白的镜像名为`scratch`,以此镜像为基础，则说明之后的指令将作为镜像的第一层开始。
+  ```shell
+  FROM scratch
+  ```
 - RUN 执行命令
 
-   RUN用于执行命令的两种格式：
+  RUN用于执行命令的两种格式：
 
-   * shell:`RUN<命令>`,类似与命令行中输入命令
-     ```shell
+    * shell:`RUN<命令>`,类似与命令行中输入命令
+      ```shell
       RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
-     ```
-   * exec: RUN ["可执行文件", "参数1", "参数2"]
+      ```
+    * exec: RUN ["可执行文件", "参数1", "参数2"]
    
-><b>ps:</b> 每一个RUN都会创建一层，对于一层中不使用多个`RUN`，Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易。镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉.
+  ><b>ps:</b> 每一个RUN都会创建一层，对于一层中不使用多个`RUN`，Dockerfile 支持 Shell 类的行尾添加 \ 的命令换行方式，以及行首 # 进行注释的格式。良好的格式，比如换行、缩进、注释等，会让维护、排障更为容易。镜像构建时，一定要确保每一层只添加真正需要添加的东西，任何无关的东西都应该清理掉.
 
-```shell
-FROM debian:jessie
+  ```shell
+  FROM debian:jessie
 
-RUN buildDeps='gcc libc6-dev make' \
+  RUN buildDeps='gcc libc6-dev make' \
     && apt-get update \
     && apt-get install -y $buildDeps \
     && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \
@@ -147,40 +147,40 @@ RUN buildDeps='gcc libc6-dev make' \
     && rm redis.tar.gz \
     && rm -r /usr/src/redis \
     && apt-get purge -y --auto-remove $buildDeps #执行清理工作
-```
+  ```
 
-<i>example:</i> 构建nginx
-```shell 
-mkdir nginx #构建空的文件夹
-cd nginx 
-touch Dockerfile 
-#在Dockerfile中写入
-FROM nginx
-RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
-#构建镜像
-docker build -t nginx:v3 . #构建镜像 `.`不能缺少
-docker run  -d -p 8099:80 nginx:v3.0 #创建容器
-```
-> 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎(服务端守护进程)和客户端工具。Docker 的引擎提供了一组 REST API([ Docker Remote API](https://docs.docker.com/develop/sdk/)),客户端工具通过API与Docker引擎交互。使用的远程调用形式在服务端（Docker 引擎）完成。`docker build `命令在服务端构建镜像。用户会指定构建镜像上下文的路径，docker build 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。
+  <i>example:</i> 构建nginx
+  ```shell 
+    mkdir nginx #构建空的文件夹
+    cd nginx 
+    touch Dockerfile 
+    #在Dockerfile中写入
+    FROM nginx
+    RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+    #构建镜像
+    docker build -t nginx:v3 . #构建镜像 `.`不能缺少
+    docker run  -d -p 8099:80 nginx:v3.0 #创建容器
+  ```
+  > 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎(服务端守护进程)和客户端工具。Docker 的引擎提供了一组 REST API([ Docker Remote API](https://docs.docker.com/develop/sdk/)),客户端工具通过API与Docker引擎交互。使用的远程调用形式在服务端（Docker 引擎）完成。`docker build `命令在服务端构建镜像。用户会指定构建镜像上下文的路径，docker build 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。
 
 #### 从Git repo中构建
-```shell
-docker build https://github.com/twang2218/gitlab-ce-zh.git#:8.14  
-```
-指定构建所需的 Git repo，并且指定默认的 master 分支，构建目录为 /8.14/，然后 Docker 自己去 git clone 这个项目、切换到指定分支、并进入到指定目录后开始构建。
+  ```shell
+   docker build https://github.com/twang2218/gitlab-ce-zh.git#:8.14  
+  ```
+  指定构建所需的 Git repo，并且指定默认的 master 分支，构建目录为 /8.14/，然后 Docker 自己去 git clone 这个项目、切换到指定分支、并进入到指定目录后开始构建。
 #### 使用 tar压缩包构建
-```shell
-docker build http://server/context.tar.gz
-```
- Docker 引擎会下载这个包，并自动解压缩，以其作为上下文，开始构建。
+  ```shell
+   docker build http://server/context.tar.gz
+  ```
+  Docker 引擎会下载这个包，并自动解压缩，以其作为上下文，开始构建。
 #### 标准输入中读取 Dockerfile 进行构建
-```shell
-docker build - < Dockerfile # cat Dockerfile | docker build -
-```
+  ```shell
+   docker build - < Dockerfile # cat Dockerfile | docker build -
+  ```
 #### 标准输入中读取上下文压缩包进行构建
-```shell
- docker build - < context.tar.gz
-```
+  ```shell
+   docker build - < context.tar.gz
+  ```
 #### Dockerfile指令详解
 - Copy复制文件
   
@@ -189,23 +189,52 @@ docker build - < Dockerfile # cat Dockerfile | docker build -
    - COPY <源路径> ... <目标路径>(类似于命令行)
    - COPY ["<源路径1>",... "<目标路径>"] (类似于函数调用)
   `<源路径>`可以是多个或者满足Go`[filepath.Match](https://golang.org/pkg/path/filepath/#Match)`规则的通配符，`<目标路径>` 可以是容器内的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 WORKDIR 指令来指定）。目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。
-   ```shell
+  ```shell
     COPY package.json /usr/src/app/ #将构建上下文目录中<源路径>的文件/目录复制到新一层的镜像内的<目标路径>位置
     COPY hom* /mydir/
     COPY hom?.txt /mydir/
-   ```
-   > 使用 `COPY` 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。
+  ```
+  > 使用 `COPY` 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。
 - ADD 复制文件
 
   `ADD` 和 `COPY` 的格式和性质基本一致，`ADD`可执行更加复杂的更能，`ADD`允许`<源路径>`为`URL`，`Docker`引擎会下载该链接的文件到`<目标文件>`并将权限设置为600(若要修改权限需要额外的加一层`RUN`进行权限的修改),对于下载的压缩包，解压也需要一层`RUN`指令进行解压(`<源路径>`为一个 tar 压缩文件的话，压缩格式为 gzip, bzip2 以及 xz 的情况下，ADD 指令将会自动解压缩这个压缩文件到`<目标路径>`去)
-```shell
-FROM scratch
-ADD ubuntu-xenial-core-cloudimg-amd64-root.tar.gz / #自动解压ubuntu镜像
-```
-> ADD 指令会令镜像构建缓存失效，所有的文件复制均使用 COPY 指令，仅在需要自动解压缩的场合使用 ADD。
+  ```shell
+   FROM scratch
+   ADD ubuntu-xenial-core-cloudimg-amd64-root.tar.gz / #自动解压ubuntu镜像
+  ```
+
+  > ADD 指令会令镜像构建缓存失效，所有的文件复制均使用 COPY 指令，仅在需要自动解压缩的场合使用 ADD。
 
 - CMD 容器的启动
 
+  容器是一个进程，容器中的应用均应该以<b>前台执行</b>，`CMD`用于指定默认的容器主进程的启动命令。`CMD`的两种格式:
+
+  - shell：CMD `<命令>`
+  - exec : CMD [“可执行文件”,"参数1","参数2",...] #解析时会被解析为JSON数组，使用时必须为双引号。
+  ```shell
+    #Dockerfile
+    FROM ubuntu:16.04
+    RUN apt-get update \
+      && apt-get install -y curl \
+      && rm -rf /var/lib/apt/lists/*
+    CMD [ "curl", "-s", "http://ip.cn" ]
+    #build 
+    docker build -t myip 。
+    #run 
+    docker run myip #输出当前IP的地址
+    docker run myip curl -s http://ip.cn -i #覆盖掉之前的CMD 增加http头信息
+  ```
+- ENTRYPOINT 
+
+  `ENTRYPOINT`指定容器启动程序及参数，也可通过在`docker run`时指定参数`--entrypoint`修改已经指定的`EMTRYPOINT`容器启动程序及参数。
+  ```shell
+  #Dockerfile
+  FROM ubuntu:16.04
+  RUN apt-get update \
+    && apt-get install -y curl \
+    && rm -rf /var/lib/apt/lists/*
+  ENTRYPOINT [ "curl", "-s", "http://ip.cn" ]
+  ```
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
 
 
