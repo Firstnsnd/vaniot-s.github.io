@@ -234,6 +234,19 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
     && apt-get install -y curl \
     && rm -rf /var/lib/apt/lists/*
   ENTRYPOINT [ "curl", "-s", "http://ip.cn" ]
+  #build 
+  docker build  -t ip .
+  #run 
+  docker run ip
+  docker run it -i #修改ENTRYPOINT的内容
+  ```
+- ENV环境变量
+  `ENV`设置环境变量，其值可在其他指令中使用,设置环境变量的格式如下：
+   
+    - ENV <key><value>
+    - ENV <key1>=<value1> <key2>=<value2>...
+  ```shell
+  ENV NODE_VERSION 8.11.4
   ```
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
 
