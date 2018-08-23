@@ -60,7 +60,7 @@ docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果�
 docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，自己定义列
 ```
 ### 删除镜像
-- 删除本地镜像
+#### 删除本地镜像
 ```shell
 docker image rm --help #查看删除的命令参数
 docker image rm [OPTIONS] IMAGE [IMAGE...] 
@@ -74,9 +74,9 @@ docker image rm centos #使用镜像名(<仓库名>:<标签>)删除镜像
 docker image ls --digests #查看镜像并列出摘要
 docker image rm  node@sha256:b4f0e0bdeb578043c1ea6862f0d40cc4afe32a4a582f3be235a3b164422be228 #使用镜像摘要删除镜像
 ``` 
-- Untagged 和 Deleted
+#### Untagged 和 Deleted
 删除标签镜像时，首先会将目标镜像的标签取消，当还有其他的标签指向该镜像时，并不会执行Delete操作。当镜像的层被其他镜像依赖，或有以该镜像为基础的容器，均不会触发Delete操作。
-- 使用docker image ls 配合删除
+#### 使用docker image ls 配合删除
 根据查询的结果成批的删除镜像列表
 ```shell
 docker image rm $(docker image ls -q redis)
@@ -110,7 +110,9 @@ docker commit -a "vaniot a developer" -m "change the content of index.html" webs
 docker history nginx:v2.0 #查看nginx:v2.0的变化
 ```
 ### Dockerfie定制镜像
+#### Dockerfile概述
 Dockerfile是一个文本文件，包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+#### 从dcoker引擎中获取
 - FROM 指定基础镜像
 
 `FROM` 为`Dockerfile`指定了镜像的基础，之后的操作均在其的基础之上进行。
@@ -159,22 +161,61 @@ docker run  -d -p 8099:80 nginx:v3.0 #创建容器
 ```
 > 在docker中`.`指定了上下文， 对于'docker build'的原理，Docker 运行是分为Docker引擎(服务端守护进程)和客户端工具。Docker 的引擎提供了一组 REST API([ Docker Remote API](https://docs.docker.com/develop/sdk/)),客户端工具通过API与Docker引擎交互。使用的远程调用形式在服务端（Docker 引擎）完成。`docker build `命令在服务端构建镜像。用户会指定构建镜像上下文的路径，docker build 命令得知这个路径后，会将路径下的所有内容打包，然后上传给 Docker 引擎。这样 Docker 引擎收到这个上下文包后，展开就会获得构建镜像所需的一切文件。
 
-- 从Git repo中构建
+#### 从Git repo中构建
 ```shell
 docker build https://github.com/twang2218/gitlab-ce-zh.git#:8.14  
 ```
 指定构建所需的 Git repo，并且指定默认的 master 分支，构建目录为 /8.14/，然后 Docker 自己去 git clone 这个项目、切换到指定分支、并进入到指定目录后开始构建。
-- 使用 tar压缩包构建
+#### 使用 tar压缩包构建
 ```shell
 docker build http://server/context.tar.gz
 ```
  Docker 引擎会下载这个包，并自动解压缩，以其作为上下文，开始构建。
-- 标准输入中读取 Dockerfile 进行构建
+#### 标准输入中读取 Dockerfile 进行构建
 ```shell
 docker build - < Dockerfile # cat Dockerfile | docker build -
 ```
-- 标准输入中读取上下文压缩包进行构建
+#### 标准输入中读取上下文压缩包进行构建
 ```shell
  docker build - < context.tar.gz
 ```
+#### Dockerfile指令
+- Copy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
