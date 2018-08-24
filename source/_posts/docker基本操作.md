@@ -5,110 +5,111 @@ tags: docker
 categories: web
 ---
 ## 镜像
+  Docker镜像由佷多的层次构成，使用[Union FS](https://en.wikipedia.org/wiki/UnionFS)将不同的层结合到一个镜像中。
 ### 获取镜像
-docker获取镜像的命令：
-```shell
-docker pull --help #查看docker 拉取镜像的的命令格式
-docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签] #默认的仓库地址为Docker Hub,仓库名为两段式名称，即 <用户名>/<软件名>
+  docker获取镜像的命令：
+  ```shell
+  docker pull --help #查看docker 拉取镜像的的命令格式
+  docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签] #默认的仓库地址为Docker Hub,仓库名为两段式名称，即 <用户名>/<软件名>
 
-docker pull ubuntu:18.04
-```
+  docker pull ubuntu:18.04
+  ```
 ### 运行
-已获取的镜像，作为容器的基础启动
-```shell
-docker run -it --rm --name ubuntu ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 --name 命名为ubuntu bash进入shell
-```
-<!--more-->
+  已获取的镜像，作为容器的基础启动
+  ```shell
+  docker run -it --rm --name ubuntu ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 --name 命名为ubuntu bash进入shell
+  ```
+  <!--more-->
 ### 查看镜像
-- 列出已经下载的镜像
-```shell
-docker image ls # 列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间
-```
-> 镜像 ID 则是镜像的唯一标识，一个镜像可以对应多个标签
+  - 列出已经下载的镜像
+    ```shell
+    docker image ls # 列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间
+    ```
+    > 镜像 ID 则是镜像的唯一标识，一个镜像可以对应多个标签
 
-- 查看镜像的体积
-```shell
-docker system shell  #查看镜像、容器、数据卷所占用的空间
-```
-镜像仓库中显示的为压缩后的体积，远大于本地的镜像的体积，除此之外，镜像是多层存储结构，可以继承，复用，不同的镜像使用相同的镜像，故拥有共同的层，实际镜像的占用空间或许会比列表中的占用要小。
+  - 查看镜像的体积
+    ```shell
+    docker system shell  #查看镜像、容器、数据卷所占用的空间
+    ```
+    镜像仓库中显示的为压缩后的体积，远大于本地的镜像的体积，除此之外，镜像是多层存储结构，可以继承，复用，不同的镜像使用相同的镜像，故拥有共同的层，实际镜像的占用空间或许会比列表中的占用要小。
 
-- 虚悬镜像
-当下载已存在的镜像时，原有的镜像的名会被转移到新的镜像，旧有的镜像仓库名、标签均为`<none>`,被称做为虚悬镜像(dangling image)
-```shell
-docker image ls -f dangling=true #只查看虚悬镜像
-docker image prune #删除虚悬镜像
-```
-- 中间层镜像
-docker的中间层镜像，是为了加速镜像的构建，重复利用资源，中间层镜像也没有标签，会随着依赖它的镜像删除而被删除。
-```shell
-docker image ls -a # 查看中间层镜像
-```
-- 镜像过滤(列出部分镜像) 
-依据条件列出镜像 --filter(简写为:-f)过滤器参数
-```shell
-docker image ls ubuntu # 根据仓库名列出镜像
-docker image ls ubuntu:18.04 #根据指定的仓库名和标签列出镜像
-docker image ls -f since=ubnutu:18.04 #列出在ubuntu：18.04之后创建的镜像
-docker image lf -f before=ubuntu:18.04 # 列出在ubuntu:18.04之前创建的镜像
-docker image ls -f label=test #根据Label 过滤，如果镜像创建时定义了
-```
-- 特定的格式显示
-利用参数筛选出镜像的特定的信息,或使用go的模板语法[go的模板语法](https://gohugo.io/templates/introduction/) 指定显示的镜像的信息。
-```shell
-docker image ls  -q # 只显示镜像的id
-docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果，并且只包含镜像ID和仓库名
-docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，自己定义列
-```
+  - 虚悬镜像
+    当下载已存在的镜像时，原有的镜像的名会被转移到新的镜像，旧有的镜像仓库名、标签均为`<none>`,被称做为虚悬镜像(dangling image)
+    ```shell
+    docker image ls -f dangling=true #只查看虚悬镜像
+    docker image prune #删除虚悬镜像
+    ```
+  - 中间层镜像
+    docker的中间层镜像，是为了加速镜像的构建，重复利用资源，中间层镜像也没有标签，会随着依赖它的镜像删除而被删除。
+    ```shell
+    docker image ls -a # 查看中间层镜像
+    ```
+  - 镜像过滤(列出部分镜像) 
+    依据条件列出镜像 --filter(简写为:-f)过滤器参数
+    ```shell
+    docker image ls ubuntu # 根据仓库名列出镜像
+    docker image ls ubuntu:18.04 #根据指定的仓库名和标签列出镜像
+    docker image ls -f since=ubnutu:18.04 #列出在ubuntu：18.04之后创建的镜像
+    docker image lf -f before=ubuntu:18.04 # 列出在ubuntu:18.04之前创建的镜像
+    docker image ls -f label=test #根据Label 过滤，如果镜像创建时定义了
+    ```
+  - 特定的格式显示
+    利用参数筛选出镜像的特定的信息,或使用go的模板语法[go的模板语法](https://gohugo.io/templates/introduction/) 指定显示的镜像的信息。
+    ```shell
+    docker image ls  -q # 只显示镜像的id
+    docker image ls  --format "{{.ID}]: {{.Repository}}" #直接列出镜像结果，并且只包含镜像ID和仓库名
+    docker imagels --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}" #以表格等距显示，并且有标题行，和默认一样，自己定义列
+    ```
 ### 删除镜像
 #### 删除本地镜像
-```shell
-docker image rm --help #查看删除的命令参数
-docker image rm [OPTIONS] IMAGE [IMAGE...] 
-#Aliases: rm, rmi, remove
-#Options: 
-#   -f, --force Force removal of the image
-#   --help       Print usage 
-#   --no-prune   Do not delete untagged parents
-docker image rm 501 #使用镜像的短id删除镜像
-docker image rm centos #使用镜像名(<仓库名>:<标签>)删除镜像
-docker image ls --digests #查看镜像并列出摘要
-docker image rm  node@sha256:b4f0e0bdeb578043c1ea6862f0d40cc4afe32a4a582f3be235a3b164422be228 #使用镜像摘要删除镜像
-``` 
+  ```shell
+  docker image rm --help #查看删除的命令参数
+  docker image rm [OPTIONS] IMAGE [IMAGE...] 
+  #Aliases: rm, rmi, remove
+  #Options: 
+  #   -f, --force Force removal of the image
+  #   --help       Print usage 
+  #   --no-prune   Do not delete untagged parents
+  docker image rm 501 #使用镜像的短id删除镜像
+  docker image rm centos #使用镜像名(<仓库名>:<标签>)删除镜像
+  docker image ls --digests #查看镜像并列出摘要
+  docker image rm  node@sha256:b4f0e0bdeb578043c1ea6862f0d40cc4afe32a4a582f3be235a3b164422be228 #使用镜像摘要删除镜像
+  ``` 
 #### Untagged 和 Deleted
-删除标签镜像时，首先会将目标镜像的标签取消，当还有其他的标签指向该镜像时，并不会执行Delete操作。当镜像的层被其他镜像依赖，或有以该镜像为基础的容器，均不会触发Delete操作。
+  删除标签镜像时，首先会将目标镜像的标签取消，当还有其他的标签指向该镜像时，并不会执行Delete操作。当镜像的层被其他镜像依赖，或有以该镜像为基础的容器，均不会触发Delete操作。
 #### 使用docker image ls 配合删除
-根据查询的结果成批的删除镜像列表
-```shell
-docker image rm $(docker image ls -q redis)
-docker image rm $(docker image ls -q -f before =mongo:3.2)
-```
-> CentOS/RHEL 的用户需要注意的事项 ??? [详见](https://yeasy.gitbooks.io/docker_practice/content/image/rm.html#untagged-%E5%92%8C-deleted)
+  根据查询的结果成批的删除镜像列表
+  ```shell
+  docker image rm $(docker image ls -q redis)
+  docker image rm $(docker image ls -q -f before =mongo:3.2)
+  ```
+  > CentOS/RHEL 的用户需要注意的事项 ??? [详见](https://yeasy.gitbooks.io/docker_practice/content/image/rm.html#untagged-%E5%92%8C-deleted)
 
 ### 镜像的构成
-docker可用于定制镜像，但一般不用于定制镜像，`docker commit`会将上一层的镜像跟随当前的存储成而变得臃肿，`docker commit`生成的尽享对于其他是黑箱操作，不可重复。`docker commit`一般用于入侵后的现场的保护。
-``` shell
-docker run --name webserver -d -p 8099:80 nginx
-#启动 nginx 容器并将其映射到本地的8099端口 用浏览器打开http:localhost:8099 输出 welcome to Nginx
-docker exec -it webserver bash #交互的方式进入容器
+  docker可用于定制镜像，但一般不用于定制镜像，`docker commit`会将上一层的镜像跟随当前的存储成而变得臃肿，`docker commit`生成的尽享对于其他是黑箱操作，不可重复。`docker commit`一般用于入侵后的现场的保护。
+  ``` shell
+  docker run --name webserver -d -p 8099:80 nginx
+  #启动 nginx 容器并将其映射到本地的8099端口 用浏览器打开http:localhost:8099 输出 welcome to Nginx
+  docker exec -it webserver bash #交互的方式进入容器
 
-#修改页面的内容
-root@b406af708fb8:/# echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
-root@b406af708fb8:/# exit
-#用浏览器打开http:localhost:8099 输出 Hello Docker
-docker diff webserver #查看具体的改动
-docker commit --help #查看 commit 的参数
-#	docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
-# Create a new image from a container's changes
-# Options:
-#   -a, --author string    Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
-#   -c, --change list      Apply Dockerfile instruction to the created image (default [])
-#       --help             Print usage
-#   -m, --message string   Commit message
-#   -p, --pause            Pause container during commit (default true)
+  #修改页面的内容
+  root@b406af708fb8:/# echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+  root@b406af708fb8:/# exit
+  #用浏览器打开http:localhost:8099 输出 Hello Docker
+  docker diff webserver #查看具体的改动
+  docker commit --help #查看 commit 的参数
+  #	docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+  # Create a new image from a container's changes
+  # Options:
+  #   -a, --author string    Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")
+  #   -c, --change list      Apply Dockerfile instruction to the created image (default [])
+  #       --help             Print usage
+  #   -m, --message string   Commit message
+  #   -p, --pause            Pause container during commit (default true)
 
-docker commit -a "vaniot a developer" -m "change the content of index.html" webserver nginx:v2.0 #提交生成新的镜像
-docker history nginx:v2.0 #查看nginx:v2.0的变化
-```
+  docker commit -a "vaniot a developer" -m "change the content of index.html" webserver nginx:v2.0 #提交生成新的镜像
+  docker history nginx:v2.0 #查看nginx:v2.0的变化
+  ```
 ### Dockerfie定制镜像
 #### Dockerfile概述
   Dockerfile是一个文本文件，但不同于`shell`,包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
@@ -307,11 +308,66 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
     - `--retries=<次数>:`当连续失败指定次数后，将容器状态视为`unhealthy`
     
     ```shell
+    #Dockerfile
     FROM nginx
     RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
     HEALTHCHECK --interval=5s --timeout=3s \
     CMD curl -fs http://localhost/ || exit 1
+    #build
+    docker build -t healthcheck:v1 .
+    #run
+    docker run -d -name web -p 8100:80 healthcheck:v1
+    # container ls
+    docker container ls
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                  NAMES
+    5f3d26567fb4        healthcheck:v1      "nginx -g 'daemon ..."   12 seconds ago      Up 10 seconds (healthy)   0.0.0.0:8100->80/tcp   web
     ```
-> **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
+    `docker inspect`查看检查命令的输出：
+    ```shell
+    docker inspect --format '{{json .State.Health}}' web | python -m json.tool #输出最近5条检查信息
 
+    {
+      "FailingStreak": 0,
+      "Log": [
+        {
+            "End": "2018-08-24T15:49:19.185224539+08:00",
+            "ExitCode": 0,
+            "Output": "<!DOCTYPE html>\n<html>\n<head>\n<title>Welcome to nginx!</title>\n<style>\n    body {\n        width: 35em;\n        margin: 0 auto;\n        font-family: Tahoma, Verdana, Arial, sans-serif;\n    }\n</style>\n</head>\n<body>\n<h1>Welcome to nginx!</h1>\n<p>If you see this page, the nginx web server is successfully installed and\nworking. Further configuration is required.</p>\n\n<p>For online documentation and support please refer to\n<a href=\"http://nginx.org/\">nginx.org</a>.<br/>\nCommercial support is available at\n<a href=\"http://nginx.com/\">nginx.com</a>.</p>\n\n<p><em>Thank you for using nginx.</em></p>\n</body>\n</html>\n",
+            "Start": "2018-08-24T15:49:19.147078923+08:00"
+        },
+        ...
+      ], 
+      "Status": "healthy"
+    }
+    ```
+- ONBUILD ？？
+
+  `ONBUILD`之后跟随着其它的指令，这些指令会在以当前镜像为基础镜像时，去构建下一级镜像才会被执行，当前镜像中不会执行，即为下一级的镜像准备。
+
+#### Dockerfile多阶段构建
+  ```shell
+  #Dockerfile
+  FROM golang:1.9-alpine as builder #命名为builder的第一阶段
+  RUN apk --no-cache add git
+  WORKDIR /go/src/github.com/go/helloworld/
+  RUN go get -d -v github.com/go-sql-driver/mysql
+  COPY app.go .
+  RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+  FROM alpine:latest as prod
+  RUN apk --no-cache add ca-certificates
+  WORKDIR /root/
+  COPY --from=0 /go/src/github.com/go/helloworld/app . #从上一阶段复制文件
+  CMD ["./app"]
+  #build
+  docker build -t go/helloworld:3 .
+  #构建其中一阶段的镜像
+  docker build --target builder -t username/imagename:tag .
+  ```
+  从镜像中复制文件：
+  ```shell
+  COPY --from=nginx:latest /etc/nginx/nginx.conf /nginx.conf
+  ```
+> **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
+### 容器
+`Docker`在`AUFS`上构建的容器，容器是独立运行的一个或一组应用，以及它们的运行态环境。
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
