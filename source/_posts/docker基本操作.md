@@ -255,7 +255,9 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
   ```
-- ARG 
+- ARG 构建参数
+
+ARG的作用与`ENV`相同，
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
 
 
