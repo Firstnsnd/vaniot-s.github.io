@@ -368,6 +368,9 @@ categories: web
   COPY --from=nginx:latest /etc/nginx/nginx.conf /nginx.conf
   ```
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
-### 容器
+
+## 容器
 `Docker`在`AUFS`上构建的容器，容器是独立运行的一个或一组应用，以及它们的运行态环境。
+
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
