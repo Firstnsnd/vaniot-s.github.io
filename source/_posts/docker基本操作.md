@@ -370,7 +370,9 @@ categories: web
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
 
 ## 容器
-`Docker`在`AUFS`上构建的容器，容器是独立运行的一个或一组应用，以及它们的运行态环境。
+  `Docker`在`AUFS`上构建的容器，容器是独立运行的一个或一组应用，以及它们的运行态环境。
+### 启动容器
+#### 基于镜像新建容器
 
-
+#### 将终止的容器重新启动  
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
