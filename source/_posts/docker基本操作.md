@@ -111,7 +111,7 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
 ```
 ### Dockerfie定制镜像
 #### Dockerfile概述
-  Dockerfile是一个文本文件，包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
+  Dockerfile是一个文本文件，但不同于`shell`,包含了许多的指令，每一个指令都将会建立一层。将需要定制的镜像的每一层修改，安装，构建，操作的命令都写入其中。解决重复构建、构建的透明性及体积。
 #### 从dcoker引擎中获取
 - FROM 指定基础镜像
 
@@ -243,8 +243,8 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
 - ENV环境变量
   `ENV`设置环境变量，其值可在其他指令中使用,设置环境变量的格式如下：
    
-    - ENV <key><value>
-    - ENV <key1>=<value1> <key2>=<value2>...
+    - `ENV <key><value>`
+    - `ENV <key1>=<value1> <key2>=<value2>...`
   ```shell
   ENV NODE_VERSION 8.11.4
   RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
@@ -257,36 +257,61 @@ docker history nginx:v2.0 #查看nginx:v2.0的变化
   ```
 - ARG 构建参数
 
-ARG的作用与`ENV`相同，
+  ARG的作用与`ENV`相同，用于设置环境变量，但`ARG`设置的是构建环境变量，在容器运行时不会存在这些环境变量。`docker history `可以看到`ARG`的值。`Dockerfile` 中的 `ARG` 指令是定义参数名称，以及定义其默认值。格式：
+  ```shell
+  ARG <参数名>[=<默认值>]
+  ```
+  该默认值可以在构建命令 `docker build` 中用 `--build-arg <参数名>=<值>`来覆盖。
+- VOLUME定义匿名卷
+
+  容器运行时，对于数据库类需要保存数据的应用，其数据哭文件应该保存于卷中，对于容器存储层不发生写操作。
+  ```shell
+  #Dockerfile
+  VOLUME /data #将/data指定为匿名卷
+  #docker run
+  docker run -d -v mydata:/data xxx # 运行将mydata卷挂在到/data 
+  ```
+- EXPOSE 声明端口
+  `EXPOSE`声明运行是容器提供的服务端口，声明容器打算使用的端口，不会在运行时开启该端口的服务，不会自动在宿主进行端口映射。当`docker run -P`会自动随机映射`EXPOSE`的端口。格式：
+  ```shell
+  EXPOSE <端口1> [<端口2>...]
+  ```
+  > 运行时使用`-p <宿主端口>:<容器端口>`,`-p`映射宿主端口和容器端口，将容器的对应端口服务公开给外界访问。
+- WORKDIR 指定工作目录
+  
+  `WORKDIR`指定工作目录，以后的各层的当前目录就被改为指定的目录，如果目录不存在，`WORKDIR`会建立目录，改变环境状态并影响以后的层。如果需要改变以后各层的工作目录的位置，那么应该使用`WORKDIR`指令。
+- USER 指定当前用户
+   
+  `USER`改变之后层执行`RUN`,`CMD`及`ENTRYPOINT`命令的身份。
+  ```shell
+  # 建立 redis 用户，并使用 gosu 换另一个用户执行命令
+  RUN groupadd -r redis && useradd -r -g redis redis
+  # 下载 gosu
+  RUN wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64" \
+  && chmod +x /usr/local/bin/gosu \
+  && gosu nobody true
+  # 设置 CMD，并以另外的用户执行
+  CMD [ "exec", "gosu", "redis", "redis-server" ] #以redis 的身份执行
+  ```
+- HEALTHCHECK 健康检查
+
+  `HEALTHCHECK`检查容器的状态是否正常，镜像在指定了 `HEALTHCHECK`指令后，用其启动容器，通过`docker container ls`可以查看，初始状态会为 `starting`，在`HEALTHCHECK`指令检查成功后变为`healthy`，如果连续一定次数失败，则会变为`unhealthy`。命令格式：
+    
+    - `HEALTHCHECK [选项] CMD <命令>：`设置检查容器健康状况的命令
+    - `HEALTHCHECK NONE：`如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令
+    
+  对于`[选项的设置]`：
+    
+    - `--interval=<间隔>:`两次健康检查的间隔，默认为30s
+    - `--timeout=<时长>:` 检查命令运行超时时间，超过时间默认为30，检查失败
+    - `--retries=<次数>:`当连续失败指定次数后，将容器状态视为`unhealthy`
+    
+    ```shell
+    FROM nginx
+    RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+    HEALTHCHECK --interval=5s --timeout=3s \
+    CMD curl -fs http://localhost/ || exit 1
+    ```
 > **`*`** [Dockerfile 最佳实践文档 ](https://yeasy.gitbooks.io/docker_practice/appendix/best_practices.html)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
