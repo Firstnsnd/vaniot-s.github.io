@@ -18,4 +18,4 @@ categories: tool
     git checkout --filname
     ```
 ## 推送到远程仓库
-    在本地创建
+    在本地与远程创建相同的仓库名，使用`git remote add origin remote Resporitory(远程仓库地址)`关联，使用`git push -u origin master`推送master分支的所有的内容。
