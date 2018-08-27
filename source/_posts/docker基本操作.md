@@ -440,5 +440,11 @@ cat healthy.tar | docker import - test/healthcheck:v1.0
 docker container prune
 ```
 ## 仓库
-
+  在注册服务器(Registry：管理仓库的具体服务器)上可以有多个仓库，每个仓库下有多个镜像。
+### 拉取镜像
+  查找官方仓库中的镜像
+  ```shell
+  docker search php #--filter=stars=N 参数指定仅显示收藏数量为 N 以上的镜像
+  ```
+  
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
