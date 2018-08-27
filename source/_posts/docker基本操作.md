@@ -389,5 +389,14 @@ categories: web
   - 从地址池配置一个IP地址给容器
   - 执行用户指定的应用程序
   - 执行完毕后容器被终止
-#### 将终止的容器重新启动  
+  ```shell
+  docker run -d ubuntu:16.04 /bin/sh -c "while true; do echo hello world; sleep 1; done" #容器会在后台运行并不会把输出的结果 (STDOUT) 打印到宿主机上(输出结果可以用 docker logs 查看)
+  ```
+#### 将终止的容器重新启动
+  `docker container start`将一个已经停止的容器启动运行。
+  `docker container restart`将运行状态的容器重新启动。
+### 终止容器
+  `docker container stop`终止一个运行的容器。
+### 进入容器
+  
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
