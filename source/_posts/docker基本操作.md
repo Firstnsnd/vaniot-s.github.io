@@ -398,5 +398,47 @@ categories: web
 ### 终止容器
   `docker container stop`终止一个运行的容器。
 ### 进入容器
-  
+  当其东容器时 带有参数`-d`，容器启动后会进入后台,进入守护态的容器使用`dcoker attach`或者`docker exec`命令，
+####  `attach`
+  ```shell
+  docker container ls #查看容器
+  # CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS                  NAMES
+  # 5f3d26567fb4        healthcheck:v1      "nginx -g 'daemon ..."   2 days ago          Up About an hour (healthy)   0.0.0.0:8100->80/tcp   web
+
+  docker attach web #进入名为web的容器
+  #exit时，会导致容器的停止。
+  ```
+#### `exec`
+  `docker exec`可以有多个参数，
+  ```shell
+  docker  run -dit  healthcheck:v1
+  b5897d0132
+  docker exec -it b5897 #exit时，容器不会停止
+  ```
+### 容器的导入及导出
+#### 导出容器
+  将本地的容器导出,使用`docker export`。
+  ```shell
+   docker export b5897d > healty.tar #将容器快照导出
+  ```
+#### 导入容器快照
+使用`docker import`从容器快照文件中导入为镜像，
+```shell
+cat healthy.tar | docker import - test/healthcheck:v1.0
+```
+通过指定 URL 或者某个目录来导入，例如
+```shell
+ docker import http://example.com/exampleimage.tgz example/imagerepo
+```
+#### 删除容器
+使用`docker container rm`来删除一个处于终止状态的容器。
+```shell
+ docker container rm  trusting_newton
+```
+清理所有处于终止状态的容器
+```shell
+docker container prune
+```
+## 仓库
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
