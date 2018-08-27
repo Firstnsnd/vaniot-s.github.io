@@ -373,6 +373,21 @@ categories: web
   `Docker`在`AUFS`上构建的容器，容器是独立运行的一个或一组应用，以及它们的运行态环境。
 ### 启动容器
 #### 基于镜像新建容器
+  新建并启动容器`dcoker run`,
+  ```shell
+  # docker run 的命令格式
+  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
+  docker run ubuntu:16.04 /bin/echo "Hello World" #输出一个"Hello world"，之后终止容器
+  docker run -t -i ubuntu:16.04 /bin/bash #启动一个客户端，允许用户进行交互
+  ```
+  使用`docker run`会进行如下操作:
+  - 检查本地是否存在指定的镜像，不存在从公有的仓库
+  - 利用镜像创建并启动一个容器
+  - 分配一个文件系统，并在只读的镜像文件层外面挂载一层可读写层
+  - 从宿主机配置的网桥接口中[桥接]()一个虚拟的接口到容器
+  - 从地址池配置一个IP地址给容器
+  - 执行用户指定的应用程序
+  - 执行完毕后容器被终止
 #### 将终止的容器重新启动  
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
