@@ -28,7 +28,6 @@ categories: basic
 > 如果使用了控制符，在程序单位的开头除了要加iostream头文件外，还要加iomanip头文件。
 
 <!--more-->
-
 #### 使用格式输出的头文件:iomanip
 
 函数：

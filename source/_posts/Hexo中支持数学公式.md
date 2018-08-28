@@ -19,7 +19,7 @@ categories: web
                 tex2jax:
                     inlineMath: [ ['$','$'], ["\\(","\\)"] ]
     ```
-    <!--more-->
+<!--more-->
     但这个js 还是会调用cdn.mathjax.org里的一些配置js文件，最好在主题目录下\themes\主题文件夹\layout\_partial\ 的head.ejs 文件`<meta charset="utf-8">`后面加上
     ```
     <link rel="dns-prefetch" href="//cdn.bootcss.com" />

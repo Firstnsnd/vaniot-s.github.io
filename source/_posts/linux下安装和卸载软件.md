@@ -14,7 +14,7 @@ linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，
 - 配置文件-> /etc
 - lib文件->/usr/lib
 例如:系统安装软件一般在/usr/share，可执行的文件在/usr/bin，配置文件可能安装到了/etc下等。
-<1--more-->
+<!--more-->
 ## 一、软件包管理器
 dpkg(跟red hat的rpm非常相似)和apt-get进行安装软件，dpkg与apt-get的区别：
 
