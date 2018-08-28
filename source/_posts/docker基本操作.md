@@ -441,9 +441,23 @@ docker container prune
 ```
 ## 仓库
   在注册服务器(Registry：管理仓库的具体服务器)上可以有多个仓库，每个仓库下有多个镜像。
-### 拉取镜像
+### 拉取及推送镜像
   查找官方仓库中的镜像
   ```shell
   docker search php #--filter=stars=N 参数指定仅显示收藏数量为 N 以上的镜像
+  docker pull php #拉取镜像到本地
+  docker tag php:5.6 vaniot/php:5.6 #在登陆后将本地的镜像退送到docker hub
   ```
+  >自动创建
+
+### 私有仓库
+  `docker-registry`官方提供用于构建私有的镜像仓库，
+  - 容器运行
+  获取官方的registry镜像来运行,默认仓库建在容器的`/var/lib/registry`目录下。
+  ```shell
+  docker run -d -p 5000:5000 -v -v /opt/data/registry:/var/lib/registry registry #将上传的镜像放到 /opt/data/registry
+  ```
+
+## 数据管理
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
