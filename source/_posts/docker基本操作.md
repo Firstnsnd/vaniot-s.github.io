@@ -446,7 +446,4 @@ docker container prune
   ```shell
   docker search php #--filter=stars=N 参数指定仅显示收藏数量为 N 以上的镜像
   ```
-  
-
-
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
