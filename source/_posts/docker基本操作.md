@@ -4,6 +4,23 @@ date: 2018-06-21 19:50:27
 tags: docker
 categories: web
 ---
+## 预操作
+### 加速器
+  修改` /etc/docker/daemon.json` 文件并添加上 `registry-mirrors `键值,将镜像源切换为国内。
+  ```shell
+    $ vim /etc/docker/daemon.json 
+    {
+    "registry-mirrors": ["https://registry.docker-cn.com"]
+    }
+  ```
+### 设置权限
+  docker守护进程启动的时候，会默认赋予名字为docker的用户组读写Unix socket的权限，创建docker用户组，并将当前用户加入到docker用户组中，当前用户就有权限访问Unix socket了，就可以执行docker相关命令.
+  ```shell
+    sudo groupadd docker     #添加docker用户组
+    sudo gpasswd -a $USER docker     #将登陆用户加入到docker用户组中
+    newgrp docker     #更新用户组
+    docker ps    #测试docker命令是否可以使用sudo正常使用
+  ```
 ## 镜像
   Docker镜像由佷多的层次构成，使用[Union FS](https://en.wikipedia.org/wiki/UnionFS)将不同的层结合到一个镜像中。
 ### 获取镜像

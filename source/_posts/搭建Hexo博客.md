@@ -1,7 +1,7 @@
 ---
 title: 搭建Github Pages和Hexo博客
 date: 2017-12-29 19:59:49
-tags: Hexo
+tags: [Hexo,git]
 categories: web
 ---
 ### 一、安装配置Git
