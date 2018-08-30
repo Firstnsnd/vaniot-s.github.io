@@ -474,7 +474,8 @@ docker container prune
   ```shell
   docker run -d -p 5000:5000 -v -v /opt/data/registry:/var/lib/registry registry #将上传的镜像放到 /opt/data/registry
   ```
-
+  - 私有仓库进行操作
+    创建好私有仓库后，使用`docker tag`标记一个镜像，推送到仓库。
 ## 数据管理
 
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
