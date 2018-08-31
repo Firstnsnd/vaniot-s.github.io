@@ -21,40 +21,40 @@ categories: web
     newgrp docker     #更新用户组
     docker ps    #测试docker命令是否可以使用sudo正常使用
   ```
+  <!--more-->
 ## 镜像
   Docker镜像由佷多的层次构成，使用[Union FS](https://en.wikipedia.org/wiki/UnionFS)将不同的层结合到一个镜像中。
 ### 获取镜像
   docker获取镜像的命令：
   ```shell
-  docker pull --help #查看docker 拉取镜像的的命令格式
-  docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签] #默认的仓库地址为Docker Hub,仓库名为两段式名称，即 <用户名>/<软件名>
+    docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签] #默认的仓库地址为Docker Hub,仓库名为两段式名称，即 <用户名>/<软件名>
 
-  docker pull ubuntu:18.04
+    docker pull ubuntu:18.04
   ```
 ### 运行
   已获取的镜像，作为容器的基础启动
   ```shell
-  docker run -it --rm --name ubuntu ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 --name 命名为ubuntu bash进入shell
+    docker run -it --rm --name ubuntu ubuntu:18.04 bash #run 启动容器 -i 交互操作 -t 终端 --rm 容器退出后会立即删除 --name 命名为ubuntu bash进入shell
   ```
-  <!--more-->
+
 ### 查看镜像
   - 列出已经下载的镜像
     ```shell
-    docker image ls # 列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间
+      docker image ls # 列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间
     ```
     > 镜像 ID 则是镜像的唯一标识，一个镜像可以对应多个标签
 
   - 查看镜像的体积
     ```shell
-    docker system shell  #查看镜像、容器、数据卷所占用的空间
+      docker system shell  #查看镜像、容器、数据卷所占用的空间
     ```
     镜像仓库中显示的为压缩后的体积，远大于本地的镜像的体积，除此之外，镜像是多层存储结构，可以继承，复用，不同的镜像使用相同的镜像，故拥有共同的层，实际镜像的占用空间或许会比列表中的占用要小。
 
   - 虚悬镜像
     当下载已存在的镜像时，原有的镜像的名会被转移到新的镜像，旧有的镜像仓库名、标签均为`<none>`,被称做为虚悬镜像(dangling image)
     ```shell
-    docker image ls -f dangling=true #只查看虚悬镜像
-    docker image prune #删除虚悬镜像
+      docker image ls -f dangling=true #只查看虚悬镜像
+      docker image prune #删除虚悬镜像
     ```
   - 中间层镜像
     docker的中间层镜像，是为了加速镜像的构建，重复利用资源，中间层镜像也没有标签，会随着依赖它的镜像删除而被删除。
@@ -477,5 +477,10 @@ docker container prune
   - 私有仓库进行操作
     创建好私有仓库后，使用`docker tag`标记一个镜像，推送到仓库。
 ## 数据管理
-
+   数据卷是一个可供一个或多个容器使用的特殊目录，绕过了`UFS`:
+   - 可在容器之间共享和重用
+   - 对数据卷的修改会立即生效
+   - 数据卷的更新不会影响镜像
+   - 数据卷会一直存在，即使容器被删除
+   
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
