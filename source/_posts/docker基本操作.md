@@ -476,6 +476,71 @@ docker container prune
   ```
   - 私有仓库进行操作
     创建好私有仓库后，使用`docker tag`标记一个镜像，推送到仓库。
-## 数据管理
+    ```shell
+    # 查看本机已有的镜像
+      docker image ls
+      docker tag IMAGE[:TAG] [REGISTRY_HOST[:REGISTRY_PORT]/]REPOSITORY[:TAG] 
+    #将镜标记到本地
+      docker tag ubuntu:latest 127.0.0.1:5000/ubuntu:latest
+    #推送镜像
+      docker push 127.0.0.1:5000/ubuntu:latest
+    #查看本地的镜像
+      curl 127.0.0.1:5000/v2/_catalog
+      {"repositories":["ubuntu"]}
+    #删除镜像
+      docker image rm 127.0.0.1:5000/ubuntu:latest
+    #从私有仓库中下载镜像
+      docker pull 127.0.0.1:5000/ubuntu:latest
+    ```
 
+## 数据管理
+  对于容器而言数据管理的两中方式：
+  - 数据卷(Volumes)
+  - 挂载主机目录(Bind mounts)
+### 数据卷 (Volumes)
+  `数据卷`是一个可供一个或多个容器使用的特殊目录，理解为多个容器共享的文件目录，与宿主机，容器无关，绕过了`UFS`。
+  - `数据卷`可以在容器之间共享和重用
+  - `数据卷`的修改会立即生效
+  - `数据卷`的改变不会影响到镜像
+  - `数据卷`默认会一直存在，即使容器被删除
+#### 数据卷的操作
+  ```shell
+    # 数据卷的创建
+    docker volume create volume-test
+    # 查看所有的数据卷
+    docker volume ls
+    #查看制定数据卷的详细信息
+     docker volume inspect volume-test
+      #      [
+      #     {
+      #         "CreatedAt": "2018-08-30T23:16:20+08:00",
+      #         "Driver": "local",
+      #         "Labels": {},
+      #         "Mountpoint": "/var/lib/docker/volumes/volume-test/_data",
+      #         "Name": "volume-test",
+      #         "Options": {},
+      #         "Scope": "local"
+      #     }
+      # ]
+  ```
+### 容器中使用数据卷
+  容器中挂载数据卷，使用`--mount`标记将`数据卷`挂载到容器里，`docker run`时可以挂载多个`数据卷`。
+  ```shell
+    docker run -d -P --name web  --mount source=volume-test,target=/webapp training/webapp python app.py  #创建一个名为 web 的容器，并加载一个 数据卷 到容器的 /webapp 目录。
+    docker inspect web 
+    # #mount 的信息
+    #  "Mounts": [
+    #         {
+    #             "Type": "volume",
+    #             "Name": "volume-test",
+    #             "Source": "/var/lib/docker/volumes/volume-test/_data",
+    #             "Destination": "/webapp",
+    #             "Driver": "local",
+    #             "Mode": "z",
+    #             "RW": true,
+    #             "Propagation": ""
+    #         }
+    #     ],
+
+  ```
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
