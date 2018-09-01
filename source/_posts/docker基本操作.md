@@ -497,7 +497,7 @@ docker container prune
   - 数据卷(Volumes)
   - 挂载主机目录(Bind mounts)
 ### 数据卷 (Volumes)
-  `数据卷`是一个可供一个或多个容器使用的特殊目录，理解为多个容器共享的文件目录，与宿主机，容器无关，绕过了`UFS`。
+  `数据卷`是一个可供一个或多个容器使用的特殊目录，理解为多个容器共享的文件目录，与宿主机，容器无关，绕过了`UFS`，数据卷设计用于持久化数据，其生命周期独立于容器，`数据卷`不会在容器被删除后自动删除`数据卷`。
   - `数据卷`可以在容器之间共享和重用
   - `数据卷`的修改会立即生效
   - `数据卷`的改变不会影响到镜像
@@ -522,7 +522,7 @@ docker container prune
       #     }
       # ]
   ```
-### 容器中使用数据卷
+#### 容器中使用数据卷
   容器中挂载数据卷，使用`--mount`标记将`数据卷`挂载到容器里，`docker run`时可以挂载多个`数据卷`。
   ```shell
     docker run -d -P --name web  --mount source=volume-test,target=/webapp training/webapp python app.py  #创建一个名为 web 的容器，并加载一个 数据卷 到容器的 /webapp 目录。
@@ -540,6 +540,29 @@ docker container prune
     #             "Propagation": ""
     #         }
     #     ],
-
   ```
+#### 删除数据卷
+  ```shell
+    docker volume rm volume-test #删除数据卷
+    docker rm -v  #删除容器时并删除数据卷
+    docker volume prune #清理数据卷
+  ```
+### 挂载主机目录
+  `docker`挂载目录可以使用`--mount`和`-v`指定一个本地主机的目录挂载到容器中去。当本地不存在指定的文件，`-v`的指令会在本地创建文件夹，而`--mount`则会报错。
+  ```shell
+    #使用--mount挂载文件
+    docker run -d -P --name web --mount type=bind,source=/src/webapp,target=/opt/webapp training/webapp python app.py
+    # 使用-v 挂载文件
+     docker run -d -P --name web  -v /src/webapp:/opt/webapp:ro --mount type=bind,source=/src/webapp, target=/opt/webapptraining/webapp python app.py
+  ```
+  > `Docker`挂载宿主机目录默认权限为`读写`,当增加指令为`readonly`则为`只读`
+  ```shell
+   docker run -d -P \
+    --name web \
+    # -v /src/webapp:/opt/webapp:ro \
+    --mount type=bind,source=/src/webapp,target=/opt/webapp,readonly \
+    training/webapp \
+    python app.py
+  ```
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
