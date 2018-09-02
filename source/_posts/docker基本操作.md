@@ -564,5 +564,6 @@ docker container prune
     training/webapp \
     python app.py
   ```
-
+## 网络
+  当外部需要访问容器中的网络应用，通过`-p`或`-P`指定端口映射。使用`-P`，`DOcker`会随机映射一个`49000-49900`的端口到内部容器开放的网络端口。
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
