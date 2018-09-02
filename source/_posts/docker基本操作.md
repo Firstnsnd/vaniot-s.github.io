@@ -565,5 +565,43 @@ docker container prune
     python app.py
   ```
 ## 网络
+### 外部访问容器
   当外部需要访问容器中的网络应用，通过`-p`或`-P`指定端口映射。使用`-P`，`DOcker`会随机映射一个`49000-49900`的端口到内部容器开放的网络端口。
+#### 映射所有接口地址
+  使用 hostPort:containerPort 格式本地的 5000 端口映射到容器的 5000 端口，可以执行
+  ```shell
+  $ docker run -d -p 5000:5000 training/webapp python app.py
+  ```
+  此时默认会绑定本地所有接口上的所有地址。
+#### 映射到指定地址的指定端口
+  可以使用 ip:hostPort:containerPort 格式指定映射使用一个特定地址，比如 localhost 地址 127.0.0.1
+  ```shell
+  $ docker run -d -p 127.0.0.1:5000:5000 training/webapp python app.py
+  ```
+#### 映射到指定地址的任意端口
+  使用 ip::containerPort 绑定 localhost 的任意端口到容器的 5000 端口，本地主机会自动分配一个端口。
+  ```shell
+  $ docker run -d -p 127.0.0.1::5000 training/webapp python app.py
+  ```
+  还可以使用 udp 标记来指定 udp 端口
+  ```shell
+  $ docker run -d -p 127.0.0.1:5000:5000/udp training/webapp python app.py
+  ```
+#### 查看映射端口配置
+`docker port`可用于查看当前映射的端口配置。
+```shell
+docker port containerName port
+```
+> - 容器有自己的内部网络和 ip 地址（使用 docker inspect 可以获取所有的变量，Docker 还可以有一个可变的网络配置。）
+>- -p 标记可以多次使用来绑定多个端口
+
+### 容器的互联
+  容器的互联可使用`--link`参数，但更优的选择是使用自定义`Docker`网络连接。
+#### 新建网络
+  `-d`指定`Docker`网络类型，类型为`bridge`或`overlay`(overlay适用于Swarm)
+  ```shell
+  docker  network create -d bridge net-test
+  ```  
+#### 连接容器
+
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
