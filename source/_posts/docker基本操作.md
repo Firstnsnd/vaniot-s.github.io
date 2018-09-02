@@ -603,5 +603,9 @@ docker port containerName port
   docker  network create -d bridge net-test
   ```  
 #### 连接容器
-
+  运行一个容器并连接到新建的 net-test 网络
+  ```shell
+  docker run -it --rm --name busybox1 --network busybox sh
+    docker run -it --rm --name busybox2 --network busybox sh
+  ```
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
