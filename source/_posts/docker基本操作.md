@@ -605,7 +605,29 @@ docker port containerName port
 #### 连接容器
   运行一个容器并连接到新建的 net-test 网络
   ```shell
-  docker run -it --rm --name busybox1 --network busybox sh
-    docker run -it --rm --name busybox2 --network busybox sh
+    docker run -it --rm --name busybox1 --network net-test busybox sh
+    docker run -it --rm --name busybox2 --network net-test busybox sh
+  ```
+  通过`ping`查看`busybox1`与`busybox2`容器建立了联系。
+  在`busybox1`中
+  ```shell
+   # ping busybox2
+  ```
+  在`busybox2`中
+  ```shell
+   # ping busybox1
+  ```
+  >多个容器之间需要互相连接，使用`Docker Compose`。
+### DNS
+  配置所有`Docker`容器的DNs可通过：
+  - `etc/resolv.conf`
+  - 配置`etc/docker/daemon.json`配置
+  ```shell
+    {
+      "dns" : [
+        "114.114.114.114",
+        "8.8.8.8"
+      ]
+    }
   ```
 > 根据[docker practice](https://yeasy.gitbooks.io/docker_practice/content/introduction/)整理而来。
