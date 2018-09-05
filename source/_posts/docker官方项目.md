@@ -564,5 +564,8 @@ categories: web
     ```
     执行 docker-compose up 则会启动一个 mongo:3.6 镜像的容器。
 ## Machine
-
+  
 ## Swarm
+  `Docker Swarm`提供`Docker`容器集群服务，利用`Docker Swarm`可以将多个`Docker`主机封装为单个大型的虚拟主机，Docker 1.12 Swarm mode 已经内嵌入 Docker 引擎，成为了 docker 子命令 docker swarm。
+### 节点
+### 服务及任务
