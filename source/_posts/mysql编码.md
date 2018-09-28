@@ -11,13 +11,13 @@ categories: web
 show variables like 'char%';
 ```
 修改编码格式:
-```
+```mysql
 set character_set_database = utf8;
- set character_set_server = utf8;
+set character_set_server = utf8;
 ```
 <!--more-->
 2.查看建库语句
-```
+```mysql
 show create database your_database_name;
 ```
 更改编码:
@@ -31,7 +31,7 @@ alter database `file` default character set utf8 collate utf8_general_ci;
 alter table `file` default character set utf8 collate utf8_general_ci;
 ```
 4.查看表字段并修改编码
- ```
+ ```mysql
 show full columns from `user`
  ```
  修改编码：

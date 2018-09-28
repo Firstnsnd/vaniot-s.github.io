@@ -23,6 +23,7 @@ public_dir: public
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
+material_dir: materials
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
@@ -58,7 +59,8 @@ category_map:
         web: web
         基础: basic
         工具: tool
-        资源: resource
+        应用: application
+        资料: material
 tag_map:
 
 # Date / Time format

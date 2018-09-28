@@ -1,5 +1,5 @@
 ---
-title: ps入门
+title: ps入门笔记
 date: 2018-01-10 14:00:33
 tags: [photoshop,设计]
 categories: tool

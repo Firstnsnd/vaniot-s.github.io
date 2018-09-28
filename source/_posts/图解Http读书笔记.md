@@ -19,24 +19,24 @@ TCP/IP协议族:
 -  11.SNMP
 
 ### TCP/IP分层管理
- OSI4层:应用层、传输层、网络层、数据链路层
+OSI4层:应用层、传输层、网络层、数据链路层
 <!--more-->
-应用层：决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
+    应用层：决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
 
-传输层：为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
+    传输层：为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
 
-网络层:处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
+    网络层:处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
 
-链路层:链接网络的硬件部分(NIC:网卡)
+    链路层:链接网络的硬件部分(NIC:网卡)
 
 TCP/IP通信传输流
 
 完整的http请求：
-发送端(封装：把数据信息包装起来)：传输层(TCP协议)从把应用层(http协议)收到的数据(HTTP请求报文)分割,在各个报文上打上标记序号及端口号后发给网络层.在网络层(IP协议),增加通信目的地的MAC地址后转发给链路层。
+    发送端(封装：把数据信息包装起来)：传输层(TCP协议)从把应用层(http协议)收到的数据(HTTP请求报文)分割,在各个报文上打上标记序号及端口号后发给网络层.在网络层(IP协议),增加通信目的地的MAC地址后转发给链路层。
 
-接收端：
-将发送端每一层加上的头部信息去掉
-image
+    接收端：
+    将发送端每一层加上的头部信息去掉
+    image
 
 IP(网络层）
 IP协议:把各种数据包传送给对方(由IP地址、MAC地址确定),
@@ -54,59 +54,51 @@ IP间的通信。
 
 TCP三次握手：
 
-1、发送端先发送一个带有SYN(synchorize)标志的数据包给接收端,
+    1、发送端先发送一个带有SYN(synchorize)标志的数据包给接收端,
 
-2、接收端接收回传带有SYN/ACK标志的数据包以示传达确认信息
+    2、接收端接收回传带有SYN/ACK标志的数据包以示传达确认信息
 
-3、发送端回传ACK标志数据包
-image
+    3、发送端回传ACK标志数据包
+    image
 
 域名解析DNS
-DNS:应用层的协议，域名到IP地址间的解析服务。
-image
-HTTP协议、TCP协议、IP协议、DNS服务的关系：
-image
+    DNS:应用层的协议，域名到IP地址间的解析服务。
+    image
+    HTTP协议、TCP协议、IP协议、DNS服务的关系：
+    image
 
 URI和URL
-URI(Uniform Resource Identifier)：统一资源标识符,由某个协议方案表示的资源的定位标识符。
-Uniform:规定的统一格式,协议方案
-Resource:资源,可标识的
-Identifier:可标识的对象
-URI的格式：
-image
-登录信息：指定用户和密码作为从服务器端获取资源时必要的登录信息(可选)
-服务器地址：使用绝对URI必须指定待访问的服务器地址(DNS可解析的名称、IPV4地址、IPV6地址)
-服务端端口号:指定服务器连接的网络端口号(可选,省略使用默认的端口号)
-带层次的文件路径:指定服务器上的文件路径来指定特定的资源
-查询字符串:针对已指定的文件路径内的资源,可使用查询字符串闯入任意的参数(可选)
-片段标识符：使用片段标识符(可选)可表记出已经获取资源中的子资源(如网页中的某个位置)，
-URL(Uniform Resource Locator):统一资源定位符,
-image
+    URI(Uniform Resource Identifier)：统一资源标识符,由某个协议方案表示的资源的定位标识符。
+    Uniform:规定的统一格式,协议方案
+    Resource:资源,可标识的
+    Identifier:可标识的对象
+    URI的格式：
+    image
+    登录信息：指定用户和密码作为从服务器端获取资源时必要的登录信息(可选)
+    服务器地址：使用绝对URI必须指定待访问的服务器地址(DNS可解析的名称、IPV4地址、IPV6地址)
+    服务端端口号:指定服务器连接的网络端口号(可选,省略使用默认的端口号)
+    带层次的文件路径:指定服务器上的文件路径来指定特定的资源
+    查询字符串:针对已指定的文件路径内的资源,可使用查询字符串闯入任意的参数(可选)
+    片段标识符：使用片段标识符(可选)可表记出已经获取资源中的子资源(如网页中的某个位置)，
+    URL(Uniform Resource Locator):统一资源定位符,
+    image
 2.简单的HTTP协议
 1.客户端和服务端的通信
 客户端：请求访问文本或图像资源的一端，通信由客户端建立，发出请求(请求报文)
 请求报文：image
 http/1.1 特点：
 
-不保存状态的协议，为了验证身份引入了cookie
-使用URI定位资源
+    不保存状态的协议，为了验证身份引入了cookie
+    使用URI定位资源
 http方法：
-
-1.GET:获取资源，访问已被URI识别的资源，返回服务器解析后的结果(一般用于获取响应的主体)，未变化返回304 not modified。
-
-2.POST：传输实体的主体,与GET类似,响应返回接受数据的处理结果。
-
-3.PUT:传输文件，在请求报文的主体包含文件内容，不会对文件的内容做验证，若无其他的验证方式(web验证、rest架构)不采用，响应返回204 no content等。
-
-4.HEAD：获取报文的首部
-
-5.DELETE:删除文件，按请求的URI指定的资源，不会对内容作出验证
-
-6.OPTIONS:查询针对URI指定的资源支持的方法
-
-7.TRACE:追踪路径，让web服务器将之前的请求通信环回给客户端
-
-8.CONNECT:用隧道协议链接代理，与代理服务器通信时建立隧道，实现用
+    1.GET:获取资源，访问已被URI识别的资源，返回服务器解析后的结果(一般用于获取响应的主体)，未变化返回304 not modified。
+    2.POST：传输实体的主体,与GET类似,响应返回接受数据的处理结果。
+    3.PUT:传输文件，在请求报文的主体包含文件内容，不会对文件的内容做验证，若无其他的验证方式(web验证、rest架构)不采用，响应返回204 no content等。
+    4.HEAD：获取报文的首部
+    5.DELETE:删除文件，按请求的URI指定的资源，不会对内容作出验证
+    6.OPTIONS:查询针对URI指定的资源支持的方法
+    7.TRACE:追踪路径，让web服务器将之前的请求通信环回给客户端
+    8.CONNECT:用隧道协议链接代理，与代理服务器通信时建立隧道，实现用
 
 方法命令： 在向URI指定的资源发送请求报文时，指定方法，资源按期望产生某种行为。
 持久连接：keep-alive 多个请求在一次连接中处理，在任意一端未提出断开连接，保持tcp连接状态
@@ -148,57 +140,38 @@ identity(不进行编码)
 分割发送的分块传输编码
 将实体分成多块每一块都会用十六进制来标记块的大小，最后一块会使用”0(CR+LF)”
 发送多种数据的(MIME拓展 Multipart)多部分对象集合 RFC2046
+ ```
+    multipart/form-data web表单文件上传时使用
+    Content-Type:multipart/form-data;boundary=AaB03x//boundary 标识符
+    --AaB03x//部分开始
+    Content-Disposition:form-data;name="field1"
+    Joe Blow
+    --AaB03x
+    Content-Disposition:form-data;name="pics";filename="file1.txt"
+    Content-type:text/plain
+    ...(file.txt的数据)...
+    --AaB03x--//对象结束标识符
+ ```
+ ```
+    multipart/byteranges 状态码206(partial Content,部分内容)响应报文包含了多个范围内容时使用
 
-multipart/form-data web表单文件上传时使用
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-Content-Type:multipart/form-data;boundary=AaB03x//boundary 标识符
---AaB03x//部分开始
-Content-Disposition:form-data;name="field1"
-Joe Blow
---AaB03x
-Content-Disposition:form-data;name="pics";filename="file1.txt"
-Content-type:text/plain
-...(file.txt的数据)...
---AaB03x--//对象结束标识符
-multipart/byteranges 状态码206(partial Content,部分内容)响应报文包含了多个范围内容时使用
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-```
-Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
---THIS_STRING_SEPARATES//部分开始
-Content-Type:application/pdf
-Content-Range:bytes 500-999/8000
-...(范围指定的数据)...
---THIS_STRING_SEPARATES
-Content-type:text/pdf
-Content-Range:bytes 7000-7999/8000
-...(范围指定的数据)...
---THIS_STRING_SEPARATES--//对象结束标识符
-```
+    Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
+    --THIS_STRING_SEPARATES//部分开始
+    Content-Type:application/pdf
+    Content-Range:bytes 500-999/8000
+    ...(范围指定的数据)...
+    --THIS_STRING_SEPARATES
+    Content-type:text/pdf
+    Content-Range:bytes 7000-7999/8000
+    ...(范围指定的数据)...
+    --THIS_STRING_SEPARATES--//对象结束标识符
+ ```
 获取部分内容的范围
-```
-5001-10000字节
- Range:byte=5001-10000
-5001后的全部字节
- Range:byte=5001-
+ ```
+    5001-10000字节
+    Range:byte=5001-10000
+    5001后的全部字节
+    Range:byte=5001-
  ```
 多重范围
 Range:byte=-3000,5001-7000 //开始到3000，5001到7000
@@ -206,11 +179,11 @@ Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 
 请求报文的首部进行
 ```
-Accept
-Accept-Charset
-Accept-Encoding
-Accept-Language
-Content-Language
+    Accept
+    Accept-Charset
+    Accept-Encoding
+    Accept-Language
+    Content-Language
 ```
 内容协商技术的分类：
 
@@ -218,66 +191,66 @@ Content-Language
 客户端驱动协商：用户从浏览器显示的可选项列表中手动选择
 透明协商：服务器和客户端各自进行内容协商的一种方法
 4.HTTP状态码
-状态码	|类别	|原因短语
---|--|--
-1XX	|information(信息状态码)	|接受请求正在处理
-2XX	|success(成功状态码)	|请求处理完毕
-3XX	|redirection(重定向状态码)	|需要附加操作以完成请求
-4XX	|Client Error(客户端错误状态码)	|服务器无法处理的请求
-5XX	|Server Error(服务端状态码)	|服务器处理请求出错
+    状态码	|类别	|原因短语
+    --|--|--
+    1XX	|information(信息状态码)	|接受请求正在处理
+    2XX	|success(成功状态码)	|请求处理完毕
+    3XX	|redirection(重定向状态码)	|需要附加操作以完成请求
+    4XX	|Client Error(客户端错误状态码)	|服务器无法处理的请求
+    5XX	|Server Error(服务端状态码)	|服务器处理请求出错
 常用的14种状态码
-2XX：客户端发来的请求被正常的处理
-1.   204(No Content):返回的响应报文中不含(不允许)主体部分，浏览器的页面不会发生任何变化。(一般用于浏览器往服务端发送数据,而不需要返回数据)
-2.   206(Partial Content):客户端进行了范围请求，而服务端成功执行了这部分GET请求，响应报文中包含Content-Range指定范围的实体内容
-3XX:重定向
-1.   301(Moved Permanently)永久重定向，请求的资源已被分配了新的URI，以后都使用
-2.   302(Found)临时性重定向,请求的资源已经被分配了新的URI，本次使用
-3.   303(See Other)请求对应的资源存在另一个URI，应使用GET方法定向获取请求的资源。
-4.   304(Not Modified)客户端发送请求附带条件的请求，服务器端允许请求访问资源，但因为发生请求未满足条件，返回304
-5.   307(Temporay Redirect)临时重定向
-4XX客户端错误
-1.   400(Bad Request)客户端请求的报文中存在语法错误,
-2.   401(Unauthorized)发送的请求需要通过HTTP认证(BASIC认证、DIGEST认证)的认证信息，若之前已经请求一次，则表示用户认证失败，第一次会弹出认证的对话框。
-3.   403(Forbidden)请求的资源被服务器拒绝。
-4.   404(Not Found)服务器上不能找到请求的资源
-5XX服务器错误
-1.  500(Internet Server Error)服务器端在执行请求时发生错误
-2.  503(Service Unavailable)服务器暂时处于超载或正在进行维护。
+    2XX：客户端发来的请求被正常的处理
+    1.   204(No Content):返回的响应报文中不含(不允许)主体部分，浏览器的页面不会发生任何变化。(一般用于浏览器往服务端发送数据,而不需要返回数据)
+    2.   206(Partial Content):客户端进行了范围请求，而服务端成功执行了这部分GET请求，响应报文中包含Content-Range指定范围的实体内容
+    3XX:重定向
+    1.   301(Moved Permanently)永久重定向，请求的资源已被分配了新的URI，以后都使用
+    2.   302(Found)临时性重定向,请求的资源已经被分配了新的URI，本次使用
+    3.   303(See Other)请求对应的资源存在另一个URI，应使用GET方法定向获取请求的资源。
+    4.   304(Not Modified)客户端发送请求附带条件的请求，服务器端允许请求访问资源，但因为发生请求未满足条件，返回304
+    5.   307(Temporay Redirect)临时重定向
+    4XX客户端错误
+    1.   400(Bad Request)客户端请求的报文中存在语法错误,
+    2.   401(Unauthorized)发送的请求需要通过HTTP认证(BASIC认证、DIGEST认证)的认证信息，若之前已经请求一次，则表示用户认证失败，第一次会弹出认证的对话框。
+    3.   403(Forbidden)请求的资源被服务器拒绝。
+    4.   404(Not Found)服务器上不能找到请求的资源
+    5XX服务器错误
+    1.  500(Internet Server Error)服务器端在执行请求时发生错误
+    2.  503(Service Unavailable)服务器暂时处于超载或正在进行维护。
 5.http协作与web服务器
-数据转发程序(程序和服务器将请求转发给通信线路上的下一站服务器，并将其返回的响应转发给客户端)
-代理：有转发功能的应用程序,扮演服务端与客户端的”中间”,转发两者的请求。
-image
-代理服务器：接受客户端发送的请求后转发给其他代理服务器，代理不会改变请求的URI，直接转发给持有资源的服务器。资源服务器将会把响应返回给代理服务器在返回给客户端
-image
-多级联台代理在转发时需要添加Via首部字段标记经过的主机信息
+    数据转发程序(程序和服务器将请求转发给通信线路上的下一站服务器，并将其返回的响应转发给客户端)
+    代理：有转发功能的应用程序,扮演服务端与客户端的”中间”,转发两者的请求。
+    image
+    代理服务器：接受客户端发送的请求后转发给其他代理服务器，代理不会改变请求的URI，直接转发给持有资源的服务器。资源服务器将会把响应返回给代理服务器在返回给客户端
+    image
+    多级联台代理在转发时需要添加Via首部字段标记经过的主机信息
 代理服务器的优势：
 
-利用缓存技术减少网络带宽的流量
-组织内部针对特定网站访问的控制
-以获取访问日志为主的目的
+    利用缓存技术减少网络带宽的流量
+    组织内部针对特定网站访问的控制
+    以获取访问日志为主的目的
 代理分类：
 
-1.是否使用缓存：代理转发响应时，缓存代理会预先将资源的副本保存在代理服务器上
-2.是否修改报文：透明代理不会对报文做任何加工，非透明代理度对报文进行加工
+    1.是否使用缓存：代理转发响应时，缓存代理会预先将资源的副本保存在代理服务器上
+    2.是否修改报文：透明代理不会对报文做任何加工，非透明代理度对报文进行加工
 
 网关：网关转发其他服务器通信数据的服务器，网关可以使通信线路上的服务器提供非http协议服务。
 
-image
+    image
 
-网关的优势：
+    网关的优势：
 
-提高通信的安全性，可在客户端与网关的通信线路上加密
+    提高通信的安全性，可在客户端与网关的通信线路上加密
 2.连接非http非http服务器
 隧道：在相隔甚远的客户端和服务器端两者间进行中转，使用SSL等手段进行加密，并保持双方通信连接的应用程序。
 
-![image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCYhgpzMfEypGQJ_H_NnqHgk2y2ETuMk0IzPhDuKmqx1iDRWAwA
+[!image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCYhgpzMfEypGQJ_H_NnqHgk2y2ETuMk0IzPhDuKmqx1iDRWAwA
 
 缓存
-缓存：代理服务器或客户端本地磁盘内保存的资源副本。利用缓存可减少对资源服务器的访问，节省了通信流量和通信时间。
+    缓存：代理服务器或客户端本地磁盘内保存的资源副本。利用缓存可减少对资源服务器的访问，节省了通信流量和通信时间。
 
-缓存服务器：是代理服务器的一种，归于缓存代理中，代理服务器转发服务器的响应时，代理服务器会保存一份资源的副本，下次请求从就近的缓存服务器上获取资源。缓存过了有效期会重新请求。
+    缓存服务器：是代理服务器的一种，归于缓存代理中，代理服务器转发服务器的响应时，代理服务器会保存一份资源的副本，下次请求从就近的缓存服务器上获取资源。缓存过了有效期会重新请求。
 
-客户端缓存：将缓存存在客户端浏览器，在有效期内直接访问本地的缓存文件。
+    客户端缓存：将缓存存在客户端浏览器，在有效期内直接访问本地的缓存文件。
 
 6.http首部
 http协议的请求报文和响应报文中必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供了所需的信息。
@@ -303,34 +276,35 @@ image
 image
 
 Accept:通知服务器用户代理可以处理的媒体类型及媒体类型的相对优先级，
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+```
 Accept:text/html.application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 //q优先等级
+```
 文本文件
+   ```
     text/html,text/plain,text/css...
     application/xhtml+xml,application/xml...
+    ```
 图片文件
+    ```
     image/jpeg,imge/gif,image/png...
+    ```
 视频文件
+  ```
   video/mpeg,video/quicktime...
+  ```
 应用程序使用的二进制文件
+   ```
    application/octet-stream,application/zip...
+   ```
 Accept-Charset:通知服务器用户代理支持的字符集及字符集的相对优先顺序
-
-1
-Accept-Charset:iso-8859-5,unicode-1-1;q=0.8
+    ```
+    Accept-Charset:iso-8859-5,unicode-1-1;q=0.8
+    ```
 Accept-Encoding:告知服务器用户代理支持的内容编码及内容编码的优先级顺序，可一次指定多种内容编码
 
-1
-Accept-Encoding:gzip,deflate
+    ```
+    Accept-Encoding:gzip,deflate
+    ```
 gzip:gzip程序生成的编码格式
 
 compress:unix中文件压缩程序compress生成的编码格式
@@ -341,32 +315,36 @@ identity:不压缩或不会变化的默认编码格式
 
 Accept-Language:告知服务器用户代理能够处理的自然语言及自然语言集的相对优先级
 
-1
-Accept-Language:zh-cn,zh;q=0.7,en-us,en;q=0.3
+    ```
+    Accept-Language:zh-cn,zh;q=0.7,en-us,en;q=0.3
+    ```
 Authorization:告知服务器，用户代理认证信息
 image
 
 Expect:客户端告知服务器期望出现的某种行为
-1
+```
 Except：100-continue //等待状态100响应的客户端发生请求时需指定
+```
 From:告知服务器使用用户代理的电子邮件地址
 
-1
+```
 From:vaniot@yeah.net
+```
 Host:告知服务器请求资源所处在的互联网的主机名和端口号(必须被包含在请求的首部字段)
 
-1
+```
 Host:www.vaniot.com
+```
 If-XXX:条件请求，服务器接收到附带条件的请求后，只有判断指定条件为真时才会执行请求
 
 If-Modified-Since:告知服务器若If-Modified-Since字段值(缓存页面的修改时间)，若早于服务器上的修改时间更新，否者返回304
 If-None-Match:当字段值的实体标记(ETag)值与请求资源的ETag不同时,服务器处理该环境
 IF-Match:告知服务器匹配资源所用的实体标记(ETag)值,服务器会匹配资源的ETag值，当两者一致时会执行请求。
 
-1
-2
+```
 GET /index.html
 If-Match:"123456"
+```
 If-Range：告知服务器若指定的If-Range字段值(ETag值或时间)与请求的值一致则返回范围内的值否则返回全体资源。
 
 If-Unmodified-Since:在指定的日期内为发生改变就进行处理。
@@ -383,18 +361,15 @@ Accept-Ranges:告知客户端服务器可以处理的范围请求，指定服务
 Age:告知客户端源务器在多久前创建了响应,字段值的单位为秒。若创建该响应的服务器的是缓存服务器，age值是指缓存后响应再次发起认证到认证完成的时间值，代理创建响应时必须加上首部字段Age。
 ETag:告知客户端实体标识，将资源以字符串形式做唯一性标识的方式。服务器会为每一份资源分配对应的ETag值。资源更新时会将ETag更新，下载等情况都会根据ETag指定资源。
 
-1
-2
-3
-4
 强ETag(不论实体发生多么细微的变化都会改变其值)
 ETag:"usagi-1234"
 弱ETag(用于提示资源是否相同，只有资源发生根本改变产生差异时才会改变ETag值)
 ETag:W/"usagi-1234"
 Location：将响应接收方引导至某个与请求URI位置不同的资源，重定向操作
 
-1
+```
 Location:http://www.vaniot.cn
+```
 Proxy-Authenticate:把由代理服务器所要求的认证信息发送给客户端
 
 1
@@ -746,31 +721,7 @@ WebSocket属性
 Socket.readyState	表示连接状态
 Socket.bufferedAmount	只读属性，表明已经被send()放入发送等待列表但是还没有发出的UTF-8文本字节数
 客户端使用示例：
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
+```
 function WebSocketExample(data){
     if("WebSocket" in window){            //检验浏览器是否支持WebSocket()接口
         var ws = new WebSocket(ws://localhost:7070/echo)     //创建一个WebSocket对象
@@ -795,7 +746,9 @@ function WebSocketExample(data){
         alert("该浏览器不支持WebSocket连接!");
     }
 }
-#####HTTP/2.0
+```
+```
+##### HTTP/2.0
 
 回顾一下HTTP的发展历史：
 
