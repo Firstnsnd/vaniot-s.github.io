@@ -24,3 +24,6 @@ layout: "material"
 # 其他
 ## markdown 
 1.[katex](https://katex.org/docs/supported.html)
+# 算法刷题
+1.[leetcode](https://leetcode.com)
+2.[51nod](http://www.51nod.com)
