@@ -15,5 +15,5 @@ GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' IDENTIFIED BY '123456';
 SHOW GRANTS;
 //撤销上一次的授权
 REVOKE ALL PRIVILEGES ON *.* FROM 'test'@'localhost'
-
+ /
 ```

@@ -1,5 +1,5 @@
 ---
-title: linux常用命令
+title: linux入门使用
 date: 2018-01-12 14:18:19
 tags: linux
 categories: basic

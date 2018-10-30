@@ -4,7 +4,7 @@ date: 2018-01-21 20:34:07
 tags: [http,计算机网络]
 categories: basic
 ---
-## 1. 网络基础
+## 网络基础
 TCP/IP协议族:
 - 1.IEEE 802.3
 - 2.FDDI
@@ -21,24 +21,23 @@ TCP/IP协议族:
 ### TCP/IP分层管理
 OSI4层:应用层、传输层、网络层、数据链路层
 <!--more-->
-    应用层：决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
-
-    传输层：为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
-
-    网络层:处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
-
-    链路层:链接网络的硬件部分(NIC:网卡)
+|层次|说明
+--|--
+应用层|决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
+传输层|为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
+网络层|处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
+链路层|链接网络的硬件部分(NIC:网卡)
 
 TCP/IP通信传输流
-
-完整的http请求：
-    发送端(封装：把数据信息包装起来)：传输层(TCP协议)从把应用层(http协议)收到的数据(HTTP请求报文)分割,在各个报文上打上标记序号及端口号后发给网络层.在网络层(IP协议),增加通信目的地的MAC地址后转发给链路层。
-
-    接收端：
+![通信传输流](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-1.png)
+>完整的http请求：
+  - 发送端(封装：把数据信息包装起来)：
+    传输层(TCP协议)从把应用层(http协议)收到的数据(HTTP请求报文)分割,在各个报文上打上标记序号及端口号后发给网络层.在网络层(IP协议),增加通信目的地的MAC地址后转发给链路层。
+  - 接收端：
     将发送端每一层加上的头部信息去掉
-    image
+    ![http请求](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-2.png)
 
-IP(网络层）
+### IP(网络层）
 IP协议:把各种数据包传送给对方(由IP地址、MAC地址确定),
 
 IP地址:节点被分配的地址(可变换)。
@@ -54,38 +53,40 @@ IP间的通信。
 
 TCP三次握手：
 
-    1、发送端先发送一个带有SYN(synchorize)标志的数据包给接收端,
+   1、发送端先发送一个带有SYN(synchorize)标志的数据包给接收端,
 
-    2、接收端接收回传带有SYN/ACK标志的数据包以示传达确认信息
+   2、接收端接收回传带有SYN/ACK标志的数据包以示传达确认信息
 
-    3、发送端回传ACK标志数据包
-    image
+   3、发送端回传ACK标志数据包
 
-域名解析DNS
-    DNS:应用层的协议，域名到IP地址间的解析服务。
-    image
-    HTTP协议、TCP协议、IP协议、DNS服务的关系：
-    image
+   ![TCP三次握手](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-3.png)
 
-URI和URL
-    URI(Uniform Resource Identifier)：统一资源标识符,由某个协议方案表示的资源的定位标识符。
-    Uniform:规定的统一格式,协议方案
-    Resource:资源,可标识的
-    Identifier:可标识的对象
-    URI的格式：
-    image
-    登录信息：指定用户和密码作为从服务器端获取资源时必要的登录信息(可选)
-    服务器地址：使用绝对URI必须指定待访问的服务器地址(DNS可解析的名称、IPV4地址、IPV6地址)
-    服务端端口号:指定服务器连接的网络端口号(可选,省略使用默认的端口号)
-    带层次的文件路径:指定服务器上的文件路径来指定特定的资源
-    查询字符串:针对已指定的文件路径内的资源,可使用查询字符串闯入任意的参数(可选)
-    片段标识符：使用片段标识符(可选)可表记出已经获取资源中的子资源(如网页中的某个位置)，
-    URL(Uniform Resource Locator):统一资源定位符,
-    image
-2.简单的HTTP协议
-1.客户端和服务端的通信
+### 域名解析DNS
+   DNS:应用层的协议，域名到IP地址间的解析服务。
+   ![域名解析的过程](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-4.gif)
+   HTTP协议、TCP协议、IP协议、DNS服务的关系：
+   ![HTTP协议与各协议间的关系](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-4.png)
+
+### URI和URL
+URI(Uniform Resource Identifier)：统一资源标识符,由某个协议方案表示的资源的定位标识符。
+Uniform:规定的统一格式,协议方案
+Resource:资源,可标识的
+Identifier:可标识的对象
+URI的格式：
+![URL](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-5.png)
+登录信息：指定用户和密码作为从服务器端获取资源时必要的登录信息(可选)
+服务器地址：使用绝对URI必须指定待访问的服务器地址(DNS可解析的名称、IPV4地址、IPV6地址)
+服务端端口号:指定服务器连接的网络端口号(可选,省略使用默认的端口号)
+带层次的文件路径:指定服务器上的文件路径来指定特定的资源
+查询字符串:针对已指定的文件路径内的资源,可使用查询字符串闯入任意的参数(可选)
+片段标识符：使用片段标识符(可选)可表记出已经获取资源中的子资源(如网页中的某个位置)，
+URL(Uniform Resource Locator):统一资源定位符,
+![URI](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-6.png)
+## 简单的HTTP协议
+### 客户端和服务端的通信
+
 客户端：请求访问文本或图像资源的一端，通信由客户端建立，发出请求(请求报文)
-请求报文：image
+请求报文：
 http/1.1 特点：
 
     不保存状态的协议，为了验证身份引入了cookie
@@ -104,12 +105,12 @@ http方法：
 持久连接：keep-alive 多个请求在一次连接中处理，在任意一端未提出断开连接，保持tcp连接状态
 管线化：在持久连接后，可多次发出请求而不需要响应后再发出请求。
 服务端：提供资源响应的一端，服务端接受到请求返回消息(响应报文)
-响应报文：image
+响应报文：
 
-3.http报文
+## http报文
 http报文：http协议交互的信息,(种类：请求报文、响应报文)报文内容分为：
 报文首部(服务端或客户端处理的请求或响应的内容及信息)报文主体(数据，非必需的)
-image
+
 
 报文主体：HTTP通信的基本单位，由8位组字节流组成，通过过HTTP通信传输
 
@@ -118,11 +119,11 @@ image
 http报文的主体用于传输请求或响应实体主体，通常报文主体与实体主体相同,只有当传输中进行编码操作时，实体的主体内容发生变化。
 
 请求报文：
-image
+
 请求行：请求的方法，请求的URI和HTTP版本
 
 响应报文：
-image
+
 
 响应行：响应结果的状态码,原因短语和http版本
 
@@ -140,57 +141,57 @@ identity(不进行编码)
 分割发送的分块传输编码
 将实体分成多块每一块都会用十六进制来标记块的大小，最后一块会使用”0(CR+LF)”
 发送多种数据的(MIME拓展 Multipart)多部分对象集合 RFC2046
- ```
-    multipart/form-data web表单文件上传时使用
-    Content-Type:multipart/form-data;boundary=AaB03x//boundary 标识符
-    --AaB03x//部分开始
-    Content-Disposition:form-data;name="field1"
-    Joe Blow
-    --AaB03x
-    Content-Disposition:form-data;name="pics";filename="file1.txt"
-    Content-type:text/plain
-    ...(file.txt的数据)...
-    --AaB03x--//对象结束标识符
- ```
- ```
-    multipart/byteranges 状态码206(partial Content,部分内容)响应报文包含了多个范围内容时使用
+```
+multipart/form-data web表单文件上传时使用
+Content-Type:multipart/form-data;boundary=AaB03x//boundary 标识符
+--AaB03x//部分开始
+Content-Disposition:form-data;name="field1"
+Joe Blow
+--AaB03x
+Content-Disposition:form-data;name="pics";filename="file1.txt"
+Content-type:text/plain
+...(file.txt的数据)...
+--AaB03x--//对象结束标识符
+```
+```
+multipart/byteranges 状态码206(partial Content,部分内容)响应报文包含了多个范围内容时使用
 
-    Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
-    --THIS_STRING_SEPARATES//部分开始
-    Content-Type:application/pdf
-    Content-Range:bytes 500-999/8000
-    ...(范围指定的数据)...
-    --THIS_STRING_SEPARATES
-    Content-type:text/pdf
-    Content-Range:bytes 7000-7999/8000
-    ...(范围指定的数据)...
-    --THIS_STRING_SEPARATES--//对象结束标识符
- ```
+Content-Type:multipart/form-data;boundary=THIS_STRING_SEPARATES//boundary 标识符
+--THIS_STRING_SEPARATES//部分开始
+Content-Type:application/pdf
+Content-Range:bytes 500-999/8000
+...(范围指定的数据)...
+--THIS_STRING_SEPARATES
+Content-type:text/pdf
+Content-Range:bytes 7000-7999/8000
+...(范围指定的数据)...
+--THIS_STRING_SEPARATES--//对象结束标识符
+```
 获取部分内容的范围
- ```
-    5001-10000字节
-    Range:byte=5001-10000
-    5001后的全部字节
-    Range:byte=5001-
- ```
+```
+5001-10000字节
+Range:byte=5001-10000
+5001后的全部字节
+Range:byte=5001-
+```
 多重范围
 Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 内容协商：客户端与服务端就响应的资源内容进行交涉，然后客户端提供给客户端最为合适的资源。
 
 请求报文的首部进行
 ```
-    Accept
-    Accept-Charset
-    Accept-Encoding
-    Accept-Language
-    Content-Language
+Accept
+Accept-Charset
+Accept-Encoding
+Accept-Language
+Content-Language
 ```
 内容协商技术的分类：
 
 服务端驱动协商：服务器以请求的首部字段为参考，在服务端进行处理
 客户端驱动协商：用户从浏览器显示的可选项列表中手动选择
 透明协商：服务器和客户端各自进行内容协商的一种方法
-4.HTTP状态码
+## HTTP状态码
     状态码	|类别	|原因短语
     --|--|--
     1XX	|information(信息状态码)	|接受请求正在处理
@@ -216,12 +217,12 @@ Range:byte=-3000,5001-7000 //开始到3000，5001到7000
     5XX服务器错误
     1.  500(Internet Server Error)服务器端在执行请求时发生错误
     2.  503(Service Unavailable)服务器暂时处于超载或正在进行维护。
-5.http协作与web服务器
+## http协作与web服务器
     数据转发程序(程序和服务器将请求转发给通信线路上的下一站服务器，并将其返回的响应转发给客户端)
     代理：有转发功能的应用程序,扮演服务端与客户端的”中间”,转发两者的请求。
-    image
+    
     代理服务器：接受客户端发送的请求后转发给其他代理服务器，代理不会改变请求的URI，直接转发给持有资源的服务器。资源服务器将会把响应返回给代理服务器在返回给客户端
-    image
+    
     多级联台代理在转发时需要添加Via首部字段标记经过的主机信息
 代理服务器的优势：
 
@@ -235,12 +236,11 @@ Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 
 网关：网关转发其他服务器通信数据的服务器，网关可以使通信线路上的服务器提供非http协议服务。
 
-    image
 
     网关的优势：
 
     提高通信的安全性，可在客户端与网关的通信线路上加密
-2.连接非http非http服务器
+### 连接非http非http服务器
 隧道：在相隔甚远的客户端和服务器端两者间进行中转，使用SSL等手段进行加密，并保持双方通信连接的应用程序。
 
 [!image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCYhgpzMfEypGQJ_H_NnqHgk2y2ETuMk0IzPhDuKmqx1iDRWAwA
@@ -252,59 +252,60 @@ Range:byte=-3000,5001-7000 //开始到3000，5001到7000
 
     客户端缓存：将缓存存在客户端浏览器，在有效期内直接访问本地的缓存文件。
 
-6.http首部
+## http首部
 http协议的请求报文和响应报文中必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供了所需的信息。
 
 1. 4种HTTP首部字段类型
 通用首部字段：请求和响应均会使用的首部
-image
+
 Via:可用于追踪报文的转发，可避免请求回环的发生，在经过代理时附加该首部字段的内容。
 
-1
+```
 Via:1.0 gw.hacker.jp(squid/3.1),1.1 a1.wxample.com(squid/2.7)
 Warning:告知用户与缓存相关的问题的警告
+```
 
-1
+```
 Warning:[警告码][警告的主机:端口号] "[警告的内容]" ([日期时间])
-image
+```
 
 Cache-Control:操作缓存工作机制
-image
-image
+
+
 
 请求首部字段：从客户端发送请求报文时使用的首部，补充了请求的附加内容、客户端信息、响应内容相关优先等级等信息
-image
+
 
 Accept:通知服务器用户代理可以处理的媒体类型及媒体类型的相对优先级，
 ```
 Accept:text/html.application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 //q优先等级
 ```
 文本文件
-   ```
-    text/html,text/plain,text/css...
-    application/xhtml+xml,application/xml...
-    ```
+```
+text/html,text/plain,text/css...
+application/xhtml+xml,application/xml...
+```
 图片文件
-    ```
-    image/jpeg,imge/gif,image/png...
-    ```
+```
+image/jpeg,imge/gif,image/png...
+```
 视频文件
-  ```
-  video/mpeg,video/quicktime...
-  ```
+```
+video/mpeg,video/quicktime...
+```
 应用程序使用的二进制文件
-   ```
-   application/octet-stream,application/zip...
-   ```
+```
+application/octet-stream,application/zip...
+```
 Accept-Charset:通知服务器用户代理支持的字符集及字符集的相对优先顺序
-    ```
-    Accept-Charset:iso-8859-5,unicode-1-1;q=0.8
-    ```
+```
+Accept-Charset:iso-8859-5,unicode-1-1;q=0.8
+```
 Accept-Encoding:告知服务器用户代理支持的内容编码及内容编码的优先级顺序，可一次指定多种内容编码
 
-    ```
-    Accept-Encoding:gzip,deflate
-    ```
+```
+Accept-Encoding:gzip,deflate
+```
 gzip:gzip程序生成的编码格式
 
 compress:unix中文件压缩程序compress生成的编码格式
@@ -315,11 +316,11 @@ identity:不压缩或不会变化的默认编码格式
 
 Accept-Language:告知服务器用户代理能够处理的自然语言及自然语言集的相对优先级
 
-    ```
-    Accept-Language:zh-cn,zh;q=0.7,en-us,en;q=0.3
-    ```
+```
+Accept-Language:zh-cn,zh;q=0.7,en-us,en;q=0.3
+```
 Authorization:告知服务器，用户代理认证信息
-image
+
 
 Expect:客户端告知服务器期望出现的某种行为
 ```
@@ -355,7 +356,7 @@ Referer:请求资源的原始URI
 TE:客户端能够处理响应的传输编码方式(还可指定伴随trailer字段的分块传输的方式，应用时把trilers赋值给该字段)
 User-Agent:将创建请求的浏览器和用户代理名称等信息传达给服务器
 响应首部字段：从服务器端返回响应报文时使用的首部，补充响应的附加内容，也会要求客户端附加额外的内容信息
-image
+
 
 Accept-Ranges:告知客户端服务器可以处理的范围请求，指定服务器端某个部分的资源，其值有两种：1.在可处理范围内请求时指定为bytes，2.不在范围内指定为none
 Age:告知客户端源务器在多久前创建了响应,字段值的单位为秒。若创建该响应的服务器的是缓存服务器，age值是指缓存后响应再次发起认证到认证完成的时间值，代理创建响应时必须加上首部字段Age。
@@ -368,7 +369,7 @@ ETag:W/"usagi-1234"
 Location：将响应接收方引导至某个与请求URI位置不同的资源，重定向操作
 
 ```
-Location:http://www.vaniot.cn
+Location:http://www.vaniot.net
 ```
 Proxy-Authenticate:把由代理服务器所要求的认证信息发送给客户端
 
@@ -391,7 +392,7 @@ WWW-Authenticate：告知客户端使用于访问请求URI所指定资源的认�
 1
 WWW-Authenticate:Basic realm="Usagidesign Auth"//realm字段辨别请求URI指定资源所受到的保护策略
 实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源内容更新时间等于实体相关的信息。
-image
+
 Allow:通知客户端能够支持Request-URI指定资源的所有http方法，当服务器接收到不支持的HTTP方法时，会以405 Method Not Allowed 作为响应返回，并将所支持的HTTP方法写入首部字段Allow后返回。
 Content-Encoding:告知客户端服务器对实体的主体部分选用的内容编码方式，内容编码指在不丢失实体信息的前提下进行的压缩,编码方式：1.gzip 2.compress 3.deflate 3.identity
 
@@ -406,7 +407,7 @@ Content-Length:表明实体主体部分的大小(单位是字节),对实体主�
 Content-Location:给出与报文主体相对应的URI(报文主体返回资源对应的URI)
 
 1
-Content-Location:http://www.vaniot.cn/index.html
+Content-Location:http://www.vaniot.net/index.html
 Content-MD5:检测报文主体传输过程中是否保持完整
 
 Content-Range:告知客户端作为响应返回实体的那个部分符合范围请求，字段以字节为单位，表示当前发送部分及整个实体大小。
@@ -483,12 +484,11 @@ P3P：CP=“CAO DSP LAW CURa ADMa  DEVa TALa PsAa PSDa => IVAa IVDa OUR BUS IND 
 Connection
 控制不再转发给代理的首部字段
 
-1
+
 Connection:Upgrade//首部字段Upgrade被删除后再转发
 管理持久连接(HTTP/1.1的连接默认都是持久的，之前均是非持久的)
 
-1
-2
+
 Connection:Keep-Alive//打开持久连接
 Connection:close//关闭连接
 Keep-Alive
@@ -496,32 +496,25 @@ Proxy-Authenticate
 Proxy-Authorization
 Trailer(指定的首部字段会在报文主体后出现)
 
-1
-2
-3
-4
 Trailer:Expries
 ...(报文主体)...
-0
 Expries:Tue ,28,Sep 2004 23:59:59  GMT
 TE
 
 Transfer-Encoding(传输报文的主体时采用的编码方式)
 
-1
+
 Transfer-Encoding:chunked
 Upgrade(检测HTTP协议及其他协议是否可以使用更高的版本进行通信,参数值可以指定一个完全不同的通信协议，使用Upgrade时必须需使用Connection:UPgrade)
 
-1
-2
 Upgrade:TLS/1.0
 Connection:Upgrade
-7.HTTPS
+## HTTPS
 HTTP缺点
 通信使用明文，内容可能会被窃听
 HTTP本身不具备加密的功能，无法做到对通信整体进行加密，即HTTP报文使用明文方式发送
 TCP/IP是可能被窃听的网络
-image
+
 不验证通信方的身份，可能会遭遇伪装
 无法确定发送目标的web服务器是否按真实意图返回响应的服务器
 无法确定接受响应的客户端是否是真实的客户端
@@ -536,14 +529,14 @@ HTTPS是HTTP通信接口部分用SSL和TLS协议代替，HTTP不会先和TCP通�
 
 加密
 1.通信加密：通过SSL(Secure Socket Layer,安全套接层)或TLS(Transport Layer Security,安全传输层协议)的组合使用，加密HTTP的通信内容
-image
+
 
 共享密钥加密：加密时需将密钥发送
 公开密钥加密(SSL采用)：公开密钥加密使用一对非对称的密钥，
 私有密钥:接收方使用私有密钥解密
 公开密钥:发送方使用共有密钥加密
 2.内容加密：将参与通信的内容本身加密，把HTTP报文里所含的内容进行加密处理,客户端会对HTTP报文进行加密处理后再发送请求(客户端和服务器同时具有加密和解密的机制，内容仍有被篡改的风险)
-image
+
 
 认证
 使用HTTP协议无法确定通行的双方，SSL提供加密处理，使用证书的手段，用于确定通信的双方,
@@ -553,10 +546,10 @@ SSL提供认证和加密处理及摘要功能
 
 HTTPS采用混合加密的方式加密：在交换密钥时使用公开密钥，通信阶段使用共享密钥(共享密钥速度高于公开密钥)
 交换密钥时为了验证公开密钥的正确性，使用第三方数字认证书认证机构的公开密钥证书
-image
+
 
 HTTP安全通信机制
-image
+
 1.客户端通过发送client hello报文开始SSL通信.报文中包含客户端支持的SSL指定版本,加密组件列表(所使用的加密算法 密钥长度等)
 
 2.服务器可进行SSL通信时,会议Server Hello报文作文回应.报文中含SSL版本 加密组件.服务器的加密组件内容是从接受客户端加密组件内筛选出来的.
@@ -582,13 +575,13 @@ image
 12.最后客户端断开连接.断开连接时,发送close_notity报文.上图做了一些省略
 
 在以上流程中,应用层发送数据时会附加一种叫做MAC(message authentication code)的报文摘要.MAC能够查知报文是佛遭到篡改.从而保护报文的完整性.
-image
 
-8.用户身份认证
+
+## 用户身份认证
 HTTP认证的方式
 BASIC(基本认证)
 是从 HTTP/1.0 就定义的认证方式。即便是现在仍有一部分的网站会使用这种认证方式。是 Web 服务器与通信客户端之间进行的认证方式。
-image
+
 步骤 1： 当请求的资源需要 BASIC 认证时，服务器会随状态码 401 Authorization Required，返回带 WWW-Authenticate 首部字段的响应。该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm）。
 步骤 2： 接收到状态码 401 的客户端为了通过 BASIC 认证，需要将用户 ID 及密码发送给服务器。发送的字符串内容是由用户 ID 和密码构成，两者中间以冒号（:）连接后，再经过 Base64 编码处理。
 
@@ -598,7 +591,7 @@ BASIC 认证使用上不够便捷灵活，且达不到多数 Web 网站期望的
 
 DIGEST(摘要认证)
 同样使用质询 / 响应的方式（challenge/response），但不会像 BASIC 认证那样直接发送明文密码；所谓质询响应方式是指，一开始一方会先发送认证要求给另一方，接着使用从另一方那接收到的质询码计算生成响应码。最后将响应码返回给对方进行认证的方式。
-image
+
 步骤 1： 请求需认证的资源时，服务器会随着状态码 401 Authorization Required，返 回带 WWW-Authenticate 首部字段的响应。该字段内包含质问响应方式认证所需的临时质询码（随机数，nonce）。
 步骤 2： 接收到 401 状态码的客户端，返回的响应中包含 DIGEST 认证必须的首部字段 Authorization 信息。
 
@@ -623,7 +616,7 @@ FormBase(基于表单认证)
 由于使用上的便利性及安全性问题，HTTP 协议标准提供的 BASIC 认证和 DIGEST 认证几乎不怎么使用。另外，SSL 客户端认证虽然具有高度的安全等级，但因为导入及维持费用等问题，还尚未普及。
 Session 管理及 Cookie 应用
 基于表单认证的标准规范尚未有定论，一般会使用 Cookie 来管理 Session（会话）。
-image
+
 
 步骤 1： 客户端把用户 ID 和密码等登录信息放入报文的实体部分，通常是以 POST 方法把请求发送给服务器。而这时，会使用 HTTPS 通信来进行 HTML 表单画面的显示和用户输入数据的发送。
 
@@ -634,18 +627,18 @@ image
 步骤 3： 客户端接收到从服务器端发来的 Session ID 后，会将其作为 Cookie 保存在本地。下次向服务器发送请求时，浏览器会自动发送 Cookie，所以 Session ID 也随之发送到服务器。服务器端可通过验证接收到的 Session ID 识别用户和其认证状态。
 另外，不仅基于表单认证的登录信息及认证过程都无标准化的方法，服务器端应如何保存用户提交的密码等登录信息等也没有标准化。通常，一种安全的保存方法是，先利用给密码加盐（salt）1 的方式增加额外信息，再使用散列（hash）函数计算出散列值后保存。但是我们也经常看到直接保存明文密码的做法，而这样的做法具有导致密码泄露的风险；salt 其实就是由服务器随机生成的一个字符串，但是要保证长度足够长，并且是真正随机生成的。然后把它和密码字符串相连接（前后都可以）生成散列值。当两个用户使用了同一个密码时，由于随机生成的 salt 值不同，对应的散列值也将是不同的。这样一来，很大程度上减少了密码特征，攻击者也就很难利用自己手中的密码特征库进行破解。
 
-9.HTTP协议的拓展
+## HTTP协议的拓展s
 HTTP的瓶颈
 一条连接上只可以发送一个请求
 请求只可以从客户端发起，客户端不能接受除了响应以外的指令
 请求/响应首部未经压缩就发送,首部信息越多延迟越大
 发送冗长的首部，每次互相发送相同的首部造成的浪费较多
 可任意选择数据压缩格式，非强制压缩发送
-image
+
 http的优化手段：
 1.Ajax:通过脚本语言Javascript调用XMLHttpRequest和HTTP通信，从已经加载完毕的web页面上发起请求,只更新局部页面，
 2.Comet(反向AJAX):实现服务端向客户端推送,服务端接收到请求后，Comet会将响应挂起(服务器和客户端建立了一个永久的连接),当服务器内有内容更新时，再返回该更新。实现由两种方式：1.AJAX长轮询 2.Iframe流
-image
+
 SPDY
 SPDY在TCP/IP应用层与运输层之间通过新加会话层的形式控制数据的流动，且规定使用SSL通信，采用HTTP建立通信连接，http中的方法Cookie、HTTP报文仍然适用
 HTTP 应用层
@@ -667,14 +660,7 @@ websocket主要特点：
 握手：websocket通信须在HTTP建立连接后完成一次握手
 
 请求：
-
-1
-2
-3
-4
-5
-6
-7
+```
 Request Method:GET
 Host:server.example.com
 Upgrade:websocket
@@ -683,26 +669,21 @@ Sec-WebSocket-Key:fajdsfjewruewuiorueqworreioq==
 Sec-WebSocket-Protocol:chat,superchat
 Sec-WebSocket-Version:13
 Sec-Websocket-Key字段记录握手过程不可少的键值，Sec-Websocket-Protocol记录使用的子协议。
-
+```
 响应：
-1
-2
-3
-4
-5
+```
 Status Code:101 Switching Protocols
 Upgrade:websocket
 Connection:Upgrade
 Sec-WebSocket-Accept:fsfjlsdjfjds42fasfs3fsdfj==
 Sec-WebSocket-Protocol:chat
 对于之前的请求，返回状态码101 Switching Protocols的响应,Sec-WebSocket-Accept字段值是由握手请求中的Sec-WebSocket-Key字段值生成的。如果成功握手确立WebSocket连接之后，通信时不再使用HTTP的数据帧，而采用WebSocket独立的数据帧。
-image
+```
 WebSocket是全双工通信，因此服务器端不必等待请求，可直接发送数据，从而实现服务器端推送功能。(当HTTP握手动作结束时，浏览器和服务器之间就形成了一个快速通道，当然从WebSocket名字也可以理解这个快速通道类似于Socket连接，客户端和服务器端就可以通过TCP连接直接交换数据了，快速通道连接一直持续到客户端或服务器端的某一方主动的关闭连接。所以WebSocket本质上是一个基于TCP的协议。)
 
 WebSocket API
 JavaScript可调用WebSocket API内提供的WebSocket程序接口，以实现WebSocket协议下的全双工通信。
 
-1
 var webSocket = new WebSocket(url,[subProtocol]); //创建一个WebSocket对象
 提示：url是指定连接的URL，subProtocol是可选的子协议。
 
@@ -747,8 +728,8 @@ function WebSocketExample(data){
     }
 }
 ```
-```
-##### HTTP/2.0
+
+###HTTP/2.0
 
 回顾一下HTTP的发展历史：
 
@@ -800,10 +781,9 @@ MKCOL：创建集合
 102 Processing：可正常处理请求，但目前是处理中状态
 207 Multi-Status：存在多种状态
 423 Locked：资源已被加锁
-
-10.构建 web内容的技术
+## 构建 web内容的技术
 html、css、js、xml、RSS、CGI
-11.Web攻击技术
+## Web攻击技术
 攻击模式
 主动攻击
 攻击者通过直接访问的模式(针对服务器上的资源进行攻击)，把攻击代码传入的攻击模式，典型：sql注入、OS命令注入
@@ -817,7 +797,7 @@ html、css、js、xml、RSS、CGI
 　　步骤3：中招后的用户浏览器会把含有攻击代码的HTTP请求发送给作为攻击目标的Web应用，运行攻击代码
 
 　　步骤4：执行完攻击代码，存在安全漏洞的Web应用会成为攻击者的跳板，可能导致用户所持的Cookie等个人信息被窃取，登录状态中的用户权限遭恶意滥用等后果
-image
+
 
 输出值转义不完全
 　　实施Web应用的安全对策可大致分为以下两部分：客户端的验证和Web应用端(服务器端)的验证
@@ -843,8 +823,7 @@ HTTP首部注入攻击
 　HTTP首部注入攻击(HTTPHeader Injection)是指攻击者通过在响应首部字段内插入换行，添加任意响应首部或主体的一种攻击。属于被动攻击模式。
 　　向首部主体内添加内容的攻击称为HTTP响应截断攻击(HTTPResponse Splitting Attack)。如下所示，Web应用有时会把从外部接收到的数值，赋给响应首部字段Location和Set-Cookie
 
-1
-2
+
 Location: http://www.example.com/a.cgi?q=12345
 Set-Cookie: UID=12345
 　　HTTP首部注入可能像这样，通过在某些响应首部字段需要处理输出值的地方，插入换行发动攻击。
@@ -853,13 +832,10 @@ Set-Cookie: UID=12345
 HTTP响应截断攻击
 　　HTTP响应截断攻击是用在HTTP首部注入的一种攻击。攻击顺序相同，但是要将两个并排插入字符串后发送。利用这两个连续的换行就可作出HTTP首部与主体分隔所需的空行了，这样就能显示伪造的主体，达到攻击目的。这样的攻击叫做HTTP响应截断攻击
 
-1
 <HTML><HEAD><TITLE>之后，想要显示的网页内容<!--
 　　在可能进行HTTP首部注入的环节，通过发送上面的字符串，返回结果得到以下这种响应
 
-1
-2
-3
+
 Set-Cookie: UID=(：换行符)
 (：换行符)
 <HTML><HEAD><TITLE>之后，想要显示的网页内容<!--(原来页面对应的首部字段和主体部分全视为注释)
@@ -875,13 +851,13 @@ Set-Cookie: UID=(：换行符)
 
 　　攻击者将以下数据作为邮件地址发起请求
 
-1
+
 bob@hackr.jp%0D%0ABcc:user@example.com
 　　%0D%0A在邮件报文中代表换行符。一旦咨询表单所在的Web应用接收了这个换行符，就可能实现对Bcc邮件地址的追加发送，而这原本是无法指定的
 
 　　另外像下面一样，使用两个连续的换行符就有可能篡改邮件文本内容并发送
 
-1
+
 bob@hackr.jp%0D%0A%0D%0ATest Message
 　　再以相同的方法，就有可能改写To和Subject等任意邮件首部，或向文本添加附件等动作
 
