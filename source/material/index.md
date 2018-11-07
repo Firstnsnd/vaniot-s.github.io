@@ -6,18 +6,33 @@ layout: "material"
 资料收集列表
 # 操作系统
 
+# 开发相关
+## 网络相关
+1.[理解 TCP 和 UDP](https://jerryc8080.gitbooks.io/understand-tcp-and-udp/)
 
-# web开发
+2.[TCP/IP详解](http://www.52im.net/topic-tcpipvol1.html)
 ##  nginx
 [Nginx开发从入门到精通](http://tengine.taobao.org/book/index.html)
-## web安全系列
-1.[owasp](https://www.owasp.org/index.php/Main_Page)
+## golang
+1.[go文档](https://go-zh.org/doc/)
 
-2.[PHP Security](https://phpsecurity.readthedocs.io/en/latest/index.html)
+2.[gotour](https://tour.go-zh.org/welcome/1)
+
+3.[godoc](https://godoc.org/)
+
+4.[gotool](https://gotools.org/)
+## oauth
+1.[oauth](https://oauth.net/2/)
+## Http
+1.[HTTP API Design Guide](https://geemus.gitbooks.io/http-api-design/content/en/)
 ## php
 [php-the-right-way](https://laravel-china.github.io/php-the-right-way/)
 ### php源码
 [php-internals](http://www.php-internals.com/)
+### web安全系列
+1.[owasp](https://www.owasp.org/index.php/Main_Page)
+
+2.[PHP Security](https://phpsecurity.readthedocs.io/en/latest/index.html)
 ### 框架
 #### yii
 1.[深入理解Yii2.0](http://www.digpage.com/index.html#)
@@ -25,13 +40,24 @@ layout: "material"
 1.[laravel API](https://laravel.com/api/5.7/index.html)
 
 2.[laravel 源码解析](https://leoyang90.gitbooks.io/laravel-source-analysis/content/)
-# 其他
-## markdown 
-1.[katex](https://katex.org/docs/supported.html)
 # 算法刷题
 1.[leetcode](https://leetcode.com)
 
 2.[51nod](http://www.51nod.com)
 
 3.[hackerrank](https://www.hackerrank.com/)
+# 其他
+## markdown 
+1.[katex](https://katex.org/docs/supported.html)
 
+## kindle书籍下载
+
+1.[雅书](https://www.yabook.org/)
+
+2.[bookset](https://bookset.me/)
+
+3.[packtpub](https://www.packtpub.com/)
+
+## 生活相关
+### 租房
+[地图搜租房](https://woyaozufang.live)

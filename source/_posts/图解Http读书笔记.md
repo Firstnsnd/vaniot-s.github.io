@@ -1,5 +1,5 @@
 ---
-title: 图解Http读书笔记
+title: HTTP协议梳理
 date: 2018-01-21 20:34:07
 tags: [http,计算机网络]
 categories: basic
@@ -16,25 +16,26 @@ TCP/IP协议族:
 - 8.DNS
 - 9.FTP
 - 10.UDP
--  11.SNMP
-
+- 11.SNMP
 ### TCP/IP分层管理
 OSI4层:应用层、传输层、网络层、数据链路层
-<!--more-->
-|层次|说明
---|--
-应用层|决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
-传输层|为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
-网络层|处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
-链路层|链接网络的硬件部分(NIC:网卡)
 
+|层次|说明|
+--|--
+应用层   | 决定向用户提供应用服务时通信的活动。(FTP:文件传输协议,DNS:域名系统,HTTP)
+传输层   | 为应用层提供网络连接中的两台计算机之间的数据传输,(TCP:传输控制协议,UDP:用户数据报协议)
+网络层   | 处理网络上流动的数据包(数据包是网络传输的最小的数据单位),规定传输路线。
+链路层   | 链接网络的硬件部分(NIC:网卡)
+<!--more-->
 TCP/IP通信传输流
 ![通信传输流](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-1.png)
 >完整的http请求：
+
   - 发送端(封装：把数据信息包装起来)：
     传输层(TCP协议)从把应用层(http协议)收到的数据(HTTP请求报文)分割,在各个报文上打上标记序号及端口号后发给网络层.在网络层(IP协议),增加通信目的地的MAC地址后转发给链路层。
   - 接收端：
     将发送端每一层加上的头部信息去掉
+
     ![http请求](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-2.png)
 
 ### IP(网络层）
@@ -84,28 +85,37 @@ URL(Uniform Resource Locator):统一资源定位符,
 ![URI](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-6.png)
 ## 简单的HTTP协议
 ### 客户端和服务端的通信
-
 客户端：请求访问文本或图像资源的一端，通信由客户端建立，发出请求(请求报文)
-请求报文：
+请求报文格式如下：
+![请求报文](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-7.jpg)
 http/1.1 特点：
 
-    不保存状态的协议，为了验证身份引入了cookie
-    使用URI定位资源
+  不保存状态的协议，为了验证身份引入了cookie
+  使用URI定位资源
 http方法：
-    1.GET:获取资源，访问已被URI识别的资源，返回服务器解析后的结果(一般用于获取响应的主体)，未变化返回304 not modified。
-    2.POST：传输实体的主体,与GET类似,响应返回接受数据的处理结果。
-    3.PUT:传输文件，在请求报文的主体包含文件内容，不会对文件的内容做验证，若无其他的验证方式(web验证、rest架构)不采用，响应返回204 no content等。
-    4.HEAD：获取报文的首部
-    5.DELETE:删除文件，按请求的URI指定的资源，不会对内容作出验证
-    6.OPTIONS:查询针对URI指定的资源支持的方法
-    7.TRACE:追踪路径，让web服务器将之前的请求通信环回给客户端
-    8.CONNECT:用隧道协议链接代理，与代理服务器通信时建立隧道，实现用
+
+  1.GET:获取资源，访问已被URI识别的资源，返回服务器解析后的结果(一般用于获取响应的主体)，未变化返回304 not modified。
+
+  2.POST：传输实体的主体,与GET类似,响应返回接受数据的处理结果。
+
+  3.PUT:传输文件，在请求报文的主体包含文件内容，不会对文件的内容做验证，若无其他的验证方式(web验证、rest架构)不采用，响应返回204 no content等。
+
+  4.HEAD：获取报文的首部
+
+  5.DELETE:删除文件，按请求的URI指定的资源，不会对内容作出验证
+
+  6.OPTIONS:查询针对URI指定的资源支持的方法
+
+  7.TRACE:追踪路径，让web服务器将之前的请求通信环回给客户端
+
+  8.CONNECT:用隧道协议链接代理，与代理服务器通信时建立隧道，实现用
 
 方法命令： 在向URI指定的资源发送请求报文时，指定方法，资源按期望产生某种行为。
 持久连接：keep-alive 多个请求在一次连接中处理，在任意一端未提出断开连接，保持tcp连接状态
 管线化：在持久连接后，可多次发出请求而不需要响应后再发出请求。
 服务端：提供资源响应的一端，服务端接受到请求返回消息(响应报文)
 响应报文：
+![响应报文](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-7.jpg)
 
 ## http报文
 http报文：http协议交互的信息,(种类：请求报文、响应报文)报文内容分为：
@@ -119,11 +129,12 @@ http报文：http协议交互的信息,(种类：请求报文、响应报文)报
 http报文的主体用于传输请求或响应实体主体，通常报文主体与实体主体相同,只有当传输中进行编码操作时，实体的主体内容发生变化。
 
 请求报文：
+![请求报文](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-9.png)
 
 请求行：请求的方法，请求的URI和HTTP版本
 
 响应报文：
-
+![响应报文](https://raw.githubusercontent.com/vaniot-s/picture/master/http/http-10.png)
 
 响应行：响应结果的状态码,原因短语和http版本
 
@@ -192,31 +203,31 @@ Content-Language
 客户端驱动协商：用户从浏览器显示的可选项列表中手动选择
 透明协商：服务器和客户端各自进行内容协商的一种方法
 ## HTTP状态码
-    状态码	|类别	|原因短语
-    --|--|--
-    1XX	|information(信息状态码)	|接受请求正在处理
-    2XX	|success(成功状态码)	|请求处理完毕
-    3XX	|redirection(重定向状态码)	|需要附加操作以完成请求
-    4XX	|Client Error(客户端错误状态码)	|服务器无法处理的请求
-    5XX	|Server Error(服务端状态码)	|服务器处理请求出错
-常用的14种状态码
-    2XX：客户端发来的请求被正常的处理
-    1.   204(No Content):返回的响应报文中不含(不允许)主体部分，浏览器的页面不会发生任何变化。(一般用于浏览器往服务端发送数据,而不需要返回数据)
-    2.   206(Partial Content):客户端进行了范围请求，而服务端成功执行了这部分GET请求，响应报文中包含Content-Range指定范围的实体内容
-    3XX:重定向
-    1.   301(Moved Permanently)永久重定向，请求的资源已被分配了新的URI，以后都使用
-    2.   302(Found)临时性重定向,请求的资源已经被分配了新的URI，本次使用
-    3.   303(See Other)请求对应的资源存在另一个URI，应使用GET方法定向获取请求的资源。
-    4.   304(Not Modified)客户端发送请求附带条件的请求，服务器端允许请求访问资源，但因为发生请求未满足条件，返回304
-    5.   307(Temporay Redirect)临时重定向
-    4XX客户端错误
-    1.   400(Bad Request)客户端请求的报文中存在语法错误,
-    2.   401(Unauthorized)发送的请求需要通过HTTP认证(BASIC认证、DIGEST认证)的认证信息，若之前已经请求一次，则表示用户认证失败，第一次会弹出认证的对话框。
-    3.   403(Forbidden)请求的资源被服务器拒绝。
-    4.   404(Not Found)服务器上不能找到请求的资源
-    5XX服务器错误
-    1.  500(Internet Server Error)服务器端在执行请求时发生错误
-    2.  503(Service Unavailable)服务器暂时处于超载或正在进行维护。
+状态码	|类别	|原因短语
+--|--|--
+1XX	|information(信息状态码)	|接受请求正在处理
+2XX	|success(成功状态码)	|请求处理完毕
+3XX	|redirection(重定向状态码)	|需要附加操作以完成请求
+4XX	|Client Error(客户端错误状态码)	|服务器无法处理的请求
+5XX	|Server Error(服务端状态码)	|服务器处理请求出错
+### 常用的14种状态码
+2XX：客户端发来的请求被正常的处理
+- 204(No Content):返回的响应报文中不含(不允许)主体部分，浏览器的页面不会发生任何变化。(一般用于浏览器往服务端发送数据,而不需要返回数据)
+-  206(Partial Content):客户端进行了范围请求，而服务端成功执行了这部分GET请求，响应报文中包含Content-Range指定范围的实体内容
+3XX:重定向
+-   301(Moved Permanently)永久重定向，请求的资源已被分配了新的URI，以后都使用
+-   302(Found)临时性重定向,请求的资源已经被分配了新的URI，本次使用
+-   303(See Other)请求对应的资源存在另一个URI，应使用GET方法定向获取请求的资源。
+-  304(Not Modified)客户端发送请求附带条件的请求，服务器端允许请求访问资源，但因为发生请求未满足条件，返回304
+-   307(Temporay Redirect)临时重定向
+4XX客户端错误
+-   400(Bad Request)客户端请求的报文中存在语法错误,
+-   401(Unauthorized)发送的请求需要通过HTTP认证(BASIC认证、DIGEST认证)的认证信息，若之前已经请求一次，则表示用户认证失败，第一次会弹出认证的对话框。
+-   403(Forbidden)请求的资源被服务器拒绝。
+-   404(Not Found)服务器上不能找到请求的资源
+5XX服务器错误
+-   500(Internet Server Error)服务器端在执行请求时发生错误
+-   503(Service Unavailable)服务器暂时处于超载或正在进行维护。
 ## http协作与web服务器
     数据转发程序(程序和服务器将请求转发给通信线路上的下一站服务器，并将其返回的响应转发给客户端)
     代理：有转发功能的应用程序,扮演服务端与客户端的”中间”,转发两者的请求。
@@ -230,12 +241,10 @@ Content-Language
     组织内部针对特定网站访问的控制
     以获取访问日志为主的目的
 代理分类：
-
     1.是否使用缓存：代理转发响应时，缓存代理会预先将资源的副本保存在代理服务器上
     2.是否修改报文：透明代理不会对报文做任何加工，非透明代理度对报文进行加工
 
 网关：网关转发其他服务器通信数据的服务器，网关可以使通信线路上的服务器提供非http协议服务。
-
 
     网关的优势：
 
@@ -243,7 +252,7 @@ Content-Language
 ### 连接非http非http服务器
 隧道：在相隔甚远的客户端和服务器端两者间进行中转，使用SSL等手段进行加密，并保持双方通信连接的应用程序。
 
-[!image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCYhgpzMfEypGQJ_H_NnqHgk2y2ETuMk0IzPhDuKmqx1iDRWAwA
+![image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCYhgpzMfEypGQJ_H_NnqHgk2y2ETuMk0IzPhDuKmqx1iDRWAwA
 
 缓存
     缓存：代理服务器或客户端本地磁盘内保存的资源副本。利用缓存可减少对资源服务器的访问，节省了通信流量和通信时间。
@@ -255,22 +264,20 @@ Content-Language
 ## http首部
 http协议的请求报文和响应报文中必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供了所需的信息。
 
-1. 4种HTTP首部字段类型
+### 4种HTTP首部字段类型
 通用首部字段：请求和响应均会使用的首部
 
 Via:可用于追踪报文的转发，可避免请求回环的发生，在经过代理时附加该首部字段的内容。
 
 ```
 Via:1.0 gw.hacker.jp(squid/3.1),1.1 a1.wxample.com(squid/2.7)
-Warning:告知用户与缓存相关的问题的警告
 ```
-
+Warning:告知用户与缓存相关的问题的警告
 ```
 Warning:[警告码][警告的主机:端口号] "[警告的内容]" ([日期时间])
 ```
 
 Cache-Control:操作缓存工作机制
-
 
 
 请求首部字段：从客户端发送请求报文时使用的首部，补充了请求的附加内容、客户端信息、响应内容相关优先等级等信息
@@ -280,27 +287,33 @@ Accept:通知服务器用户代理可以处理的媒体类型及媒体类型的�
 ```
 Accept:text/html.application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 //q优先等级
 ```
+
 文本文件
 ```
 text/html,text/plain,text/css...
 application/xhtml+xml,application/xml...
 ```
+
 图片文件
 ```
 image/jpeg,imge/gif,image/png...
 ```
+
 视频文件
 ```
 video/mpeg,video/quicktime...
 ```
+
 应用程序使用的二进制文件
 ```
 application/octet-stream,application/zip...
 ```
+
 Accept-Charset:通知服务器用户代理支持的字符集及字符集的相对优先顺序
 ```
 Accept-Charset:iso-8859-5,unicode-1-1;q=0.8
 ```
+
 Accept-Encoding:告知服务器用户代理支持的内容编码及内容编码的优先级顺序，可一次指定多种内容编码
 
 ```
@@ -373,51 +386,63 @@ Location:http://www.vaniot.net
 ```
 Proxy-Authenticate:把由代理服务器所要求的认证信息发送给客户端
 
-1
+```
 Proxy-Authenticate: Basic realm="Usagidesign Auth"
+```
 Retry-After:告知客户端应该在多久之后再次发送请求。字段值为多少秒后或具体的日期
-
-1
+```
 Retry-After:120
+```
+
 Server: 告知客户端当前服务器上安装的HTTP服务器应用程序的信息，
 
-1
+```
 Server:Apache/2.2.6(Unix) php/5.2.5
+```
+
 Vary:对缓存进行控制,源服务器会向代理服务器传达关于本地缓存使用方法的命令，会对请求中含有相同的首部字段的 请求缓存
 
-1
+```
 Vary:Accept-language
-WWW-Authenticate：告知客户端使用于访问请求URI所指定资源的认证方案(Basic或是Diggest)和带参数提示的质询(challenge),状态码401Unauthorized响应中，带有 WWW-Authenticate
+```
 
-1
+WWW-Authenticate：告知客户端使用于访问请求URI所指定资源的认证方案(Basic或是Diggest)和带参数提示的质询(challenge),状态码401Unauthorized响应中，带有 WWW-Authenticate
+```
 WWW-Authenticate:Basic realm="Usagidesign Auth"//realm字段辨别请求URI指定资源所受到的保护策略
+
+```
 实体首部字段：针对请求报文和响应报文的实体部分使用的首部，补充了资源内容更新时间等于实体相关的信息。
 
 Allow:通知客户端能够支持Request-URI指定资源的所有http方法，当服务器接收到不支持的HTTP方法时，会以405 Method Not Allowed 作为响应返回，并将所支持的HTTP方法写入首部字段Allow后返回。
 Content-Encoding:告知客户端服务器对实体的主体部分选用的内容编码方式，内容编码指在不丢失实体信息的前提下进行的压缩,编码方式：1.gzip 2.compress 3.deflate 3.identity
 
-1
+```
 Content-Encoding:gzip
+```
 Content-Language:告知客户端,实体主体使用的自然语言
 
-1
+```
 Content-Language:zh-CN
+```
 Content-Length:表明实体主体部分的大小(单位是字节),对实体主体进行内容编码传输,不可再使用Content-Length首部字段。
 
 Content-Location:给出与报文主体相对应的URI(报文主体返回资源对应的URI)
 
-1
+```
 Content-Location:http://www.vaniot.net/index.html
+```
 Content-MD5:检测报文主体传输过程中是否保持完整
 
 Content-Range:告知客户端作为响应返回实体的那个部分符合范围请求，字段以字节为单位，表示当前发送部分及整个实体大小。
 
-1
+```
 Content-Range:bytes 5001-10000/10000
+```
 Content-Type:实体主体内对象的媒体类型与首部字段Accept一样，字段值用type/subtype形式赋值
 
-1
+```
 Content-Type:text/html;charset=UTF-8
+```
 Expires:将资源失效的日期告知客户端，缓存服务器接收到含有首部字段Expires的响应后,会缓存应答请求，在Expires字段值指定的时间之前，响应的副本会一直被保存，当超过指定的时间后，缓存服务器在请求发送过来时，会转向源服务器请求资源。
 
 Last-Modified:指明资源最终修改的时间
@@ -458,20 +483,19 @@ DENY：拒绝
 SAMEORIGIN:仅在同源域名下的页面匹配时许可。
 在web服务器端预先设定好X-Frame-Options字段值,
 apache.conf的配置:
-1
-2
-3
+```
 <IfModule mod_headers.c>
     Header append X-Frame-Options "SAMEORIGIN"
 </IfModule>
-X-XSS-Options：HTTP响应首部,针对跨站脚本攻击的一种对策,用于控制浏览器XSS防护机制的开关。可指定的字段值:
+```
 
-0：将XSS过滤设置成无效状态
-1:将XSS过滤设置成有效的状态
+X-XSS-Options：HTTP响应首部,针对跨站脚本攻击的一种对策,用于控制浏览器XSS防护机制的开关。可指定的字段值:
+- 0：将XSS过滤设置成无效状态
+- 1:将XSS过滤设置成有效的状态
 DNT(Do Not Track)：HTTP请求首部,拒绝个人信息被收集，拒绝被精准广告追踪的一种方法,字段值如下：
 
-0:同意被追踪
-1:拒绝被追踪
+- 0:同意被追踪
+- 1:拒绝被追踪
 P3P(The Platform for Privacy Preferences):HTTP响应首部,让web网站上的个人隐私变成一种仅供程序可理解的形式，以达到保护用户隐私的目地
 1
 P3P：CP=“CAO DSP LAW CURa ADMa  DEVa TALa PsAa PSDa => IVAa IVDa OUR BUS IND UNI COM NAV INT"
@@ -627,8 +651,8 @@ Session 管理及 Cookie 应用
 步骤 3： 客户端接收到从服务器端发来的 Session ID 后，会将其作为 Cookie 保存在本地。下次向服务器发送请求时，浏览器会自动发送 Cookie，所以 Session ID 也随之发送到服务器。服务器端可通过验证接收到的 Session ID 识别用户和其认证状态。
 另外，不仅基于表单认证的登录信息及认证过程都无标准化的方法，服务器端应如何保存用户提交的密码等登录信息等也没有标准化。通常，一种安全的保存方法是，先利用给密码加盐（salt）1 的方式增加额外信息，再使用散列（hash）函数计算出散列值后保存。但是我们也经常看到直接保存明文密码的做法，而这样的做法具有导致密码泄露的风险；salt 其实就是由服务器随机生成的一个字符串，但是要保证长度足够长，并且是真正随机生成的。然后把它和密码字符串相连接（前后都可以）生成散列值。当两个用户使用了同一个密码时，由于随机生成的 salt 值不同，对应的散列值也将是不同的。这样一来，很大程度上减少了密码特征，攻击者也就很难利用自己手中的密码特征库进行破解。
 
-## HTTP协议的拓展s
-HTTP的瓶颈
+## HTTP协议的拓展
+### HTTP的瓶颈
 一条连接上只可以发送一个请求
 请求只可以从客户端发起，客户端不能接受除了响应以外的指令
 请求/响应首部未经压缩就发送,首部信息越多延迟越大
@@ -639,7 +663,7 @@ http的优化手段：
 1.Ajax:通过脚本语言Javascript调用XMLHttpRequest和HTTP通信，从已经加载完毕的web页面上发起请求,只更新局部页面，
 2.Comet(反向AJAX):实现服务端向客户端推送,服务端接收到请求后，Comet会将响应挂起(服务器和客户端建立了一个永久的连接),当服务器内有内容更新时，再返回该更新。实现由两种方式：1.AJAX长轮询 2.Iframe流
 
-SPDY
+### SPDY
 SPDY在TCP/IP应用层与运输层之间通过新加会话层的形式控制数据的流动，且规定使用SSL通信，采用HTTP建立通信连接，http中的方法Cookie、HTTP报文仍然适用
 HTTP 应用层
 SPDY 会话层
@@ -688,15 +712,18 @@ var webSocket = new WebSocket(url,[subProtocol]); //创建一个WebSocket对象
 提示：url是指定连接的URL，subProtocol是可选的子协议。
 
 WebSocket事件
-事件	事件处理程序	说明
-open	webSocket.onopen	连接建立时触发
-message	webSocket.onmessage	客户端接收服务端数据时触发
-error	webSocket.onerror	通信发生错误时触发
-message	webSocket.onclose	连接关闭时触发
+事件	|事件处理程序|	说明
+--|--|
+open|	webSocket.onopen	|连接建立时触发
+message|	webSocket.onmessage	|客户端接收服务端数据时触发
+error|	webSocket.onerror	|通信发生错误时触发
+message|	webSocket.onclose	|连接关闭时触发
+
 WebSocket方法
-方法	说明
-send()	使用连接发送数据
-close()	关闭连接
+方法|	说明
+--|--
+send()|	 使用连接发送数据
+close()| 关闭连接
 WebSocket属性
 属性	说明
 Socket.readyState	表示连接状态

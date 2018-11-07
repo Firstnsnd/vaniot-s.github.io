@@ -22,7 +22,7 @@ dpkg(跟red hat的rpm非常相似)和apt-get进行安装软件，dpkg与apt-get�
 - dpkg是用来安装.deb文件,不会解决模块的依赖关系,不会关心ubuntu的软件仓库内的软件,可以用于安装本地的deb文件。
 - apt会解决和安装模块的依赖问题,并会咨询软件仓库, 不会安装本地的deb文件, apt是建立在dpkg之上的软件管理工具。
 ### 1.dpkg
-```
+```shell
 dpkg -i remarkable_1.87_all.deb //安装软件
 dpkg -R /usr/local/src  //安装一个目录下面所有的软件包
 dpkg –-unpack remarkable_1.87_all.deb //释放软件包，但是不进行配置,如果和-R一起使用，参数可以是一个目录
