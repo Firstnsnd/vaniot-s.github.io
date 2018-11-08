@@ -11,6 +11,7 @@ RESTful(Representational State Transfer):表征性状态传输,RESTful架构又�
 - 使用`/`表示资源的层级关系,如：`http://www.example.com/books/gone-with-wind`
 - 使用`，`或者`;`表示同级资源的关系，如:`http://www.example.com/gone-with-wind;Jane-Eyre`
 - 使用`?`过滤资源，`http://www.example.com/books?category=science`
+
 ## 统一资源接口(HTT动作)
 RESTful架构遵循统一的接口原则，包含一组受限的预定义的操作，所有的资源通过相同的接口进行资源访问。
 
@@ -112,6 +113,7 @@ DELETE /collection/:id #删除指定的集合
 ## 状态转移
   在REST设计原则中客户端与服务端的交互无状态，客户端维护应用的状态，服务端维护资源的状态，但服务端不保存客户端状态。只有在每一次的请求中包含处理请求的信息，"会话"被客户端用作为应用状态进行跟踪，在服务端的超媒体的指引下发生变迁。服务端通过超媒体告诉客户端当前状态有哪些后续状态可以进入。 
   
-> 后记
+> ps
   - 违反无状态通信原则的设计,如:利用Cookie跟踪某个服务端会话状态.
   - 超媒体:把一个个把资源链接起来.
+##  认证机制
