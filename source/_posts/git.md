@@ -23,7 +23,7 @@ categories: tool
 ## 仓库的相关操作
 ### 创建仓库
   ```shell
-  git clone
+  git clone  #git的克隆有两种方式
   git init 
   ```
 ### git 版本的回退
@@ -34,7 +34,7 @@ categories: tool
     git reset --hard HEAD~100 #往上回退100个版本
     git reset --hard commitId #回退到某个提交的coommitId
   ```
-  <!--more-->
+   <!--more-->
 ### 撤销修改
   将工作区的修改放弃
   ```shell
@@ -78,3 +78,9 @@ categories: tool
   - 删除冲突
     将删除的文件重新加入`git add`,或者删除`git rm`。
 ### 远程操作
+
+
+> tip:推荐资料
+
+- [可视化的git操作](https://learngitbranching.js.org/)
+- [书籍](https://progit.bootcss.com/)
