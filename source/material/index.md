@@ -17,6 +17,8 @@ layout: "material"
 4.[prossOn](https://www.processon.com/)
 ### 图片处理
 1.[photopea](https://www.photopea.com/)
+### logo
+1.[fontAwesome](https://fontawesome.com/)
 ## 计划表
 ### list
 1.[taskade](https://www.taskade.com)
