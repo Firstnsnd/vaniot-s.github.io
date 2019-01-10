@@ -1,15 +1,15 @@
 ---
-title: markdown语法笔记
+title: Markdown语法笔记
 date: 2018-01-30 22:37:07
-tags: [markdown,hexo]
+tags: [Markdown,Hexo]
 categories: tool
 ---
 
-markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了markdown中的一些方法。
+Markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了Markdown中的一些方法。
 ## 一.符号
 1.符号转义
 
-描述中需要用到 markdown 的符号：`_ # * `在这些符号前加反斜杠
+描述中需要用到 Markdown 的符号：`_ # * `在这些符号前加反斜杠
 
 2.显示&lt;&gt;
 ```markdown
@@ -130,9 +130,3 @@ st->op->cond
 cond(yes)->e
 cond(no)->op
 ```
-比如PHP[^1] Markdown Extra [^2] 是这样的。
-
-[^1]: 脚注1
-[^2]: 脚注2
-
-![ss](https://vaniot-s.github.io/css/images/mylogo.jpg =200x)

@@ -38,7 +38,8 @@ layout: "material"
 
 2.[TCP/IP详解](http://www.52im.net/topic-tcpipvol1.html)
 ###  nginx
-[Nginx开发从入门到精通](http://tengine.taobao.org/book/index.html)
+1.[Nginx开发从入门到精通](http://tengine.taobao.org/book/index.html)
+2.[Nginx中文文档](http://www.nginx.cn)
 ### golang
 1.[go文档](https://go-zh.org/doc/)
 
