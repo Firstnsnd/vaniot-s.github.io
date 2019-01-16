@@ -39,7 +39,7 @@ typedef struct list {
 } list;
 ```
 list链表结构:
-![链表结构图]()
+![链表结构图](https://raw.githubusercontent.com/vaniot-s/picture/master/redis/Source/adlist/List.png)
 ## 链表的操作
 ### 创建链表
 创建空链表
