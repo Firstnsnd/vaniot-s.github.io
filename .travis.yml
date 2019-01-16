@@ -38,10 +38,5 @@ after_script:
 # End: Build LifeCycle
 
 # 修改后
-deploy:
-  - type: git
-    # 下方的gh_token会被.travis.yml中sed命令替换
-    repo: https://gh_token@github.com/xiong-it/xiong-it.github.io.git
-    branch: master
 
 

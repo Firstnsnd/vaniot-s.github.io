@@ -153,7 +153,15 @@ theme: hexo-theme-hiker
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+#deploy:
+#  type: git
+#  repository: git@github.com:Vaniot-s/vaniot-s.github.io.git
+#  branch: master
+
+# use travis deploy
 deploy:
-  type: git
-  repository: git@github.com:Vaniot-s/vaniot-s.github.io.git
-  branch: master
+  - type: git
+    # 下方的gh_token会被.travis.yml中sed命令替换
+    repo: https://gh_token@github.com/xiong-it/xiong-it.github.io.git
+    branch: master
+
