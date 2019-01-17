@@ -226,3 +226,7 @@ Token 的注销，由于 Token 不存储在服务端，由客户端存储，当�
   Oatuh的登录流程：
   ![Oauth](https://raw.githubusercontent.com/vaniot-s/picture/master/Oauth/Oauth.png)
 >详细 [理解OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
+
+>参考资料
+ 1.[json](http://jsonapi.org/format/)
+ 2.[细说API – 重新认识RESTful](https://insights.thoughtworks.cn/api-restful/)

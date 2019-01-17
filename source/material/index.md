@@ -10,6 +10,8 @@ layout: "material"
 2.[processOn](https://www.processon.com/)
 3.[百度脑图 ](http://naotu.baidu.com/)
 ## 设计
+### 资源参考
+1.[freepik](https://www.freepik.com)
 ### 原型
 1.[Axure](https://www.axure.com.cn/)
 2.[墨刀](https://modao.cc)
