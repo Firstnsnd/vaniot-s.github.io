@@ -53,7 +53,9 @@ layout: "material"
 ### oauth
 1.[oauth](https://oauth.net/2/)
 ### HTTP
-1.[HTTP API Design Guide](https://geemus.gitbooks.io/http-api-design/content/en/)
+1.[HTTP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP)
+2.[HTTP API Design Guide](https://geemus.gitbooks.io/http-api-design/content/en/)
+
 ### php
 [php-the-right-way](https://laravel-china.github.io/php-the-right-way/)
 #### php源码
