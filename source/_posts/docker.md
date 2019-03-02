@@ -1,18 +1,101 @@
 ---
-title: docker
+title: docker安装
 date: 2018-05-05 00:31:22
 tags: docker
 categories: web
 ---
-## docker
- docker 使用go语言开发，对进程进行封装隔离。
- <!--more-->
-## docker的三个基本概念
+使用 APT 安装
+由于 apt 源使用 HTTPS 以确保软件下载过程中不被篡改。因此，我们首先需要添加使用 HTTPS 传输的软件包以及 CA 证书。
+```
+$ sudo apt-get update
 
-### 一、镜像(Image)
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+```
+鉴于国内网络问题，强烈建议使用国内源，官方源请在注释中查看。
 
- Docker中的文件系统(操作系统的完整root文件系统)，提供容器运行时所需的程序，文件，资源，配置及配置参数(匿名卷，环境变量，用户)，镜像不会包含任何动态数据，其中的内容在构建后不会发生任何的变化，Docker的镜像设计基于[Union FS](https://en.wikipedia.org/wiki/Union_mount)设计为分层存储的架构。镜像的构建一层一层前者是后者的基础，构建完成后不再发生变化。
-### 二、容器(container)
-容器是镜像的运行实体(实质为进程)，容器运行时以镜像为基础层创建当前的**容器存储层**，容器存储层的生命周期与容器相同，保存于容器存储层的信息都会丢失，所以容器不向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用 数据卷(Volume)、或者绑定宿主目录，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写。
-### 三、仓库(Repository)
-仓库用于集中存储，分发镜像的服务。 
+为了确认所下载软件包的合法性，需要添加软件源的 GPG 密钥。
+```
+$ curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+
+
+# 官方源
+# $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+然后，我们需要向 source.list 中添加 Docker 软件源
+```
+$ sudo add-apt-repository \
+    "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+
+
+# 官方源
+# $ sudo add-apt-repository \
+#    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+#    $(lsb_release -cs) \
+#    stable"
+```
+以上命令会添加稳定版本的 Docker CE APT 镜像源，如果需要测试或每日构建版本的 Docker CE 请将 stable 改为 test 或者 nightly。
+
+安装 Docker CE
+更新 apt 软件包缓存，并安装 docker-ce：
+```
+$ sudo apt-get update
+
+$ sudo apt-get install docker-ce
+```
+使用 APT 安装
+由于 apt 源使用 HTTPS 以确保软件下载过程中不被篡改。因此，我们首先需要添加使用 HTTPS 传输的软件包以及 CA 证书。
+
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+鉴于国内网络问题，强烈建议使用国内源，官方源请在注释中查看。
+
+为了确认所下载软件包的合法性，需要添加软件源的 GPG 密钥。
+```
+$ curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+
+
+# 官方源
+# $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+然后，我们需要向 source.list 中添加 Docker 软件源
+```
+$ sudo add-apt-repository \
+    "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+
+
+# 官方源
+$ sudo add-apt-repository \
+ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+ $(lsb_release -cs) \
+ stable"
+```
+以上命令会添加稳定版本的 Docker CE APT 镜像源，如果需要测试或每日构建版本的 Docker CE 请将 stable 改为 test 或者 nightly。
+
+安装 Docker CE
+更新 apt 软件包缓存，并安装 docker-ce：
+```
+$ sudo apt-get update
+
+$ sudo apt-get install docker-ce
+```
+建立 docker 组：
+```
+$ sudo groupadd docker
+```
+将当前用户加入 docker 组：
+```
+$ sudo usermod -aG docker $USER
+```
