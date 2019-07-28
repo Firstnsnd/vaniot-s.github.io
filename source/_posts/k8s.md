@@ -45,7 +45,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 	
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-
+## 或者
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 # worker
 kubeadm join 192.168.1.18:6443 --token sexemg.1wqeqweqweqwew \
     --discovery-token-ca-cert-hash sha256:2153e47c21dbbaasdasd64735d4aa0546fdb60231 
