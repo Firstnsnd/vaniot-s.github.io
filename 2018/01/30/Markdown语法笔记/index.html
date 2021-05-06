@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>markdown语法笔记 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="MarkdownHexo">
+  
+  
+  
+  
+  <meta name="description" content="Markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了Markdown中的一些方法。 一.符号1.符号转义 描述中需要用到 Markdown 的符号：_ # *在这些符号前加反斜杠 2.显示&amp;lt;&amp;gt;1输入&amp;amp;lt;和&amp;amp;gt;">
+<meta name="keywords" content="Markdown,Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown语法笔记">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/01/30/Markdown语法笔记/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="Markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了Markdown中的一些方法。 一.符号1.符号转义 描述中需要用到 Markdown 的符号：_ # *在这些符号前加反斜杠 2.显示&amp;lt;&amp;gt;1输入&amp;amp;lt;和&amp;amp;gt;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Markdown语法笔记">
+<meta name="twitter:description" content="Markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了Markdown中的一些方法。 一.符号1.符号转义 描述中需要用到 Markdown 的符号：_ # *在这些符号前加反斜杠 2.显示&amp;lt;&amp;gt;1输入&amp;amp;lt;和&amp;amp;gt;">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Markdown语法笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Markdown语法笔记
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/01/30/Markdown语法笔记/" class="article-date">
+	  <time datetime="2018-01-30T22:37:07.000Z" itemprop="datePublished">2018-01-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/tool/">tool</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">919</span>字  
+      预计:<span class="post-count">4</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Markdown发展至今衍生出各种版本,因而并没有统一的标准,本篇博文仅用于在hexo中的配置及使用,记录了Markdown中的一些方法。</p>
+<h2 id="一-符号"><a href="#一-符号" class="headerlink" title="一.符号"></a>一.符号</h2><p>1.符号转义</p>
+<p>描述中需要用到 Markdown 的符号：<code>_ # *</code>在这些符号前加反斜杠</p>
+<p>2.显示&lt;&gt;<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入&amp;lt;和&amp;gt;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<h2 id="二、表格"><a href="#二、表格" class="headerlink" title="二、表格"></a>二、表格</h2><p> makrdown中的表格和并只能由html代码实现</p>
+<h2 id="三、数学"><a href="#三、数学" class="headerlink" title="三、数学"></a>三、数学</h2><p>在<code>hexo</code>中支持数学(latex)公式,需要依赖于<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="noopener">hexo-math</a>,在站点中的配置文件<code>_config.yml</code>可加入如下配置:<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line"><span class="code">    engine: 'mathjax'</span></span><br><span class="line"><span class="code">    mathjax:</span></span><br><span class="line"><span class="code">        src: "//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span></span><br><span class="line"><span class="code">        config:</span></span><br><span class="line"><span class="code">            tex2jax:</span></span><br><span class="line"><span class="code">                inlineMath: [ ['$','$'], ["\\(","\\)"] ]</span></span><br></pre></td></tr></table></figure></p>
+<p> 但这个js 还是会调用cdn.mathjax.org里的一些配置js文件，最好在主题目录下<code>\themes\主题文件夹\layout\ _partial\head.ejs</code>文件中<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>后面引入:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//cdn.bootcss.com"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//cdn.mathjax.org"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Markdown 本身的特殊符号与Latex 中的符号会出现冲突的情况</p>
+<ul>
+<li><code>_</code>的转义，在Markdown 中<code>_</code>是斜体，但在latex 中，却有下标的意思；</li>
+<li><code>\\</code>的转义，在Markdown 中<code>\\</code>会被转义为<code>\</code>，这样也会影响mathjax对公式中的<code>\\</code>进行渲染。</li>
+</ul>
+<blockquote>
+<p>解决办法</p>
+</blockquote>
+<p>只需要有冲突的公式放在<code><span>$`和`$</span><!-- Has MathJax --></code>之间即可。</p>
+<h3 id="1-行内公式"><a href="#1-行内公式" class="headerlink" title="1.行内公式"></a>1.行内公式</h3><p>当要在一行内书写数学公式时,使用<code>$表达式$</code>来书写如:<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$\sum_&#123;i=0&#125;^&#123;n&#125;i^2$</span><br></pre></td></tr></table></figure></p>
+<p>输出:$\sum_{i=0}^{n}i^2$</p>
+<h3 id="2-独立公式"><a href="#2-独立公式" class="headerlink" title="2.独立公式"></a>2.独立公式</h3><p>使用独立的公式,输出的公式独占一行,使用<code>$$$表达式$</code>展现内容:<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$\sum_&#123;i=0&#125;^&#123;n&#125;i^2$$</span><br></pre></td></tr></table></figure></p>
+<p>输出内容如下: $$\sum_{i=0}^{n}i^2$$</p>
+<p>3.当标记为小数时，将小数写在{ }中，如:<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$2^&#123;1.2&#125;+a_&#123;5.6&#125;$</span><br></pre></td></tr></table></figure></p>
+<p>输出为:$2^{1.2}+a_{5.6}$</p>
+<blockquote>
+<p>关于Markdown中的更多的Math语法<a href="https://khan.github.io/KaTeX/function-support.html" target="_blank" rel="noopener">这里</a></p>
+</blockquote>
+<h2 id="四、画图"><a href="#四、画图" class="headerlink" title="四、画图"></a>四、画图</h2><h3 id="1-时序图"><a href="#1-时序图" class="headerlink" title="1.时序图"></a>1.时序图</h3><p>在hexo中流程图的实现,依赖于<a href="https://github.com/bubkoo/hexo-filter-sequence" target="_blank" rel="noopener">sequence</a>,在站点中的配置文件<code>_config.yml</code>可加入如下配置:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#sequence</span></span><br><span class="line"><span class="attr">sequence:</span></span><br><span class="line">    <span class="attr">webfont:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"</span></span><br><span class="line">    <span class="attr">snap:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"</span></span><br><span class="line">    <span class="attr">underscore:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"</span></span><br><span class="line">    <span class="attr">sequence:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"</span></span><br><span class="line">    <span class="attr">style:</span> <span class="string">""</span></span><br><span class="line">    <span class="attr">options:</span> </span><br><span class="line">       <span class="attr">theme:</span> <span class="string">simple</span></span><br><span class="line">       <span class="attr">css_class:</span> <span class="string">""</span></span><br></pre></td></tr></table></figure></p>
+<p>使用如下的语法规则,<code>sequence</code>为闭合的代码块,可画出时序图:</p>
+<pre><code>Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow
+</code></pre><p>生成的时序图:</p>
+<p><div id="sequence-0"></div></p>
+<h3 id="2-流程图"><a href="#2-流程图" class="headerlink" title="2.流程图"></a>2.流程图</h3><p>在hexo中流程图的实现,依赖于<a href="https://github.com/bubkoo/hexo-filter-flowchart" target="_blank" rel="noopener">flowchart</a>,在站点中的配置文件<code>_config.yml</code>可加入如下配置:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#flowchart:</span></span><br><span class="line"><span class="attr">flowchart:</span></span><br><span class="line">    <span class="attr">raphael:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"</span></span><br><span class="line">    <span class="attr">flowchart:</span> <span class="string">"//cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"</span></span><br><span class="line">    <span class="attr">options:</span> </span><br><span class="line">       <span class="attr">scale:</span> <span class="number">1</span><span class="string">,</span></span><br><span class="line">       <span class="attr">line-width:</span> <span class="number">2</span></span><br><span class="line">       <span class="attr">line-length:</span> <span class="number">50</span></span><br><span class="line">       <span class="attr">text-margin:</span> <span class="number">10</span></span><br><span class="line">       <span class="attr">font-size:</span> <span class="number">12</span></span><br></pre></td></tr></table></figure></p>
+<p>使用如下的语法规则,<code>flow</code>为闭合的代码块,可画出流程图:</p>
+<pre><code>st=&gt;start: 开始
+e=&gt;end: 结束
+op=&gt;operation: 我的操作
+cond=&gt;condition: 确认？
+
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op
+</code></pre><p>生成的流程图:</p>
+<p><div id="flowchart-0" class="flow-chart"></div><script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: 开始
+e=>end: 结束
+op=>operation: 我的操作
+cond=>condition: 确认？
+
+st->op->cond
+cond(yes)->e
+cond(no)->op</textarea><textarea id="flowchart-0-options" style="display: none">{"theme":"simple","scale":"1,","line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: Here is a title
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow</textarea><textarea id="sequence-0-options" style="display: none">{"theme":"simple","scale":"1,","line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/01/30/Markdown语法笔记/" target="_blank" title="Markdown语法笔记">https://vaniot-s.github.io/2018/01/30/Markdown语法笔记/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/04/C-格式化输出/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++格式化输出
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/30/STL-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">STL(一)</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-符号"><span class="nav-number">1.</span> <span class="nav-text">一.符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、表格"><span class="nav-number">2.</span> <span class="nav-text">二、表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、数学"><span class="nav-number">3.</span> <span class="nav-text">三、数学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-行内公式"><span class="nav-number">3.1.</span> <span class="nav-text">1.行内公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-独立公式"><span class="nav-number">3.2.</span> <span class="nav-text">2.独立公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、画图"><span class="nav-number">4.</span> <span class="nav-text">四、画图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-时序图"><span class="nav-number">4.1.</span> <span class="nav-text">1.时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-流程图"><span class="nav-number">4.2.</span> <span class="nav-text">2.流程图</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

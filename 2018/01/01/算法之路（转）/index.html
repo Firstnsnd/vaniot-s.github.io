@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>算法之路（转） | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="算法">
+  
+  
+  
+  
+  <meta name="description" content="第一阶段：练经典常用算法，下面的每个算法给我打上十到二十遍，同时自己精简代码，因为太常用，所以要练到写时不用想，10-15分钟内打完，甚至关掉显示器都可以把程序打出来. 1.最短路(Floyd、Dijstra,BellmanFord)2.最小生成树(先写个prim,kruscal要用并查集，不好写)3.大数（高精度）加减乘除4.二分查找. (代码可在五行以内)5.叉乘、判线段相交、然后写个凸包.6">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法之路（转）">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/01/01/算法之路（转）/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="第一阶段：练经典常用算法，下面的每个算法给我打上十到二十遍，同时自己精简代码，因为太常用，所以要练到写时不用想，10-15分钟内打完，甚至关掉显示器都可以把程序打出来. 1.最短路(Floyd、Dijstra,BellmanFord)2.最小生成树(先写个prim,kruscal要用并查集，不好写)3.大数（高精度）加减乘除4.二分查找. (代码可在五行以内)5.叉乘、判线段相交、然后写个凸包.6">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法之路（转）">
+<meta name="twitter:description" content="第一阶段：练经典常用算法，下面的每个算法给我打上十到二十遍，同时自己精简代码，因为太常用，所以要练到写时不用想，10-15分钟内打完，甚至关掉显示器都可以把程序打出来. 1.最短路(Floyd、Dijstra,BellmanFord)2.最小生成树(先写个prim,kruscal要用并查集，不好写)3.大数（高精度）加减乘除4.二分查找. (代码可在五行以内)5.叉乘、判线段相交、然后写个凸包.6">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-算法之路（转）" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      算法之路（转）
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/01/01/算法之路（转）/" class="article-date">
+	  <time datetime="2018-01-01T11:17:19.000Z" itemprop="datePublished">2018-01-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/basic/">basic</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">2.7k</span>字  
+      预计:<span class="post-count">10</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="第一阶段："><a href="#第一阶段：" class="headerlink" title="第一阶段："></a>第一阶段：</h3><p>练经典常用算法，下面的每个算法给我打上十到二十遍，同时自己精简代码，因为太常用，所以要练到写时不用想，10-15分钟内打完，甚至关掉显示器都可以把程序打出来.</p>
+<p>1.最短路(Floyd、Dijstra,BellmanFord)<br>2.最小生成树(先写个prim,kruscal要用并查集，不好写)<br>3.大数（高精度）加减乘除<br>4.二分查找. (代码可在五行以内)<br>5.叉乘、判线段相交、然后写个凸包.<br>6.BFS、DFS,同时熟练hash表(要熟，要灵活,代码要简)<br>7.数学上的有：辗转相除（两行内），线段交点、多角形面积公式. </p>
+<ol start="8">
+<li>调用系统的qsort, 技巧很多，慢慢掌握. </li>
+<li><p>任意进制间的转换 </p>
+<h3 id="第二阶段："><a href="#第二阶段：" class="headerlink" title="第二阶段："></a>第二阶段：</h3><p>练习复杂一点，但也较常用的算法。</p>
+<a id="more"></a>
+<p>如：</p>
+</li>
+<li><p>二分图匹配（匈牙利），最小路径覆盖 </p>
+</li>
+<li>网络流，最小费用流。 </li>
+<li>线段树. </li>
+<li>并查集。 </li>
+<li>熟悉动态规划的各个典型：LCS、最长递增子串、三角剖分、记忆化dp<br>6.博弈类算法。博弈树，二进制法等。<br>7.最大团，最大独立集。<br>8.判断点在多边形内。 </li>
+<li>差分约束系统. </li>
+<li>双向广度搜索、A*算法，最小耗散优先.<br>相关的知识</li>
+</ol>
+<p>图论<br>路径问题</p>
+<p> 0/1边权最短路径<br> BFS<br> 非负边权最短路径（Dijkstra）<br> 可以用Dijkstra解决问题的特征<br> 负边权最短路径<br> Bellman-Ford<br> Bellman-Ford的Yen-氏优化<br> 差分约束系统<br> Floyd<br> 广义路径问题<br> 传递闭包<br> 极小极大距离 / 极大极小距离<br> Euler Path / Tour<br> 圈套圈算法<br> 混合图的 Euler Path / Tour<br> Hamilton Path / Tour<br> 特殊图的Hamilton Path / Tour 构造<br> 生成树问题<br> 最小生成树<br> 第k小生成树<br> 最优比率生成树<br> 0/1分数规划<br> 度限制生成树<br> 连通性问题<br> 强大的DFS算法<br> 无向图连通性<br> 割点<br> 割边<br> 二连通分支<br> 有向图连通性<br> 强连通分支<br> 2-SAT<br> 最小点基<br> 有向无环图<br> 拓扑排序<br> 有向无环图与动态规划的关系<br> 二分图匹配问题<br> 一般图问题与二分图问题的转换思路<br> 最大匹配<br>有向图的最小路径覆盖<br>0 / 1矩阵的最小覆盖<br> 完备匹配<br> 最优匹配<br> 稳定婚姻<br>网络流问题</p>
+<p>网络流模型的简单特征和与线性规划的关系<br>最大流最小割定理<br>最大流问题<br>    有上下界的最大流问题<br>        循环流<br>最小费用最大流 / 最大费用最大流<br>弦图的性质和判定<br>组合数学<br>解决组合数学问题时常用的思想</p>
+<p>逼近<br>递推 / 动态规划<br>概率问题</p>
+<p>Polya定理<br>计算几何 / 解析几何</p>
+<p>计算几何的核心：叉积 / 面积<br>解析几何的主力：复数<br>基本形<br>    点<br>    直线，线段<br>    多边形<br>凸多边形 / 凸包<br>    凸包算法的引进，卷包裹法<br>Graham扫描法<br>    水平序的引进，共线凸包的补丁<br>完美凸包算法<br>相关判定<br>    两直线相交<br>    两线段相交<br>    点在任意多边形内的判定<br>    点在凸多边形内的判定<br>经典问题<br>    最小外接圆<br>        近似O(n)的最小外接圆算法<br>    点集直径<br>        旋转卡壳，对踵点<br>    多边形的三角剖分<br>数学 / 数论<br>最大公约数</p>
+<p>Euclid算法<br>    扩展的Euclid算法<br>        同余方程 / 二元一次不定方程<br>        同余方程组<br>线性方程组</p>
+<pre><code>高斯消元法 
+    解mod 2域上的线性方程组 
+整系数方程组的精确解法 
+</code></pre><p>矩阵 </p>
+<pre><code>行列式的计算 
+    利用矩阵乘法快速计算递推关系 
+</code></pre><p>分数 </p>
+<pre><code>分数树 
+连分数逼近 
+</code></pre><p>数论计算 </p>
+<pre><code>求N的约数个数 
+求phi(N) 
+求约数和 
+快速数论变换 
+…… 
+</code></pre><p>素数问题 </p>
+<pre><code>概率判素算法 
+概率因子分解 
+</code></pre><p>数据结构</p>
+<p>组织结构<br>    二叉堆<br>    左偏树<br>    二项树<br>    胜者树<br>    跳跃表<br>    样式图标<br>    斜堆<br>    reap<br>统计结构<br>    树状数组<br>    虚二叉树<br>    线段树<br>        矩形面积并<br>        圆形面积并<br>关系结构<br>    Hash表<br>    并查集<br>        路径压缩思想的应用<br>STL中的数据结构<br>    vector<br>    deque<br>    set / map<br>动态规划 / 记忆化搜索</p>
+<p>   动态规划和记忆化搜索在思考方式上的区别<br>   最长子序列系列问题<br>    最长不下降子序列<br>    最长公共子序列<br>    最长公共不下降子序列<br>一类NP问题的动态规划解法<br>树型动态规划<br>背包问题<br>动态规划的优化<br>    四边形不等式<br>    函数的凸凹性<br>    状态设计<br>    规划方向<br>线性规划</p>
+<p>常用思想</p>
+<p>二分          最小表示法<br>串</p>
+<p>KMP                              Trie结构<br>后缀树/后缀数组            LCA/RMQ<br>有限状态自动机理论<br>排序</p>
+<p>选择/冒泡        快速排序        堆排序            归并排序<br>基数排序        拓扑排序        排序网络<br>中级:<br>一.基本算法:</p>
+<p>(1)C++的标准模版库的应用. (poj3096,poj3007)<br>(2)较为复杂的模拟题的训练(poj3393,poj1472,poj3371,poj1027,poj2706)<br>二.图算法:</p>
+<p>(1)差分约束系统的建立和求解. (poj1201,poj2983)<br>(2)最小费用最大流(poj2516,poj2516,poj2195)<br>(3)双连通分量(poj2942)<br>(4)强连通分支及其缩点.(poj2186)<br>(5)图的割边和割点(poj3352)<br>(6)最小割模型、网络流规约(poj3308, )<br>三.数据结构.</p>
+<p>(1)线段树. (poj2528,poj2828,poj2777,poj2886,poj2750)<br>(2)静态二叉检索树. (poj2482,poj2352)<br>(3)树状树组(poj1195,poj3321)<br>(4)RMQ. (poj3264,poj3368)<br>(5)并查集的高级应用. (poj1703,2492)<br>(6)KMP算法. (poj1961,poj2406)<br>四.搜索</p>
+<p>(1)最优化剪枝和可行性剪枝<br>(2)搜索的技巧和优化 (poj3411,poj1724)<br>(3)记忆化搜索(poj3373,poj1691)<br>五.动态规划</p>
+<p>(1)较为复杂的动态规划(如动态规划解特别的施行商问题等)   (poj1191,poj1054,poj3280,poj2029,poj2948,poj1925,poj3034)<br>(2)记录状态的动态规划. (POJ3254,poj2411,poj1185)<br>(3)树型动态规划(poj2057,poj1947,poj2486,poj3140)<br>六.数学</p>
+<p>(1)组合数学:<br>    1.容斥原理.<br>    2.抽屉原理.<br>    3.置换群与Polya定理(poj1286,poj2409,poj3270,poj1026).<br>    4.递推关系和母函数.<br>(2)数学.<br>    1.高斯消元法(poj2947,poj1487, poj2065,poj1166,poj1222)<br>    2.概率问题. (poj3071,poj3440)<br>    3.GCD、扩展的欧几里德(中国剩余定理) (poj3101)<br>(3)计算方法.<br>    1.0/1分数规划. (poj2976)<br>    2.三分法求解单峰(单谷)的极值.<br>    3.矩阵法(poj3150,poj3422,poj3070)<br>    4.迭代逼近(poj3301)<br>(4)随机化算法(poj3318,poj2454)<br>(5)杂题.<br>    (poj1870,poj3296,poj3286,poj1095)<br>七.计算几何学.</p>
+<p>(1)坐标离散化.<br>(2)扫描线算法(例如求矩形的面积和周长并,常和线段树或堆一起使用).   (poj1765,poj1177,poj1151,poj3277,poj2280,poj3004)<br>(3)多边形的内核(半平面交)(poj3130,poj3335)<br>(4)几何工具的综合应用.(poj1819,poj1066,poj2043,poj3227,poj2165,poj3429)<br>高级:</p>
+<p>一.基本算法要求:</p>
+<p>(1)代码快速写成,精简但不失风格    (poj2525,poj1684,poj1421,poj1048,poj2050,poj3306)<br>(2)保证正确性和高效性. poj3434<br>二.图算法:</p>
+<p>(1)度限制最小生成树和第K最短路. (poj1639)<br>(2)最短路,最小生成树,二分图,最大流问题的相关理论(主要是模型建立和求解)<br>  (poj3155, poj2112,poj1966,poj3281,poj1087,poj2289,poj3216,poj2446<br>(3)最优比率生成树. (poj2728)<br>(4)最小树形图(poj3164)<br>(5)次小生成树.<br>(6)无向图、有向图的最小环<br>三.数据结构.</p>
+<p>(1)trie图的建立和应用. (poj2778)<br>(2)LCA和RMQ问题(LCA(最近公共祖先问题) 有离线算法(并查集+dfs) 和 在线算法<br>    (RMQ+dfs)).(poj1330)<br>(3)双端队列和它的应用(维护一个单调的队列,常常在动态规划中起到优化状态转移的目的). (poj2823)<br>(4)左偏树(可合并堆).<br>(5)后缀树(非常有用的数据结构,也是赛区考题的热点).<br>  (poj3415,poj3294)<br>四.搜索</p>
+<p>(1)较麻烦的搜索题目训练(poj1069,poj3322,poj1475,poj1924,poj2049,poj3426)<br>(2)广搜的状态优化:利用M进制数存储状态、转化为串用hash表判重、按位压缩存储状态、双向广搜、A<em>算法. (poj1768,poj1184,poj1872,poj1324,poj2046,poj1482)<br>(3)深搜的优化:尽量用位运算、一定要加剪枝、函数参数尽可能少、层数不易过大、可以考虑双向搜索或者是轮换搜索、IDA</em>算法. (poj3131,poj2870,poj2286)<br>五.动态规划</p>
+<p>(1)需要用数据结构优化的动态规划(poj2754,poj3378,poj3017)<br>(2)四边形不等式理论.<br>(3)较难的状态DP(poj3133)<br>六.数学</p>
+<p>(1)组合数学.<br>  1.MoBius反演(poj2888,poj2154)<br>  2.偏序关系理论.<br>(2)博奕论.<br>  1.极大极小过程(poj3317,poj1085)<br>  2.Nim问题.<br>七.计算几何学.</p>
+<p>(1)半平面求交(poj3384,poj2540)<br>(2)可视图的建立(poj2966)<br>(3)点集最小圆覆盖.<br>(4)对踵点(poj2079)<br>八.综合题.</p>
+<p>(poj3109,poj1478,poj1462,poj2729,poj2048,poj3336,poj3315,poj2148,poj1263)<br>初期:</p>
+<p>一.基本算法:</p>
+<p>(1)枚举. (poj1753,poj2965) (2)贪心(poj1328,poj2109,poj2586)<br>(3)递归和分治法.<br>(4)递推.<br>(5)构造法.(poj3295)<br>(6)模拟法.(poj1068,poj2632,poj1573,poj2993,poj2996)<br>二.图算法:</p>
+<p>(1)图的深度优先遍历和广度优先遍历.<br>(2)最短路径算法(dijkstra,bellman-ford,floyd,heap+dijkstra) (poj1860,poj3259,poj1062,poj2253,poj1125,poj2240)<br>(3)最小生成树算法(prim,kruskal)<br>    (poj1789,poj2485,poj1258,poj3026)<br>(4)拓扑排序 (poj1094)<br>(5)二分图的最大匹配 (匈牙利算法) (poj3041,poj3020)<br>(6)最大流的增广路算法(KM算法). (poj1459,poj3436)<br>三.数据结构.</p>
+<p>(1)串 (poj1035,poj3080,poj1936)<br>(2)排序(快排、归并排(与逆序数有关)、堆排) (poj2388,poj2299)<br>(3)简单并查集的应用.<br>(4)哈希表和二分查找等高效查找法(数的Hash,串的Hash)   (poj3349,poj3274,POJ2151,poj1840,poj2002,poj2503)<br>(5)哈夫曼树(poj3253)<br>(6)堆<br>(7)trie树(静态建树、动态建树) (poj2513)<br>四.简单搜索</p>
+<p>(1)深度优先搜索 (poj2488,poj3083,poj3009,poj1321,poj2251)<br>(2)广度优先搜索(poj3278,poj1426,poj3126,poj3087.poj3414)<br>(3)简单搜索技巧和剪枝(poj2531,poj1416,poj2676,1129)<br>五.动态规划</p>
+<p>(1)背包问题. (poj1837,poj1276)<br>(2)型如下表的简单DP(可参考lrj的书 page149):<br>  1.E[j]=opt{D+w(i,j)} (poj3267,poj1836,poj1260,poj2533)<br>  2.E[i,j]=opt{D[i-1,j]+xi,D[i,j-1]+yj,D[i-1][j-1]+zij} (最长公共子序列)<br>    (poj3176,poj1080,poj1159)<br>  3.C[i,j]=w[i,j]+opt{C[i,k-1]+C[k,j]}.(最优二分检索树问题)<br>六.数学</p>
+<p>(1)组合数学:<br>    1.加法原理和乘法原理.<br>    2.排列组合.<br>    3.递推关系.<br>      (POJ3252,poj1850,poj1019,poj1942)<br>(2)数论.<br>    1.素数与整除问题<br>    2.进制位.<br>    3.同余模运算.<br>      (poj2635, poj3292,poj1845,poj2115)<br>(3)计算方法.<br>    1.二分法求解单调函数相关知识.(poj3273,poj3258,poj1905,poj3122)<br>七.计算几何学.</p>
+<p>(1)几何公式.<br>(2)叉积和点积的运用(如线段相交的判定,点到线段的距离等). (poj2031,poj1039)<br>(3)多边型的简单算法(求面积)和相关判定(点在多边型内,多边型是否相交) (poj1408,poj1584)<br>(4)凸包. (poj2187,poj1113) </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/01/01/算法之路（转）/" target="_blank" title="算法之路（转）">https://vaniot-s.github.io/2018/01/01/算法之路（转）/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/01/websocket原理(一)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          websocket基础(一)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/31/跨域/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">跨域</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一阶段："><span class="nav-number">1.</span> <span class="nav-text">第一阶段：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二阶段："><span class="nav-number">2.</span> <span class="nav-text">第二阶段：</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

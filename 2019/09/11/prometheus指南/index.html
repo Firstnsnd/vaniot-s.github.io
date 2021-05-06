@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>prometheus指南 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="proemtheus，k8s">
+  
+  
+  
+  
+  <meta name="description" content="prometheus 的数据存储类型为时间序列，prometheus周期性的从应用或pushgateway(应用将metrics发送到pushgateway)中拉取metrics的当前value 一.监控指标(Metrics)：1.组成 指标(metric)：metric name和描述当前样本特征的labelsets; 时间戳(timestamp)：一个精确到毫秒的时间戳(查询时timestam">
+<meta name="keywords" content="proemtheus，k8s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="prometheus指南">
+<meta property="og:url" content="https://vaniot-s.github.io/2019/09/11/prometheus指南/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="prometheus 的数据存储类型为时间序列，prometheus周期性的从应用或pushgateway(应用将metrics发送到pushgateway)中拉取metrics的当前value 一.监控指标(Metrics)：1.组成 指标(metric)：metric name和描述当前样本特征的labelsets; 时间戳(timestamp)：一个精确到毫秒的时间戳(查询时timestam">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="prometheus指南">
+<meta name="twitter:description" content="prometheus 的数据存储类型为时间序列，prometheus周期性的从应用或pushgateway(应用将metrics发送到pushgateway)中拉取metrics的当前value 一.监控指标(Metrics)：1.组成 指标(metric)：metric name和描述当前样本特征的labelsets; 时间戳(timestamp)：一个精确到毫秒的时间戳(查询时timestam">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-prometheus指南" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      prometheus指南
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/09/11/prometheus指南/" class="article-date">
+	  <time datetime="2019-09-11T17:00:59.000Z" itemprop="datePublished">2019-09-11</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/basic/">basic</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">968</span>字  
+      预计:<span class="post-count">4</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>prometheus 的数据存储类型为时间序列，prometheus周期性的从应用或pushgateway(应用将metrics发送到pushgateway)中拉取metrics的当前value</p>
+<h2 id="一-监控指标-Metrics-："><a href="#一-监控指标-Metrics-：" class="headerlink" title="一.监控指标(Metrics)："></a>一.监控指标(Metrics)：</h2><h4 id="1-组成"><a href="#1-组成" class="headerlink" title="1.组成"></a>1.组成</h4><ul>
+<li>指标(metric)：metric name和描述当前样本特征的labelsets;</li>
+<li>时间戳(timestamp)：一个精确到毫秒的时间戳(查询时timestamp不可见);</li>
+<li>样本值(value)： 一个folat64的浮点型数据表示当前样本的值。<br><strong>metrics示例：</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;--metric  name--&gt;&lt;-------------metrics labels------&gt; &lt;--timestamp --&gt;     &lt;--value--&gt;</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417560938 =&gt; 94355</span><br><span class="line">http_request_total&#123;status=&quot;200&quot;, method=&quot;GET&quot;&#125;@1434417561287 =&gt; 94334</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>注意：metric部分完全相同为同一个metric</p>
+</blockquote>
+<h4 id="2-四种类型："><a href="#2-四种类型：" class="headerlink" title="2.四种类型："></a>2.四种类型：</h4><ul>
+<li>Counter 计数器指标其工作方式和计数器一样，<strong>只增不减</strong>记录某些事件发生的次数。</li>
+<li>Gauge表盘<strong>可增可减</strong>的类似于仪表盘，用于反映当前系统的状态</li>
+<li>分析数据分布情况：<ul>
+<li>Histogram 柱状图，用于统计一些数据分布的情况，用于计算在一定范围内的分布情况，同时还提供了度量指标值的总和</li>
+<li>Summary  摘要，计算在一定时间窗口范围内度量指标对象的总数以及所有对量指标值的总和。</li>
+</ul>
+</li>
+</ul>
+<p><strong>四种类型示例：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># histogram 类型示例</span><br><span class="line">&lt;---------------------------metric name-----------------------&gt;  &lt;value range&gt; &lt;count&gt;</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1000&quot;&#125;          0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;4000&quot;&#125;          0</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;16000&quot;&#125;        100</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;64000&quot;&#125;        160</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;256000&quot;&#125;     260 # value 小于25600的个数统计，包含前一段的数据</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;1024000&quot;&#125;  780</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_bucket&#123;le=&quot;+Inf&quot;&#125;           780 # prometheus 自添加的范围</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_sum 1.1540798e+09  #value 统计,prometheus自行处理</span><br><span class="line">prometheus_tsdb_compaction_chunk_range_count 780  #个数总计，prometheus自行处理</span><br><span class="line"></span><br><span class="line"># summary 类型示例</span><br><span class="line">&lt;---------metric name-----&gt;&lt;quantile range&gt;  &lt;value&gt;</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0&quot;&#125;        3.1888e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.25&quot;&#125; 3.6715e-05 # 25%小于3.6715e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.5&quot;&#125;    5.1522e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;0.75&quot;&#125; 8.1027e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile=&quot;1&quot;&#125;      0.000161162</span><br><span class="line">go_gc_duration_seconds_sum 0.001803144 # gc的总时间，prometheus自行处理</span><br><span class="line">go_gc_duration_seconds_count 27 #gc 的次数，prometheus自行处理</span><br></pre></td></tr></table></figure></p>
+<h2 id="二-应用埋点："><a href="#二-应用埋点：" class="headerlink" title="二.应用埋点："></a>二.应用埋点：</h2><h4 id="1-前提-监控的规范配置-："><a href="#1-前提-监控的规范配置-：" class="headerlink" title="1.前提(监控的规范配置)："></a>1.前提(监控的规范配置)：</h4><p>prometheus支持自动发现机制，需要我们在应用部署的yaml添加配置支持，分为service和pod,某些部署应用只有pod没有service，这种情况只能在pod上加配置，通过pods采集metrics。如果有service，就无需在pod加配置，直接在service上加即可。否则，prometheus将采集两次数据，service-endpoints最终也会落到pod上。</p>
+<h4 id="pod"><a href="#pod" class="headerlink" title="pod"></a>pod</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">annotations:</span></span><br><span class="line">        <span class="string">prometheus.io/scrape，为true则会将pod作为监控目标。</span></span><br><span class="line">        <span class="string">prometheus.io/path，默认为/metrics</span></span><br><span class="line">        <span class="string">prometheus.io/port</span> <span class="string">,</span> <span class="string">端口</span></span><br><span class="line">   <span class="attr">labels:</span>   <span class="comment"># 添加额外的信息，在采集时填入metrics labels</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：经过测试，一个POD只支持一个path的配置，当一个POD中有多个container的metrics,考虑使用pushgateway,此时应当在采集时区分来自应用，最佳的做法:分开部署。</p>
+</blockquote>
+<h4 id="service-endpoints"><a href="#service-endpoints" class="headerlink" title="service-endpoints"></a>service-endpoints</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">metadata:</span></span><br><span class="line">    <span class="attr">annotations:</span></span><br><span class="line">       <span class="string">prometheus.io/scrape，为true则会将pod作为监控目标。</span></span><br><span class="line">       <span class="string">prometheus.io/path，默认为/metrics</span></span><br><span class="line">       <span class="string">prometheus.io/port</span> <span class="string">,</span> <span class="string">端口</span></span><br><span class="line">       <span class="string">prometheus.io/scheme</span> <span class="string">默认http，如果为了安全设置了https，此处需要改为https</span></span><br><span class="line">   <span class="attr">labels:</span>   <span class="comment"># 添加额外的信息，在采集时填入metrics labels</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-开发"><a href="#2-开发" class="headerlink" title="2.开发"></a>2.开发</h4><p>在应用中埋点，需要引入对应语言的<a href="https://github.com/prometheus" target="_blank" rel="noopener">prometheus库</a>.<br><strong>埋点的原理：</strong>埋点的产生的metrics将一直在内存中，依据应用的运行状态更新value,直到应用停止运行<br>适用于：</p>
+<ul>
+<li>记录系统的资源使用情况，</li>
+<li>应用的运行状态</li>
+<li><p>错误发生的计数<br>…</p>
+<p>应用埋点产生可控的metrics,metrics不应当用于记录用户的行为，随着运行时长(用户增加)，产生大量metrics，占满内存。需要持久化与用户强相关的数据，不应当使用prometheus，metrics只用记录应用运行状态，存于内存中。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/09/11/prometheus指南/" target="_blank" title="prometheus指南">https://vaniot-s.github.io/2019/09/11/prometheus指南/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/04/k8s/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">K8S搭建</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-监控指标-Metrics-："><span class="nav-number">1.</span> <span class="nav-text">一.监控指标(Metrics)：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-组成"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-四种类型："><span class="nav-number">1.0.2.</span> <span class="nav-text">2.四种类型：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-应用埋点："><span class="nav-number">2.</span> <span class="nav-text">二.应用埋点：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-前提-监控的规范配置-："><span class="nav-number">2.0.1.</span> <span class="nav-text">1.前提(监控的规范配置)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pod"><span class="nav-number">2.0.2.</span> <span class="nav-text">pod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#service-endpoints"><span class="nav-number">2.0.3.</span> <span class="nav-text">service-endpoints</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-开发"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.开发</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

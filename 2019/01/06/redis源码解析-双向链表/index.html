@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>redis源码解析--双向链表 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="redis">
+  
+  
+  
+  
+  <meta name="description" content="redis https://github.com/antirez/redis/blob/5.0/src/adlist.hhttps://github.com/antirez/redis/blob/5.0/src/adlist.c  结构体的定义结构体的实现,双向链表的相关定义于adlist.h中节点:123456typedef struct listNode &amp;#123;    struct l">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis源码解析--双向链表">
+<meta property="og:url" content="https://vaniot-s.github.io/2019/01/06/redis源码解析-双向链表/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="redis https://github.com/antirez/redis/blob/5.0/src/adlist.hhttps://github.com/antirez/redis/blob/5.0/src/adlist.c  结构体的定义结构体的实现,双向链表的相关定义于adlist.h中节点:123456typedef struct listNode &amp;#123;    struct l">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/vaniot-s/picture/master/redis/Source/adlist/List.png">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis源码解析--双向链表">
+<meta name="twitter:description" content="redis https://github.com/antirez/redis/blob/5.0/src/adlist.hhttps://github.com/antirez/redis/blob/5.0/src/adlist.c  结构体的定义结构体的实现,双向链表的相关定义于adlist.h中节点:123456typedef struct listNode &amp;#123;    struct l">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/vaniot-s/picture/master/redis/Source/adlist/List.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-redis源码解析-双向链表" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      redis源码解析--双向链表
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/01/06/redis源码解析-双向链表/" class="article-date">
+	  <time datetime="2019-01-06T16:57:57.000Z" itemprop="datePublished">2019-01-06</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/basic/">basic</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">1.8k</span>字  
+      预计:<span class="post-count">8</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>redis <a href="https://github.com/antirez/redis/blob/5.0/src/adlist.h" target="_blank" rel="noopener">https://github.com/antirez/redis/blob/5.0/src/adlist.h</a><br><a href="https://github.com/antirez/redis/blob/5.0/src/adlist.c" target="_blank" rel="noopener">https://github.com/antirez/redis/blob/5.0/src/adlist.c</a></p>
+</blockquote>
+<h2 id="结构体的定义"><a href="#结构体的定义" class="headerlink" title="结构体的定义"></a>结构体的定义</h2><p>结构体的实现,双向链表的相关定义于<code>adlist.h</code>中<br>节点:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">prev</span>;</span> <span class="comment">//前一个节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> *<span class="title">next</span>;</span> <span class="comment">//后一个节点</span></span><br><span class="line">    <span class="keyword">void</span> *value; <span class="comment">//节点的值</span></span><br><span class="line">&#125; listNode;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>迭代器:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listIter</span> &#123;</span></span><br><span class="line">    listNode *next; <span class="comment">//指向节点</span></span><br><span class="line">    <span class="keyword">int</span> direction; <span class="comment">//迭代器的方向 迭代方向由常量AL_START_HEAD及AL_START_TAIL 指示</span></span><br><span class="line">&#125; listIter;</span><br></pre></td></tr></table></figure></p>
+<p>链表结构:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">    listNode *head; <span class="comment">//链表的头结点</span></span><br><span class="line">    listNode *tail;<span class="comment">//链表的尾节点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//函数指针如类中的成员函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr); <span class="comment">//复制</span></span><br><span class="line">    <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr); <span class="comment">//清空</span></span><br><span class="line">    <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key); <span class="comment">//匹配链表节点的值</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len; <span class="comment">//链表的长度</span></span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure></p>
+<p>list链表结构:<br><img src="https://raw.githubusercontent.com/vaniot-s/picture/master/redis/Source/adlist/List.png" alt="链表结构图"></p>
+<h2 id="链表的操作"><a href="#链表的操作" class="headerlink" title="链表的操作"></a>链表的操作</h2><h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><p>创建空链表<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">list</span> *<span class="title">listCreate</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list</span> *<span class="title">list</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((<span class="built_in">list</span> = zmalloc(<span class="keyword">sizeof</span>(*<span class="built_in">list</span>))) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">//初始化属性</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;head = <span class="built_in">list</span>-&gt;tail = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="built_in">list</span>-&gt;len = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">list</span>-&gt;dup = <span class="literal">NULL</span>;  <span class="comment">//</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;<span class="built_in">free</span> = <span class="literal">NULL</span>; <span class="comment">//</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;match = <span class="literal">NULL</span>; <span class="comment">//</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>; <span class="comment">//返回链表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="链表的删除操作"><a href="#链表的删除操作" class="headerlink" title="链表的删除操作"></a>链表的删除操作</h3><p>清空链表中的元素,不删除链表本身:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listEmpty</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>)</span> <span class="comment">//O(n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> len;</span><br><span class="line">    listNode *current, *next; <span class="comment">//指向当前,接下来的节点</span></span><br><span class="line"></span><br><span class="line">    current = <span class="built_in">list</span>-&gt;head; <span class="comment">//指向头结点</span></span><br><span class="line">    len = <span class="built_in">list</span>-&gt;len; <span class="comment">//链表的长度</span></span><br><span class="line">    <span class="keyword">while</span>(len--) &#123; <span class="comment">//</span></span><br><span class="line">        next = current-&gt;next; <span class="comment">//</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;<span class="built_in">free</span>) <span class="built_in">list</span>-&gt;<span class="built_in">free</span>(current-&gt;value);  <span class="comment">//是否有自带的free方法,先使用释放当前值</span></span><br><span class="line">        zfree(current); <span class="comment">//释放节点</span></span><br><span class="line">        current = next; <span class="comment">//指向下一个节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">list</span>-&gt;head = <span class="built_in">list</span>-&gt;tail = <span class="literal">NULL</span>; <span class="comment">//循环清空</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;len = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>释放链表:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listRelease</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>)</span> <span class="comment">//O(n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listEmpty(<span class="built_in">list</span>); <span class="comment">//释放链表中的元素</span></span><br><span class="line">    zfree(<span class="built_in">list</span>);<span class="comment">//释放链表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="在链表中添加元素"><a href="#在链表中添加元素" class="headerlink" title="在链表中添加元素"></a>在链表中添加元素</h3><p>对于链表的指针添加操作.三种方法,若链表为空或添加到链表头(尾),采用<code>ListAddNodeHead()</code>或<code>ListAddNodeTail()</code>其时间复杂度为$O(1)$,不为空<code>listInsertNode</code>时间复杂度仍为$O(1)$.<br>头部添加<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">list</span> *<span class="title">listAddNodeHead</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, <span class="keyword">void</span> *value)</span> <span class="comment">//O(1)头插法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listNode *node; <span class="comment">//node</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((node = zmalloc(<span class="keyword">sizeof</span>(*node))) == <span class="literal">NULL</span>) <span class="comment">//申请空间</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node-&gt;value = value; <span class="comment">//将链表值复制</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//第一个节点</span></span><br><span class="line">        <span class="built_in">list</span>-&gt;head = <span class="built_in">list</span>-&gt;tail = node;</span><br><span class="line">        node-&gt;prev = node-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        node-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">        node-&gt;next = <span class="built_in">list</span>-&gt;head;</span><br><span class="line">        <span class="built_in">list</span>-&gt;head-&gt;prev = node;</span><br><span class="line">        <span class="built_in">list</span>-&gt;head = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">list</span>-&gt;len++;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>尾部添加<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">list</span> *<span class="title">listAddNodeTail</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, <span class="keyword">void</span> *value)</span> <span class="comment">//O(1)尾插法</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listNode *node;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((node = zmalloc(<span class="keyword">sizeof</span>(*node))) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node-&gt;value = value;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">list</span>-&gt;head = <span class="built_in">list</span>-&gt;tail = node;</span><br><span class="line">        node-&gt;prev = node-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        node-&gt;prev = <span class="built_in">list</span>-&gt;tail;</span><br><span class="line">        node-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">list</span>-&gt;tail-&gt;next = node;</span><br><span class="line">        <span class="built_in">list</span>-&gt;tail = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">list</span>-&gt;len++;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在指定的位置添加<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">list</span> *<span class="title">listInsertNode</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, listNode *old_node, <span class="keyword">void</span> *value, <span class="keyword">int</span> after)</span> </span>&#123; <span class="comment">//O(1)将值插入指定节点后,listNode一定是存在的.</span></span><br><span class="line">    listNode *node; <span class="comment">//申请节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((node = zmalloc(<span class="keyword">sizeof</span>(*node))) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    node-&gt;value = value;<span class="comment">//节点赋值</span></span><br><span class="line">    <span class="keyword">if</span> (after) &#123;</span><br><span class="line">        <span class="comment">//old_node之后插入</span></span><br><span class="line">        node-&gt;prev = old_node; <span class="comment">//</span></span><br><span class="line">        node-&gt;next = old_node-&gt;next;</span><br><span class="line">        <span class="comment">//如果指定的节点是尾节点,处理尾指针</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;tail == old_node) &#123;</span><br><span class="line">            <span class="built_in">list</span>-&gt;tail = node; <span class="comment">//</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//插入到old_node之前</span></span><br><span class="line">        node-&gt;next = old_node;</span><br><span class="line">        node-&gt;prev = old_node-&gt;prev;</span><br><span class="line">        <span class="comment">//如果指定的节点是头节点,处理头指针</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;head == old_node) &#123;</span><br><span class="line">            <span class="built_in">list</span>-&gt;head = node;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果插入的节点不是头指针</span></span><br><span class="line">    <span class="keyword">if</span> (node-&gt;prev != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        node-&gt;prev-&gt;next = node;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">//如果插入的节点不是尾指针</span></span><br><span class="line">    <span class="keyword">if</span> (node-&gt;next != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        node-&gt;next-&gt;prev = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">list</span>-&gt;len++;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改链表"><a href="#修改链表" class="headerlink" title="修改链表"></a>修改链表</h3><p>将链表的尾节点移动至头结点,可用于将链表反转<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listRotate</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>)</span> </span>&#123; <span class="comment">//O(1)</span></span><br><span class="line">    listNode *tail = <span class="built_in">list</span>-&gt;tail; <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (listLength(<span class="built_in">list</span>) &lt;= <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Detach current tail */</span></span><br><span class="line">    <span class="comment">//将尾节点的前驱更新为尾节点</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;tail = tail-&gt;prev;</span><br><span class="line">    <span class="built_in">list</span>-&gt;tail-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="comment">/* Move it as head */</span></span><br><span class="line">    <span class="comment">//将尾节点插入头节点前</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;head-&gt;prev = tail;</span><br><span class="line">    tail-&gt;prev = <span class="literal">NULL</span>;</span><br><span class="line">    tail-&gt;next = <span class="built_in">list</span>-&gt;head;</span><br><span class="line">    <span class="built_in">list</span>-&gt;head = tail;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listDelNode</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, listNode *node)</span> <span class="comment">//O(1)删除节点</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//处理前驱节点指针</span></span><br><span class="line">    <span class="keyword">if</span> (node-&gt;prev) <span class="comment">//不是头结点</span></span><br><span class="line">        node-&gt;prev-&gt;next = node-&gt;next;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">list</span>-&gt;head = node-&gt;next;</span><br><span class="line">         <span class="comment">//处理后继节点指针</span></span><br><span class="line">    <span class="keyword">if</span> (node-&gt;next) <span class="comment">//不是尾节点</span></span><br><span class="line">        node-&gt;next-&gt;prev = node-&gt;prev;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">list</span>-&gt;tail = node-&gt;prev;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;<span class="built_in">free</span>) <span class="built_in">list</span>-&gt;<span class="built_in">free</span>(node-&gt;value); <span class="comment">//释放节点值</span></span><br><span class="line">    zfree(node); <span class="comment">//删除节点</span></span><br><span class="line">    <span class="built_in">list</span>-&gt;len--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p>搜索链表节点返回匹配给定键值的第一个节点.<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">listNode *<span class="title">listSearchKey</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, <span class="keyword">void</span> *key)</span> <span class="comment">//O(n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listIter iter;</span><br><span class="line">    listNode *node;</span><br><span class="line"></span><br><span class="line">    listRewind(<span class="built_in">list</span>, &amp;iter); <span class="comment">//迭代器,指向头结点开始搜索</span></span><br><span class="line">    <span class="keyword">while</span>((node = listNext(&amp;iter)) != <span class="literal">NULL</span>) &#123; <span class="comment">//迭代器</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;match) &#123; <span class="comment">//是否存在匹配的函数</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">list</span>-&gt;match(node-&gt;value, key)) &#123;</span><br><span class="line">                <span class="keyword">return</span> node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (key == node-&gt;value) &#123;</span><br><span class="line">                <span class="keyword">return</span> node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//不存在返回为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>返回指定索引的值,正数从链表头部为0开始,负数从链表的尾端开始-1即尾部<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">listNode *<span class="title">listIndex</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, <span class="keyword">long</span> index)</span> </span>&#123; <span class="comment">//O(n)</span></span><br><span class="line">    listNode *n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span>) &#123; <span class="comment">//从尾节点开始</span></span><br><span class="line">        index = (-index)<span class="number">-1</span>;</span><br><span class="line">        n = <span class="built_in">list</span>-&gt;tail;</span><br><span class="line">        <span class="keyword">while</span>(index-- &amp;&amp; n) n = n-&gt;prev;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        n = <span class="built_in">list</span>-&gt;head;</span><br><span class="line">        <span class="keyword">while</span>(index-- &amp;&amp; n) n = n-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="合并链表"><a href="#合并链表" class="headerlink" title="合并链表"></a>合并链表</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listJoin</span><span class="params">(<span class="built_in">list</span> *l, <span class="built_in">list</span> *o)</span> </span>&#123; <span class="comment">//将</span></span><br><span class="line">    <span class="keyword">if</span> (o-&gt;head) <span class="comment">//将O添加到l之后</span></span><br><span class="line">        o-&gt;head-&gt;prev = l-&gt;tail;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (l-&gt;tail) <span class="comment">//l不为空</span></span><br><span class="line">        l-&gt;tail-&gt;next = o-&gt;head;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        l-&gt;head = o-&gt;head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (o-&gt;tail) l-&gt;tail = o-&gt;tail; <span class="comment">//O不为空</span></span><br><span class="line">    l-&gt;len += o-&gt;len;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Setup other as an empty list. O为空节点*/</span></span><br><span class="line">    o-&gt;head = o-&gt;tail = <span class="literal">NULL</span>;</span><br><span class="line">    o-&gt;len = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="迭代器的相关操作"><a href="#迭代器的相关操作" class="headerlink" title="迭代器的相关操作"></a>迭代器的相关操作</h2><h3 id="创建迭代器"><a href="#创建迭代器" class="headerlink" title="创建迭代器"></a>创建迭代器</h3><p>创建链表的迭代器<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">listIter *<span class="title">listGetIterator</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, <span class="keyword">int</span> direction)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listIter *iter; <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((iter = zmalloc(<span class="keyword">sizeof</span>(*iter))) == <span class="literal">NULL</span>)  <span class="keyword">return</span> <span class="literal">NULL</span>; <span class="comment">//创建</span></span><br><span class="line">    <span class="keyword">if</span> (direction == AL_START_HEAD) <span class="comment">//根据迭代器的方向，将迭代器的指针指向表头</span></span><br><span class="line">        iter-&gt;next = <span class="built_in">list</span>-&gt;head;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">//或者表尾</span></span><br><span class="line">        iter-&gt;next = <span class="built_in">list</span>-&gt;tail;</span><br><span class="line">    iter-&gt;direction = direction; <span class="comment">//记录方向</span></span><br><span class="line">    <span class="keyword">return</span> iter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改迭代器"><a href="#修改迭代器" class="headerlink" title="修改迭代器"></a>修改迭代器</h3><p>将迭代器指向链表头,并正向<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listRewind</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, listIter *li)</span> </span>&#123; <span class="comment">//O(1)</span></span><br><span class="line">    li-&gt;next = <span class="built_in">list</span>-&gt;head;</span><br><span class="line">    li-&gt;direction = AL_START_HEAD;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将迭代器指向链表为,并逆向<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">listRewindTail</span><span class="params">(<span class="built_in">list</span> *<span class="built_in">list</span>, listIter *li)</span> </span>&#123; <span class="comment">// O(1)</span></span><br><span class="line">    li-&gt;next = <span class="built_in">list</span>-&gt;tail;</span><br><span class="line">    li-&gt;direction = AL_START_TAIL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="迭代器执行"><a href="#迭代器执行" class="headerlink" title="迭代器执行"></a>迭代器执行</h3><p>返回迭代器指向的元素,并移动迭代器<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">listNode *<span class="title">listNext</span><span class="params">(listIter *iter)</span> <span class="comment">//O(1)返回迭代器指向的元素,并移动迭代器</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    listNode *current = iter-&gt;next; <span class="comment">//指向iter指向的节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (current != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (iter-&gt;direction == AL_START_HEAD)</span><br><span class="line">            iter-&gt;next = current-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            iter-&gt;next = current-&gt;prev;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> current; <span class="comment">//返回当前迭代器指向的节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用迭代器操作链表"><a href="#使用迭代器操作链表" class="headerlink" title="使用迭代器操作链表"></a>使用迭代器操作链表</h2><h3 id="使用迭代器拷贝链表"><a href="#使用迭代器拷贝链表" class="headerlink" title="使用迭代器拷贝链表"></a>使用迭代器拷贝链表</h3><p> 复制整个列表。在内存不足返回NULL。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">list</span> *<span class="title">listDup</span><span class="params">(<span class="built_in">list</span> *orig)</span>  <span class="comment">//拷贝链表</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">list</span> *copy; <span class="comment">//链表指针</span></span><br><span class="line">    listIter iter; <span class="comment">//迭代器</span></span><br><span class="line">    listNode *node; <span class="comment">//节点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((copy = listCreate()) == <span class="literal">NULL</span>) <span class="comment">//创建链表</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="comment">//复制操作</span></span><br><span class="line">    copy-&gt;dup = orig-&gt;dup; </span><br><span class="line">    copy-&gt;<span class="built_in">free</span> = orig-&gt;<span class="built_in">free</span>;</span><br><span class="line">    copy-&gt;match = orig-&gt;match;</span><br><span class="line">    listRewind(orig, &amp;iter); <span class="comment">//将迭代器指向链表头</span></span><br><span class="line">    <span class="keyword">while</span>((node = listNext(&amp;iter)) != <span class="literal">NULL</span>) &#123; <span class="comment">//迭代器指为空</span></span><br><span class="line">        <span class="keyword">void</span> *value;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (copy-&gt;dup) &#123; <span class="comment">//是否有复制的函数</span></span><br><span class="line">            value = copy-&gt;dup(node-&gt;value);<span class="comment">//复制节点的值,返回复制节点的值</span></span><br><span class="line">            <span class="keyword">if</span> (value == <span class="literal">NULL</span>) &#123;<span class="comment">//值为空,复制失败</span></span><br><span class="line">                listRelease(copy); <span class="comment">//清除链表</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span></span><br><span class="line">            value = node-&gt;value; <span class="comment">//没有复制的函数,赋值操作</span></span><br><span class="line">        <span class="keyword">if</span> (listAddNodeTail(copy, value) == <span class="literal">NULL</span>) &#123; <span class="comment">//将值添加到尾端</span></span><br><span class="line">            listRelease(copy);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2019/01/06/redis源码解析-双向链表/" target="_blank" title="redis源码解析--双向链表">https://vaniot-s.github.io/2019/01/06/redis源码解析-双向链表/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/11/redis源码解析-sds/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          redis源码解析--sds
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/05/TCP与UDP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">TCP与UDP</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体的定义"><span class="nav-number">1.</span> <span class="nav-text">结构体的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表的操作"><span class="nav-number">2.</span> <span class="nav-text">链表的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建链表"><span class="nav-number">2.1.</span> <span class="nav-text">创建链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表的删除操作"><span class="nav-number">2.2.</span> <span class="nav-text">链表的删除操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在链表中添加元素"><span class="nav-number">2.3.</span> <span class="nav-text">在链表中添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改链表"><span class="nav-number">2.4.</span> <span class="nav-text">修改链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除节点"><span class="nav-number">2.5.</span> <span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找"><span class="nav-number">2.6.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并链表"><span class="nav-number">3.</span> <span class="nav-text">合并链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器的相关操作"><span class="nav-number">4.</span> <span class="nav-text">迭代器的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建迭代器"><span class="nav-number">4.1.</span> <span class="nav-text">创建迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改迭代器"><span class="nav-number">4.2.</span> <span class="nav-text">修改迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器执行"><span class="nav-number">4.3.</span> <span class="nav-text">迭代器执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用迭代器操作链表"><span class="nav-number">5.</span> <span class="nav-text">使用迭代器操作链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用迭代器拷贝链表"><span class="nav-number">5.1.</span> <span class="nav-text">使用迭代器拷贝链表</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

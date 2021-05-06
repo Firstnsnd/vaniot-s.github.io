@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>c++格式化输出 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="C++">
+  
+  
+  
+  
+  <meta name="description" content="1.格式输出在输入输出流中使用控制符输入输出流中的控制语句    控制符 作用       dec 设置数值的基数为10     hex 设置数值的基数为16     oct 设置数值的基数为8     setfill(c) 设置填充字符c，c可以是字符常量或字符变量     setprecision(n) 设置浮点数的精度为n位,在以一般十进制小数形式输出时，n代表有效数字。在以fixed(固定">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++格式化输出">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/02/04/C-格式化输出/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="1.格式输出在输入输出流中使用控制符输入输出流中的控制语句    控制符 作用       dec 设置数值的基数为10     hex 设置数值的基数为16     oct 设置数值的基数为8     setfill(c) 设置填充字符c，c可以是字符常量或字符变量     setprecision(n) 设置浮点数的精度为n位,在以一般十进制小数形式输出时，n代表有效数字。在以fixed(固定">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++格式化输出">
+<meta name="twitter:description" content="1.格式输出在输入输出流中使用控制符输入输出流中的控制语句    控制符 作用       dec 设置数值的基数为10     hex 设置数值的基数为16     oct 设置数值的基数为8     setfill(c) 设置填充字符c，c可以是字符常量或字符变量     setprecision(n) 设置浮点数的精度为n位,在以一般十进制小数形式输出时，n代表有效数字。在以fixed(固定">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-C-格式化输出" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      C++格式化输出
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/02/04/C-格式化输出/" class="article-date">
+	  <time datetime="2018-02-04T02:01:01.000Z" itemprop="datePublished">2018-02-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/basic/">basic</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">2.3k</span>字  
+      预计:<span class="post-count">9</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="1-格式输出"><a href="#1-格式输出" class="headerlink" title="1.格式输出"></a>1.格式输出</h3><h4 id="在输入输出流中使用控制符"><a href="#在输入输出流中使用控制符" class="headerlink" title="在输入输出流中使用控制符"></a><strong>在输入输出流中使用控制符</strong></h4><p>输入输出流中的控制语句</p>
+<table>
+<thead>
+<tr>
+<th>控制符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  dec</td>
+<td>设置数值的基数为10</td>
+</tr>
+<tr>
+<td>  hex</td>
+<td>设置数值的基数为16</td>
+</tr>
+<tr>
+<td>  oct</td>
+<td>设置数值的基数为8</td>
+</tr>
+<tr>
+<td>  setfill(c)</td>
+<td>设置填充字符c，c可以是字符常量或字符变量</td>
+</tr>
+<tr>
+<td>  setprecision(n)</td>
+<td>设置浮点数的精度为n位,在以一般十进制小数形式输出时，n代表有效数字。在以fixed(固定小数位数)形式和 scientific(指数)形式输出时，n为小数位数</td>
+</tr>
+<tr>
+<td>  setw(n)</td>
+<td>设置字段宽为n</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::fixed)</td>
+<td>设置浮点数以固定的小数位数显示</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::scient)</td>
+<td>设置浮点数以科学记数(指数形式)显示</td>
+</tr>
+<tr>
+<td>  setiosflags(ios:left)</td>
+<td>输出数据左对齐</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::right)</td>
+<td>输出数据右对齐</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::skipws)</td>
+<td>忽略前导的空格</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::uppercase)</td>
+<td>数据以十六进制形式输出字母以大写表示</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::lowercase)</td>
+<td>数据以十六进制形式输出时字母以小写表示</td>
+</tr>
+<tr>
+<td>  setiosflags(ios::showpos)</td>
+<td>输出正数时给”+”号</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果使用了控制符，在程序单位的开头除了要加iostream头文件外，还要加iomanip头文件。<br><a id="more"></a></p>
+</blockquote>
+<h4 id="使用格式输出的头文件-iomanip"><a href="#使用格式输出的头文件-iomanip" class="headerlink" title="使用格式输出的头文件:iomanip"></a><strong>使用格式输出的头文件:iomanip</strong></h4><p>函数：</p>
+<table>
+<thead>
+<tr>
+<th>流成员函数</th>
+<th>相同作用的控制函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  precision(n)</td>
+<td>setprecision(n)</td>
+<td>设置实数的精度为n位</td>
+</tr>
+<tr>
+<td>  width(n)</td>
+<td>setw(n)</td>
+<td>设置字段的宽度为n位</td>
+</tr>
+<tr>
+<td>  fill(c)</td>
+<td>setfill(c)</td>
+<td>设置填充字符c</td>
+</tr>
+<tr>
+<td>  setf()</td>
+<td>setiosflags()</td>
+<td>设置输出格式状态，括号中应给出格式状态设置标志，内容与控制符setiosflags括号中的内容相同</td>
+</tr>
+<tr>
+<td>  unsetf()</td>
+<td>resetioflags()</td>
+<td>终止已设置的输出格式状态，在括号中给出设置输出状态的标志符</td>
+</tr>
+</tbody>
+</table>
+<p>设置格式状态的格式标志：<br>     流成员函数setf和控制符setiosflags括号中的参数表示格式状态，它是通过格式标志来指定的。格式标志在类ios中被定义为枚举值。因此在引用这些格式标志时要在前面加上类名ios和域运算符“::</p>
+<table>
+<thead>
+<tr>
+<th>格式标志</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  ios::left</td>
+<td>输出数据在文本域宽范围内向左对齐</td>
+</tr>
+<tr>
+<td>  ios::right</td>
+<td>输出数据在文本域宽范围内向右对齐</td>
+</tr>
+<tr>
+<td>  ios::internal</td>
+<td>数值的符号位在域宽内左对齐,数字右对齐，中间由填充字符填充</td>
+</tr>
+<tr>
+<td>  ios::dec</td>
+<td>设置整数的基数为10</td>
+</tr>
+<tr>
+<td>  ios::oct</td>
+<td>设置整数的基数为8</td>
+</tr>
+<tr>
+<td>  ios::hex</td>
+<td>设置整数的基数为16</td>
+</tr>
+<tr>
+<td>  ios::showbase</td>
+<td>强制输出整数的基数(八进制数用0打头,十六进制以0x打头)</td>
+</tr>
+<tr>
+<td>  ios::showpiont</td>
+<td>强制输出浮点数的小点和位数0</td>
+</tr>
+<tr>
+<td>  ios::uppercase</td>
+<td>在以科学计数法格式E和以十六进制输出字母时以大写表示</td>
+</tr>
+<tr>
+<td>  ios::showpos</td>
+<td>对正数显示”+”号</td>
+</tr>
+<tr>
+<td>  ios::scientific</td>
+<td>浮点数以科学计数法格式输出</td>
+</tr>
+<tr>
+<td>  ios::fixed</td>
+<td>浮点数以定点格式(小数形式)输出</td>
+</tr>
+<tr>
+<td>  ios::unitbuf</td>
+<td>每次输出后刷新所有的流</td>
+</tr>
+<tr>
+<td>  iosL::stdio</td>
+<td>每次输出后清除stdout，stderr</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;iomanip&gt;//不要忘记包含此头文件</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   int a;</span><br><span class="line">   cout&lt;&lt;&quot;input a:&quot;;</span><br><span class="line">   cin&gt;&gt;a;</span><br><span class="line">   cout&lt;&lt;&quot;dec:&quot;&lt;&lt;dec&lt;&lt;a&lt;&lt;endl;  //以十进制形式输出整数</span><br><span class="line">   cout&lt;&lt;&quot;hex:&quot;&lt;&lt;hex&lt;&lt;a&lt;&lt;endl;  //以十六进制形式输出整数a</span><br><span class="line">   cout&lt;&lt;&quot;oct:&quot;&lt;&lt;setbase(8)&lt;&lt;a&lt;&lt;endl;  //以八进制形式输出整数a</span><br><span class="line">   char *pt=&quot;China&quot;;  //pt指向字符串&quot;China&quot;</span><br><span class="line">   cout&lt;&lt;setw(10)&lt;&lt;pt&lt;&lt;endl;  //指定域宽为,输出字符串</span><br><span class="line">   cout&lt;&lt;setfill(&apos;*&apos;)&lt;&lt;setw(10)&lt;&lt;pt&lt;&lt;endl;  //指定域宽,输出字符串,空白处以&apos;*&apos;填充</span><br><span class="line">   double pi=22.0/7.0;  //计算pi值</span><br><span class="line">   //按指数形式输出,8位小数</span><br><span class="line">   cout&lt;&lt;setiosflags(ios::scientific)&lt;&lt;setprecision(8);</span><br><span class="line">   cout&lt;&lt;&quot;pi=&quot;&lt;&lt;pi&lt;&lt;endl;  //输出pi值</span><br><span class="line">   cout&lt;&lt;&quot;pi=&quot;&lt;&lt;setprecision(4)&lt;&lt;pi&lt;&lt;endl;  //改为位小数 4位小数</span><br><span class="line">   cout&lt;&lt;&quot;pi=&quot;&lt;&lt;setiosflags(ios::fixed)&lt;&lt;pi&lt;&lt;endl;  //改为小数形式输出</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main( )</span><br><span class="line">&#123;</span><br><span class="line">   int a=21</span><br><span class="line">   cout.setf(ios::showbase);//显示基数符号(0x或)</span><br><span class="line">   cout&lt;&lt;&quot;dec:&quot;&lt;&lt;a&lt;&lt;endl;         //默认以十进制形式输出a</span><br><span class="line">   cout.unsetf(ios::dec);         //终止十进制的格式设置</span><br><span class="line">   cout.setf(ios::hex);           //设置以十六进制输出的状态</span><br><span class="line">   cout&lt;&lt;&quot;hex:&quot;&lt;&lt;a&lt;&lt;endl;         //以十六进制形式输出a</span><br><span class="line">   cout.unsetf(ios::hex);         //终止十六进制的格式设置</span><br><span class="line">   cout.setf(ios::oct);           //设置以八进制输出的状态</span><br><span class="line">   cout&lt;&lt;&quot;oct:&quot;&lt;&lt;a&lt;&lt;endl;         //以八进制形式输出a</span><br><span class="line">   cout.unseft(ios::oct);</span><br><span class="line">   char *pt=&quot;China&quot;;              //pt指向字符串&quot;China&quot;</span><br><span class="line">   cout.width(10);                //指定域宽为</span><br><span class="line">   cout&lt;&lt;pt&lt;&lt;endl;                //输出字符串</span><br><span class="line">   cout.width(10);                //指定域宽为</span><br><span class="line">   cout.fill(&apos;*&apos;);                //指定空白处以&apos;*&apos;填充</span><br><span class="line">   cout&lt;&lt;pt&lt;&lt;endl;                //输出字符串</span><br><span class="line">   double pi=22.0/7.0;            //输出pi值</span><br><span class="line">   cout.setf(ios::scientific);    //指定用科学记数法输出</span><br><span class="line">   cout&lt;&lt;&quot;pi=&quot;;                   //输出&quot;pi=&quot;</span><br><span class="line">   cout.width(14);                //指定域宽为</span><br><span class="line">   cout&lt;&lt;pi&lt;&lt;endl;                //输出pi值</span><br><span class="line">   cout.unsetf(ios::scientific); //终止科学记数法状态</span><br><span class="line">   cout.setf(ios::fixed);        //指定用定点形式输出</span><br><span class="line">   cout.width(12);               //指定域宽为</span><br><span class="line">   cout.setf(ios::showpos);      //正数输出“+”号</span><br><span class="line">   cout.setf(ios::internal);     //数符出现在左侧</span><br><span class="line">   cout.precision(6);            //保留位小数</span><br><span class="line">   cout&lt;&lt;pi&lt;&lt;endl;               //输出pi,注意数符“+”的位置</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用stdio-h"><a href="#使用stdio-h" class="headerlink" title="使用stdio.h"></a><strong>使用stdio.h</strong></h4><p>printf()操作字符串的可以有：</p>
+<ul>
+<li>字符串的左、右对齐</li>
+<li>字符串打印长度的设置</li>
+<li>字符串填充符的前后设定</li>
+<li>‘char’与数字的相互转换<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  // 正常的打印字符串</span><br><span class="line">    printf(&quot;%s|end\n&quot;, &quot;test123&quot;);</span><br><span class="line">    // 设定打印的%s字符串长度最小值为10，长度不足10时默认在字符串的左边填充&apos; &apos;空格。</span><br><span class="line">    printf(&quot;%10s|end\n&quot;, &quot;test123&quot;);</span><br><span class="line">    // 设定打印的%s字符串长度最小值为10，长度不足10时默认在字符串的右边填充&apos; &apos;空格。</span><br><span class="line">    printf(&quot;%-10s|end\n&quot;, &quot;test123&quot;);</span><br><span class="line">    // 设定打印的%s字符串长度最小值为10，长度不足10时默认在字符串的左边填充&apos;0&apos;空格。</span><br><span class="line">    printf(&quot;%010s|end\n&quot;, &quot;test123&quot;);</span><br><span class="line">    // 打印出ASCII码表中数字所代表的字符</span><br><span class="line">    printf(&quot;%c%c%c%c%c %d %d %d %d %d.\n&quot;, 72, 101, 108, 108, 111, &apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;);</span><br><span class="line">// output</span><br><span class="line">test123|end</span><br><span class="line">   test123|end</span><br><span class="line">test123   |end</span><br><span class="line">000test123|end</span><br><span class="line">Hello 72 101 108 108 111.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>1.设定数字的输出进制表达式<br>o:八进制<br>d:十进制<br>u:无符号数的十进制<br>x:十六进制(字母部分大写)<br>X:十六进制(字母部分小写)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  printf(&quot;%o %d %u %d %x %X\n&quot;, 123, 123, -123, -123, 123, 123);</span><br><span class="line">// output</span><br><span class="line">173 123 4294967173 -123 7b 7B</span><br></pre></td></tr></table></figure></p>
+<p>操作数字打印的长度及精度<br>操作数字打印的左、右对齐方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// %f默认小数点后6位数</span><br><span class="line">    printf(&quot;%f|end\n&quot;, 12.3);</span><br><span class="line">    // %f默认小数点后2位数</span><br><span class="line">    printf(&quot;%.2f|end\n&quot;, 12.3);</span><br><span class="line">    // %f默认小数点后2位数，打印的字符串长度最小值为6，不足的个数用&apos; &apos;填充在左边</span><br><span class="line">    printf(&quot;%6.2f|end\n&quot;, 12.3);</span><br><span class="line">    // %f默认小数点后2位数，打印的字符串长度最小值为6，不足的个数用&apos; &apos;填充在左边</span><br><span class="line">    printf(&quot;% 6.2f|end\n&quot;, 12.3);</span><br><span class="line">    // %f默认小数点后2位数，打印的字符串长度最小值为6，不足的个数用&apos;0&apos;填充在左边</span><br><span class="line">    printf(&quot;%06.2f|end\n&quot;, 12.3);</span><br><span class="line">    // %f默认小数点后2位数，打印的字符串长度最小值为6，不足的个数用&apos; &apos;填充在右边</span><br><span class="line">    printf(&quot;%-6.2f|end\n&quot;, 12.3);</span><br><span class="line">// output</span><br><span class="line">12.300000|end</span><br><span class="line">12.30|end</span><br><span class="line"> 12.30|end</span><br><span class="line"> 12.30|end</span><br><span class="line">012.30|end</span><br><span class="line">12.30 |end</span><br><span class="line">  // 默认小数点后6位，e小写</span><br><span class="line">    printf(&quot;%e \n&quot;, 1.23f);</span><br><span class="line">    // 默认小数点后6位，E大写</span><br><span class="line">    printf(&quot;%E \n&quot;, 1.23f);</span><br><span class="line">    // 设置小数点后2位，总长度最小值为10，不足默认用‘ ’空格在左边填充，E大写</span><br><span class="line">    printf(&quot;%10.2E|end \n&quot;, 1.23f);</span><br><span class="line">    // 设置小数点后2位，总长度最小值为10，不足默认用‘ ’空格在左边填充，E大写</span><br><span class="line">    printf(&quot;% 10.2E|end \n&quot;, 1.23f);</span><br><span class="line">    // 设置小数点后2位，总长度最小值为10，不足默认用‘0’在左边填充，E大写</span><br><span class="line">    printf(&quot;%010.2E|end \n&quot;, 1.23f);</span><br><span class="line">    // 设置小数点后2位，总长度最小值为10，不足默认用‘ ’空格在右边填充，E大写</span><br><span class="line">    printf(&quot;%-10.2E|end \n&quot;, 1.23f);</span><br><span class="line">// output</span><br><span class="line">1.230000e+00 </span><br><span class="line">1.230000E+00 </span><br><span class="line">  1.23E+00|end </span><br><span class="line">  1.23E+00|end </span><br><span class="line">001.23E+00|end </span><br><span class="line">1.23E+00  |end</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-c-算法库"><a href="#2-c-算法库" class="headerlink" title="2.c++算法库"></a>2.c++算法库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;algorithm&gt; //算法库</span><br></pre></td></tr></table></figure>
+<p>1.排序函数<br>  sort(a,a+n)；//对a到a+n的元素进行排序</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/02/04/C-格式化输出/" target="_blank" title="C++格式化输出">https://vaniot-s.github.io/2018/02/04/C-格式化输出/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/04/Redis-一/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Redis(一)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/30/Markdown语法笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Markdown语法笔记</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式输出"><span class="nav-number">1.</span> <span class="nav-text">1.格式输出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在输入输出流中使用控制符"><span class="nav-number">1.1.</span> <span class="nav-text">在输入输出流中使用控制符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用格式输出的头文件-iomanip"><span class="nav-number">1.2.</span> <span class="nav-text">使用格式输出的头文件:iomanip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用stdio-h"><span class="nav-number">1.3.</span> <span class="nav-text">使用stdio.h</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-c-算法库"><span class="nav-number">2.</span> <span class="nav-text">2.c++算法库</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

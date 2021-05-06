@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>golang笔记 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="golang">
+  
+  
+  
+  
+  <meta name="description" content="Go环境变量GOROOT  golang当前的安装目录 GOPATH  golang工作区的集合，放置golang源码文件的目录，包含以下三个目录  123├── bin  //编译后的可执行文件├── pkg  //存放go install命令安装后的代码包的归档文件└── src  //源码存放，命令源码文件并不一定必须放在 src 文件夹 GOBIN  指向编译后的可执行文件，上述的bin目">
+<meta name="keywords" content="golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang笔记">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/10/31/golang笔记/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="Go环境变量GOROOT  golang当前的安装目录 GOPATH  golang工作区的集合，放置golang源码文件的目录，包含以下三个目录  123├── bin  //编译后的可执行文件├── pkg  //存放go install命令安装后的代码包的归档文件└── src  //源码存放，命令源码文件并不一定必须放在 src 文件夹 GOBIN  指向编译后的可执行文件，上述的bin目">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang笔记">
+<meta name="twitter:description" content="Go环境变量GOROOT  golang当前的安装目录 GOPATH  golang工作区的集合，放置golang源码文件的目录，包含以下三个目录  123├── bin  //编译后的可执行文件├── pkg  //存放go install命令安装后的代码包的归档文件└── src  //源码存放，命令源码文件并不一定必须放在 src 文件夹 GOBIN  指向编译后的可执行文件，上述的bin目">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-golang笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      golang笔记
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/10/31/golang笔记/" class="article-date">
+	  <time datetime="2018-10-31T01:36:30.000Z" itemprop="datePublished">2018-10-31</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/web/">web</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">1.2k</span>字  
+      预计:<span class="post-count">4</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="Go环境变量"><a href="#Go环境变量" class="headerlink" title="Go环境变量"></a>Go环境变量</h2><h3 id="GOROOT"><a href="#GOROOT" class="headerlink" title="GOROOT"></a>GOROOT</h3><p>  golang当前的安装目录</p>
+<h3 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h3><p>  golang工作区的集合，放置golang源码文件的目录，包含以下三个目录<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── bin  //编译后的可执行文件</span><br><span class="line">├── pkg  //存放go install命令安装后的代码包的归档文件</span><br><span class="line">└── src  //源码存放，命令源码文件并不一定必须放在 src 文件夹</span><br></pre></td></tr></table></figure></p>
+<h3 id="GOBIN"><a href="#GOBIN" class="headerlink" title="GOBIN"></a>GOBIN</h3><p>  指向编译后的可执行文件，上述的bin目录</p>
+<h3 id="GOOS-和-GOARCH"><a href="#GOOS-和-GOARCH" class="headerlink" title="GOOS 和 GOARCH"></a>GOOS 和 GOARCH</h3><p>  两个环境变量是不用我们设置的，系统就默认的。GOOS 是 Go 所在的操作系统类型，GOARCH 是 Go 所在的计算架构。<br>  <a id="more"></a></p>
+<h2 id="Go命令基础"><a href="#Go命令基础" class="headerlink" title="Go命令基础"></a>Go命令基础</h2><h3 id="go-run"><a href="#go-run" class="headerlink" title="go run"></a>go run</h3><p><code>go run</code>用于运行命令源码文件，只接受一个<b>命令源码文件</b><code>，go run</code>包含了<code>go build</code>的编译过程，可以接受<code>go build</code>的所有命令参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run [build flags] [-exec xprog] gofiles... [arguments...]</span><br></pre></td></tr></table></figure></p>
+<h3 id="go-build"><a href="#go-build" class="headerlink" title="go build"></a>go build</h3><p><code>go build</code>编译制定的源码文件或代码包及其依赖包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go build [-o output] [-i] [build flags] [packages]</span><br></pre></td></tr></table></figure></p>
+<p>参数<code>[-i]</code>:</p>
+<ul>
+<li><code>-a</code>对所有的相关代码包进行重新构建</li>
+<li><code>-n</code>打印编译时用到的命令，不执行</li>
+<li><code>-p n</code>指定编译时执行过程中的并行数量，默认为CPU的逻辑数量</li>
+<li><code>-race</code>开启竞态条件检测</li>
+<li><code>-work</code>打印编译时生成的临时工作目录的路径，编译结束后保留(默认删除)</li>
+<li><code>-x</code>打印编译期间用到的其他的命令，并将执行这些命令</li>
+<li><code>-asmflags</code></li>
+<li><code>-buildmode</code> 用于制定编译的模式<code>-buildmode=default</code>(使用默认的设置)，用于控制编译完成后生成静态链接库（即.a文件，也就是我们之前说的归档文件）、动态链接库（即.so文                   。件）或/和可执行文件。</li>
+<li><code>gcflags</code>用于制定需要传递给<code>go tool compile</code>的命令的标记文件</li>
+</ul>
+<h3 id="go-install"><a href="#go-install" class="headerlink" title="go install"></a>go install</h3><p>  编译并安装制定的代码包及它们的依赖包，比<code>go build</code>多一步，将编译后的结果文件安装到指定的目录</p>
+<h3 id="go-get"><a href="#go-get" class="headerlink" title="go get"></a>go get</h3><p>  将从互联网下载或更行制定的代码及其依赖包，并将编译和安装<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get [-d] [-f] [-fix] [-insecure] [-t] [-u] [build flags] [packages]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>-d</code> 命令只会执行下载操作，而不会执行安装动作</li>
+<li><code>-f</code> 与<code>-u</code>一同执行时才有效，让命令程序忽略已下载代码包的导入路径的检查。</li>
+<li><code>-fix</code> 下载代码包后先执行修正操作，在进行编译和安装。</li>
+<li><code>-insecure</code>允许使用非安全的<code>scheme</code>（如http）去下载指定的代码包。</li>
+<li><code>-t</code> 下载安装指定的代码包中的测试源码文件中的依赖的代码包</li>
+<li><code>-u</code> 利用网络更新已有代码包及其依赖包。</li>
+<li><code>-x</code> 查看<code>go get</code>执行过程中使用的所有命令</li>
+</ul>
+<h3 id="go-list"><a href="#go-list" class="headerlink" title="go list"></a>go list</h3><p>  列出指定的代码包的信息<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go list [-e] [-f format] [-json] [build flags] [packages]</span><br></pre></td></tr></table></figure></p>
+<h3 id="go-test"><a href="#go-test" class="headerlink" title="go test"></a>go test</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go test [build/test flags] [packages] [build/test flags &amp; test binary flags]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-c</code>生成用于测试的可执行文件，不执行</li>
+<li><code>-i</code>安装运行测试所需要的依赖包，不编译测试运行测试代码</li>
+<li><code>-o</code>指定用于运行测试可执行文件的名称，不影响测试代码的运行</li>
+</ul>
+<h3 id="go-tool"><a href="#go-tool" class="headerlink" title="go tool"></a>go tool</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go tool [-n] command [args...]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>go tool pprof命令来交互式的访问概要文件的内容。会分析指定的概要文件，并会提供高可读性的输出信息。</li>
+<li>go tool cgo这个工具可以使我们创建能够调用C语言代码的Go语言源码文件。</li>
+</ul>
+<h3 id="go-fmt"><a href="#go-fmt" class="headerlink" title="go fmt"></a>go fmt</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go fmt [-n] [-x] [packages]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-n</code>打印编译期间所用到的其它命令，但是不执行它们。</li>
+<li><code>-x</code>可以看到<code>go get</code>命令执行过程中所使用的所有命令。</li>
+</ul>
+<h2 id="go-clean"><a href="#go-clean" class="headerlink" title="go clean"></a>go clean</h2><p>删除执行其他命令时产生的文件和目录(go build和go test)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go clean [-i] [-r] [-n] [-x] [build flags] [packages]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>- r</code>当前代码包的所有依赖包及<code>go build</code>和<code>go test</code>相关</li>
+<li><code>-i</code>除安装当前代码包时所产生的结果文件</li>
+</ul>
+<h2 id="go-doc"><a href="#go-doc" class="headerlink" title="go doc"></a>go doc</h2><p>可以打印附于Go语言程序实体上的文档。我们可以通过把程序实体的标识符作为该命令的参数来达到查看其文档的目的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go doc [-u] [-c] [package|[package.]symbol[.method]]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>-c</code>加入此标记后会使go doc命令区分参数中字母的大小写。</li>
+<li><code>-cmd</code>打印出main包中的可导出的程序实体（其名称的首字母大写）的文档。</li>
+<li><code>-u</code>打印出不可导出的程序实体（其名称的首字母小写）的文档。</li>
+<li><code>godoc</code>用于展示指定代码包的文档。在Go语言的1.5版本以后，它是一个内置的标准命令。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">godoc -http=:6060标记-http的值:6060表示启动的Web服务器使用本机的6060端口。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="go-generate"><a href="#go-generate" class="headerlink" title="go generate"></a>go generate</h2><p><code>go generate</code>可以用来自动自成Go代码的命令。</p>
+<h1 id="go语言特性"><a href="#go语言特性" class="headerlink" title="go语言特性"></a>go语言特性</h1>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/10/31/golang笔记/" target="_blank" title="golang笔记">https://vaniot-s.github.io/2018/10/31/golang笔记/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/05/TCP与UDP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          TCP与UDP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/31/RESTful架构/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">RESTful架构</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go环境变量"><span class="nav-number">1.</span> <span class="nav-text">Go环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GOROOT"><span class="nav-number">1.1.</span> <span class="nav-text">GOROOT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOPATH"><span class="nav-number">1.2.</span> <span class="nav-text">GOPATH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOBIN"><span class="nav-number">1.3.</span> <span class="nav-text">GOBIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOOS-和-GOARCH"><span class="nav-number">1.4.</span> <span class="nav-text">GOOS 和 GOARCH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go命令基础"><span class="nav-number">2.</span> <span class="nav-text">Go命令基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#go-run"><span class="nav-number">2.1.</span> <span class="nav-text">go run</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-build"><span class="nav-number">2.2.</span> <span class="nav-text">go build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-install"><span class="nav-number">2.3.</span> <span class="nav-text">go install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-get"><span class="nav-number">2.4.</span> <span class="nav-text">go get</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-list"><span class="nav-number">2.5.</span> <span class="nav-text">go list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-test"><span class="nav-number">2.6.</span> <span class="nav-text">go test</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-tool"><span class="nav-number">2.7.</span> <span class="nav-text">go tool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go-fmt"><span class="nav-number">2.8.</span> <span class="nav-text">go fmt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-clean"><span class="nav-number">3.</span> <span class="nav-text">go clean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-doc"><span class="nav-number">4.</span> <span class="nav-text">go doc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#go-generate"><span class="nav-number">5.</span> <span class="nav-text">go generate</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go语言特性"><span class="nav-number"></span> <span class="nav-text">go语言特性</span></a>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>php基础回顾 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="php">
+  
+  
+  
+  
+  <meta name="description" content="1.输出语句php中的各种输出方式的总结:    函数 说明     echo() echo 是指令而不是函数，可以省略(),他没有返回值，可以输出一个或多个字符串.其语法规则为:echo(string arg1[,string …])   print() print 其本质也是一个语言结构非函数，可省略()，有返回，只接受一个参数，输出简单的变量,无法输出数组及对象。   print_r() p">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php基础回顾">
+<meta property="og:url" content="https://vaniot-s.github.io/2017/12/01/php基础回顾/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="1.输出语句php中的各种输出方式的总结:    函数 说明     echo() echo 是指令而不是函数，可以省略(),他没有返回值，可以输出一个或多个字符串.其语法规则为:echo(string arg1[,string …])   print() print 其本质也是一个语言结构非函数，可省略()，有返回，只接受一个参数，输出简单的变量,无法输出数组及对象。   print_r() p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php基础回顾">
+<meta name="twitter:description" content="1.输出语句php中的各种输出方式的总结:    函数 说明     echo() echo 是指令而不是函数，可以省略(),他没有返回值，可以输出一个或多个字符串.其语法规则为:echo(string arg1[,string …])   print() print 其本质也是一个语言结构非函数，可省略()，有返回，只接受一个参数，输出简单的变量,无法输出数组及对象。   print_r() p">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-php基础回顾" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      php基础回顾
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/12/01/php基础回顾/" class="article-date">
+	  <time datetime="2017-12-01T22:02:16.000Z" itemprop="datePublished">2017-12-01</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/web/">web</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">1.9k</span>字  
+      预计:<span class="post-count">7</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>1.输出语句<br>php中的各种输出方式的总结:</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>echo()</td>
+<td>echo 是指令而不是函数，可以省略(),他没有返回值，可以输出一个或多个字符串.其语法规则为:echo(string arg1[,string …])</td>
+</tr>
+<tr>
+<td>print()</td>
+<td>print 其本质也是一个语言结构非函数，可省略()，有返回，只接受一个参数，输出简单的变量,无法输出数组及对象。</td>
+</tr>
+<tr>
+<td>print_r()</td>
+<td>print_r() 是函数，print_r(mixed arg)打印int,boolean,float,string,及复合类型如数组、对象，成功时返回true。当设置第二个参数为true时,使print_r()返回其要输出的值而不输出,即为：print_r(mixed arg,boolean true)</td>
+</tr>
+<tr>
+<td>die()</td>
+<td>die()的功能为：执行出后，退出程序。</td>
+</tr>
+<tr>
+<td>printf()</td>
+<td>printf(“arg1”,arg2)执行格式化输出，arg1规定了按什么格式输出，arg2为输出的变量，格式化输出的命令及说明附后</td>
+</tr>
+<tr>
+<td>sprintf()</td>
+<td>sprintf(“arg1”,arg2)执行格式化输出，arg1规定了按什么格式输出，arg2为输出的变量将输出的内容格式化，赋值给变量并不直接输出</td>
+</tr>
+<tr>
+<td>var_export（）</td>
+<td>输出变量的结构信息，输出的是php的合法代码，将函数的第二个参数设置为 TRUE，从而返回变量的表示。</td>
+</tr>
+<tr>
+<td>var_dump()</td>
+<td>用于显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。它是直接将结果输出到浏览器的，如果需要将结果保存到一个string变量中，可使用输出控制函数来捕获当前函数的输出。</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>printf()格式化输出的命令及说明：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%%</td>
+<td>打印出百分比符号，不转换。</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>整数转成二进位。</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>整数转成对应的 ASCII 字符。</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>整数转成十进位。</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>倍精确度数字转成浮点数。</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>整数转成八进位。</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>整数转成字符串。</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>整数转成小写十六进位。</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>整数转成大写十六进位。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">printf (“$%01.2f” , 43.2); //$43.20</span><br><span class="line">$ 表示填充的字符</span><br><span class="line">0 表示位数不够在不影响原值的情况下补</span><br><span class="line">1 表示输出的总宽度</span><br><span class="line">2 表示小数位数 ，有四舍五入</span><br><span class="line">%f 是表示显示为一个浮点数</span><br><span class="line">$a = array (1, 2, array (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;));</span><br><span class="line">var_export ($a);</span><br><span class="line">/* 结果将输出：</span><br><span class="line">array (</span><br><span class="line">  0 =&gt; 1,</span><br><span class="line">  1 =&gt; 2,</span><br><span class="line">  2 =&gt; </span><br><span class="line">  array (</span><br><span class="line">    0 =&gt; &apos;a&apos;,</span><br><span class="line">    1 =&gt; &apos;b&apos;,</span><br><span class="line">    2 =&gt; &apos;c&apos;,</span><br><span class="line">  ),</span><br><span class="line">)</span><br><span class="line">*/</span><br><span class="line">$b = 3.1;</span><br><span class="line">$v = var_export($b, TRUE);</span><br><span class="line">echo $v;</span><br><span class="line">/* 结果将输出：</span><br><span class="line">3.1</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>2.php中的隐式转换<br>PHP的变量都存放在一个名为ZVAL的容器中,隐式类型转换也被称为自动类型转换，是指不需要程序员书写代码，由编程语言自动完成的类型转换。 在PHP中，我们经常遇到的隐式转换有：</p>
+<p>1．直接的变量赋值操作<br>在php中,b变量的数据类型由赋予的值决定，即左值(在内存中找到地址且有名字)的数据类型由右值的数据类型决定，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$string = &quot;To love someone sincerely means to love all the people,  to love the world and life,  too.&quot;;</span><br><span class="line">$integer = 10;</span><br><span class="line">$string = $integer;//$string的类型变为整型,$integer的引用计数加1,原右值被垃圾回收</span><br></pre></td></tr></table></figure></p>
+<p>2．运算式结果对变量的赋值操作<br>在运算的过程中发生了隐式的类型转换。<br>种类型转换又分为两种情况：</p>
+<p>表达式的操作数为同一数据类型 这种情况的作用以上面的直接变量的类型转换是同一种情况，只是此时右值变成了表达式的运算结果。<br>表达式的操作数不为同的数据类型 这种情况的类型转换发生在表达式的运算符的计算过程中，在源码中也就是发生在运行符的实现过程中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$b = &apos;a string &apos;;</span><br><span class="line">echo $a . $b;</span><br></pre></td></tr></table></figure></p>
+<p>符串连接操作就存在自动数据类型转化，\$a变量是数值类型，\$b变量是字符串类型， 这里\$a变量就是隐式(自动)的转换为字符串类型了。通常自动数据类型转换发生在特定的操作上下文中，具体的自动类型转换方式和特定的操作有关。<br>脚本执行的时候字符串的连接操作是通过Zend/zend_operators.c文件中的如下函数进行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ZEND_API int concat_function(zval *result, zval *op1, zval *op2 TSRMLS_DC) /* &#123;&#123;&#123; */</span><br><span class="line">&#123;           </span><br><span class="line">        zval op1_copy, op2_copy;</span><br><span class="line">        int use_copy1 = 0, use_copy2 = 0;</span><br><span class="line"> </span><br><span class="line">        if (Z_TYPE_P(op1) != IS_STRING) &#123; </span><br><span class="line">                zend_make_printable_zval(op1, &amp;op1_copy, &amp;use_copy1);</span><br><span class="line">        &#125;           </span><br><span class="line">        if (Z_TYPE_P(op2) != IS_STRING) &#123; </span><br><span class="line">                zend_make_printable_zval(op2, &amp;op2_copy, &amp;use_copy2);</span><br><span class="line">        &#125;       </span><br><span class="line">        // 省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可用看出如果字符串链接的两个操作数如果不是字符串的话， 则调用zend_make_printable_zval函数将操作数转换为”printable_zval”也就是字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">ZEND_API void zend_make_printable_zval(zval *expr, zval *expr_copy, int *use_copy)</span><br><span class="line">&#123;</span><br><span class="line">    if (Z_TYPE_P(expr)==IS_STRING) &#123;</span><br><span class="line">        *use_copy = 0;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    switch (Z_TYPE_P(expr)) &#123;</span><br><span class="line">        case IS_NULL:</span><br><span class="line">            Z_STRLEN_P(expr_copy) = 0;</span><br><span class="line">            Z_STRVAL_P(expr_copy) = STR_EMPTY_ALLOC();</span><br><span class="line">            break;</span><br><span class="line">        case IS_BOOL:</span><br><span class="line">            if (Z_LVAL_P(expr)) &#123;</span><br><span class="line">                Z_STRLEN_P(expr_copy) = 1;</span><br><span class="line">                Z_STRVAL_P(expr_copy) = estrndup(&quot;1&quot;, 1);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                Z_STRLEN_P(expr_copy) = 0;</span><br><span class="line">                Z_STRVAL_P(expr_copy) = STR_EMPTY_ALLOC();</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">        case IS_RESOURCE:</span><br><span class="line">            // ...省略</span><br><span class="line">        case IS_ARRAY:</span><br><span class="line">            Z_STRLEN_P(expr_copy) = sizeof(&quot;Array&quot;) - 1;</span><br><span class="line">            Z_STRVAL_P(expr_copy) = estrndup(&quot;Array&quot;, Z_STRLEN_P(expr_copy));</span><br><span class="line">            break;</span><br><span class="line">        case IS_OBJECT:</span><br><span class="line">                // ... 省略</span><br><span class="line">        case IS_DOUBLE:</span><br><span class="line">            *expr_copy = *expr;</span><br><span class="line">            zval_copy_ctor(expr_copy);</span><br><span class="line">            zend_locale_sprintf_double(expr_copy ZEND_FILE_LINE_CC);</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            *expr_copy = *expr;</span><br><span class="line">            zval_copy_ctor(expr_copy);</span><br><span class="line">            convert_to_string(expr_copy);</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    Z_TYPE_P(expr_copy) = IS_STRING;</span><br><span class="line">    *use_copy = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>类似的还有求和操作”+”。</p>
+<table>
+<thead>
+<tr>
+<th>第一个操作数类型</th>
+<th>第二个操作数类型</th>
+<th>类型转换</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整型</td>
+<td>浮点型</td>
+<td>整型转换为浮点型</td>
+</tr>
+<tr>
+<td>整型</td>
+<td>字符串</td>
+<td>字符串转换为数字，如果字符串转换后是浮点型，整型也会转换为浮点型</td>
+</tr>
+<tr>
+<td>浮点型</td>
+<td>字符串</td>
+<td>字符串转换为浮点型</td>
+</tr>
+</tbody>
+</table>
+<p>总结:浮点型 &gt; 整型 &gt; 字符串</p>
+<p>PHP是一个弱类型语言，比较的过程中是带有隐式转换的，因为你可以用一个字符串和整数进行比较，字符串会自动转化为整数,使用“===”比较符则可以避免,如果生产环境版本足够高的话，最好使用hash_equals()。<br>3.isset、empty、is_null的区别</p>
+<ul>
+<li>isset()如果 变量 存在(非NULL)则返回 TRUE，否则返回 FALSE(包括未定义)。变量值设置为：null，返回也是false;unset一个变量后，变量被取消了。</li>
+<li>empty()变量 是非空或非零的值，则 empty() 返回 FALSE。换句话说，””、0、”0”、NULL、FALSE、array()、var \$var、未定义; 以及没有任何属性的对象都将被认为是空的，如果 var 为空，则返回 TRUE</li>
+<li>is_null()检测传入值【值，变量，表达式】是否是null,只有一个变量定义了，且它的值是null，它才返回TRUE . 其它都返回 FALSE<blockquote>
+<p>当要 判断一个变量是否已经声明的时候 可以使用 isset 函数<br>当要 判断一个变量是否已经赋予数据且不为空 可以用 empty 函数<br>当要 判断 一个变量 存在且不为空 先isset 函数 再用 empty 函数</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>require与include的区别<br>require() :如果文件不存在，会报出一个fatal error.脚本停止执行,require的使用方法如 require(“./inc.php”); 。通常放在PHP程式的最前面，PHP程式在执行前，就会先读入require所指定引入的档案，使它变成PHP 程式网页的一部份。<br>include() : 如果文件不存在，会给出一个 warning，但脚本会继续执行 这里特别要注意的是： 使用include()文件不存在时，脚本继续执行，include使用方法如include(“./inc.php”); 。一般是放在流程控制的处理区段中。PHP程式网页在读到 include的档案时，才将它读进来。这种方式，可以把程式执行时的流程简单化。<br>5.php的垃圾回收</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2017/12/01/php基础回顾/" target="_blank" title="php基础回顾">https://vaniot-s.github.io/2017/12/01/php基础回顾/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/29/搭建Hexo博客/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          搭建Github Pages和Hexo博客
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/30/排序算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">排序算法</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

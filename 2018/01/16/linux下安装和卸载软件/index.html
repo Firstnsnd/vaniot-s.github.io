@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>linux下安装和卸载软件 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="linux">
+  
+  
+  
+  
+  <meta name="description" content="linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:  程序的文档-&amp;gt;/usr/share/doc; /usr/local/share/doc 程序-&amp;gt;/usr/share; /usr/local/share 程序的启动项-&amp;gt;/usr/share/apps; /usr/local/share 程序的语言包-&amp;gt;/usr/share/locale;">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下安装和卸载软件">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/01/16/linux下安装和卸载软件/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:  程序的文档-&amp;gt;/usr/share/doc; /usr/local/share/doc 程序-&amp;gt;/usr/share; /usr/local/share 程序的启动项-&amp;gt;/usr/share/apps; /usr/local/share 程序的语言包-&amp;gt;/usr/share/locale;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-33-27.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2021-32-51.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2022-01-08.png">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux下安装和卸载软件">
+<meta name="twitter:description" content="linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:  程序的文档-&amp;gt;/usr/share/doc; /usr/local/share/doc 程序-&amp;gt;/usr/share; /usr/local/share 程序的启动项-&amp;gt;/usr/share/apps; /usr/local/share 程序的语言包-&amp;gt;/usr/share/locale;">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-33-27.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-linux下安装和卸载软件" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      linux下安装和卸载软件
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/01/16/linux下安装和卸载软件/" class="article-date">
+	  <time datetime="2018-01-16T15:32:23.000Z" itemprop="datePublished">2018-01-16</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/basic/">basic</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">2.6k</span>字  
+      预计:<span class="post-count">10</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>linux(继承自Unix)的文件系统架构，系统会默认选择安装目录，通常情况下:</p>
+<ul>
+<li>程序的文档-&gt;/usr/share/doc; /usr/local/share/doc</li>
+<li>程序-&gt;/usr/share; /usr/local/share</li>
+<li>程序的启动项-&gt;/usr/share/apps; /usr/local/share</li>
+<li>程序的语言包-&gt;/usr/share/locale; /usr/local/share/locale</li>
+<li>可执行文件-&gt;/usr/bin; /usr/local/bin</li>
+<li>配置文件-&gt; /etc</li>
+<li><p>lib文件-&gt;/usr/lib<br>例如:系统安装软件一般在/usr/share，可执行的文件在/usr/bin，配置文件可能安装到了/etc下等。</p>
+<a id="more"></a>
+<h2 id="一、软件包管理器"><a href="#一、软件包管理器" class="headerlink" title="一、软件包管理器"></a>一、软件包管理器</h2><p>dpkg(跟red hat的rpm非常相似)和apt-get进行安装软件，dpkg与apt-get的区别：</p>
+</li>
+<li><p>dpkg绕过apt包管理数据库对软件包进行操作，用dpkg安装过的软件包用apt可以再安装一遍，系统不知道之前是否安装过，会覆盖之前dpkg的安装。</p>
+</li>
+<li>dpkg是用来安装.deb文件,不会解决模块的依赖关系,不会关心ubuntu的软件仓库内的软件,可以用于安装本地的deb文件。</li>
+<li>apt会解决和安装模块的依赖问题,并会咨询软件仓库, 不会安装本地的deb文件, apt是建立在dpkg之上的软件管理工具。<h3 id="1-dpkg"><a href="#1-dpkg" class="headerlink" title="1.dpkg"></a>1.dpkg</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i remarkable_1.87_all.deb //安装软件</span><br><span class="line">dpkg -R /usr/local/src  //安装一个目录下面所有的软件包</span><br><span class="line">dpkg –-unpack remarkable_1.87_all.deb //释放软件包，但是不进行配置,如果和-R一起使用，参数可以是一个目录</span><br><span class="line">dpkg –configure remarkable_1.87_all.deb //重新配置和释放软件包. 如果和-a一起使用，将配置所有没有配置的软件包</span><br><span class="line">dpkg -r remarkable_1.87_all ///删除软件包（保留其配置信息）</span><br><span class="line">dpkg –update-avail &lt;Packages-file&gt; //替代软件包的信息</span><br><span class="line">dpkg –merge-avail &lt;Packages-file&gt; //合并软件包信息 </span><br><span class="line">dpkg -A package_file //从软件包里面读取软件的信息</span><br><span class="line">dpkg -P //删除一个包（包括配置信息）</span><br><span class="line">dpkg –forget-old-unavail //丢失所有的Uninstall的软件包信息</span><br><span class="line">dpkg –clear-avail //删除软件包的Avaliable信息</span><br><span class="line">dpkg -C  //查找只有部分安装的软件包信息</span><br><span class="line">dpkg –compare-versions ver1 op ver2  //比较同一个包的不同版本之间的差别</span><br><span class="line">dpkg –help  //显示帮助信息</span><br><span class="line">dpkg –licence (or) dpkg –license //显示dpkg的Licence</span><br><span class="line">dpkg --version  //显示dpkg的版本号</span><br><span class="line">dpkg -b directory [filename]  //建立一个deb文件</span><br><span class="line">dpkg -c filename //显示一个Deb文件的目录</span><br><span class="line">dpkg -I filename [control-file] //显示一个Deb的说明</span><br><span class="line">dpkg -l vim  //搜索Deb包</span><br><span class="line">dpkg -l //显示所有已经安装的Deb包，同时显示版本号以及简短说明</span><br><span class="line">dpkg -s ssh  //报告指定包的状态信息</span><br><span class="line">dpkg -L apache2 //显示一个包安装到系统里面的文件目录信息(使用apt-get install命令安装)</span><br><span class="line">dpkg -S remarkable //搜索指定包里面的文件（模糊查询）</span><br><span class="line">dpkg -p remarkable //显示包的具体信息</span><br><span class="line">dpkg-reconfigure --frontend=dialog debconf //重新配制 debconf，使用一个 dialog 前端 重新配制一个已经安装的包裹，如果它使用的是 debconf</span><br><span class="line">dpkg --get-selections *wine*  //获取当前状态</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-apt-get"><a href="#2-apt-get" class="headerlink" title="2.apt-get"></a>2.apt-get</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apt-get install packagename  //安装一个新软件包（参见下文的aptitude）</span><br><span class="line">apt-get remove packagename  //卸载一个已安装的软件包（保留配置文档）</span><br><span class="line">apt-get remove --purge packagename  //卸载一个已安装的软件包（删除配置文档）</span><br><span class="line">apt-get autoremove packagename  //删除包及其依赖的软件包</span><br><span class="line">apt-get autoremove --purge packagname  //删除包及其依赖的软件包+配置文件，比上面的要删除的彻底一点</span><br><span class="line">dpkg --force-all --purge packagename  //有些软件很难卸载，而且还阻止别的软件的应用,用这个强制卸载，但是有点冒险。</span><br><span class="line">apt-get autoclean //apt会把已装或已卸的软件都备份在硬盘上，所以假如需要空间的话，这个命令来删除您已卸载掉的软件的备份。</span><br><span class="line">apt-get clean  //这个命令会把安装的软件的备份也删除，不会影响软件的使用。</span><br><span class="line">apt-get upgrade  //更新软件包，apt-get upgrade不仅可以从相同版本号的发布版中更新软件包，也可以从新版本号的发布版中更新软件包，尽管实现后一种更新的推荐命令为apt-get dist-upgrade。在运行apt-get upgrade命令时加上-u选项很有用（即：apt-get -u upgrade)。这个选项让APT显示完整的可更新软件包列表。不加这个选项，你就只能盲目地更新。APT会下载每个软件包的最新更新版本，然后以合理的次序安装它们。在运行该命令前应先运行 apt-get update更新数据库，更新任何已安装的软件包。</span><br><span class="line">apt-get dist-upgrade  //将系统升级到新版本。</span><br><span class="line">apt-cache search string  //在软件包列表中搜索字符串。</span><br><span class="line">aptitude  //周详查看已安装或可用的软件包。和apt-get类似，aptitude能够通过命令行方式调用，但仅限于某些命令——最常见的有安装和卸载命令。</span><br><span class="line">由于aptitude比apt-get了解更多信息，能够说他更适合用来进行安装和卸载。</span><br><span class="line">apt-cache showpkg pkgs  //显示软件包信息。</span><br><span class="line">apt-cache dumpavail pkgs //打印可用软件包列表。</span><br><span class="line">apt-cache show pkgs  //显示软件包记录，类似于dpkg –print-avail。</span><br><span class="line">apt-cache pkgnames  //打印软件包列表中任何软件包的名称。</span><br><span class="line">apt-file search filename  //查找包含特定文档的软件包（不一定是已安装的），这些文档的文档名中含有指定的字符串。apt-file是个单独的软件包。必须先使用apt-get install来安装他，然后运行apt-file update。如apt-file search filename输出的内容太多，您能够尝试使用apt-file search filename | grep -w filename（只显示指定字符串作为完整的单词出现在其中的那些文档名）或类似方法.</span><br><span class="line">apt-cache search sorftname //查找包含特定文档的软件包</span><br><span class="line">apt-cache madusion sorftname //查找包含特定文档的软件包</span><br><span class="line">apt-cache policy sorftname //查找包含特定文档的软件包</span><br></pre></td></tr></table></figure>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a><strong>example</strong></h4><blockquote>
+<p>ubuntu使用apt-get搭配java环境</p>
+</blockquote>
+<pre><code>apt-get install default-jdk
+apt-get install default-jre
+</code></pre><blockquote>
+<p>使用ubuntu自带apt-get安装加Node.js </p>
+</blockquote>
+<p>在终端中执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 当add-apt-repository 命令不能找到时先执行，apt-get install software-properties-common</span><br><span class="line">sudo add-apt-repository ppa:chris-lea/node.js //ubuntu自带的node版本太老，PPA安装最新版的Node.js，</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nodejs</span><br><span class="line">sudo apt-get install npm</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>更新node和npm</p>
+</blockquote>
+<p>升级npm为最新版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install npm@latest -g</span><br></pre></td></tr></table></figure></p>
+<p>安装用于安装nodejs的模块n<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g n</span><br></pre></td></tr></table></figure></p>
+<p>然后通过n模块安装指定版本的nodejs，n模块更多介绍请参考<a href="https://www.npmjs.com/package/n" target="_blank" rel="noopener">官方文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//安装官方最新版本</span><br><span class="line">sudo n latest</span><br><span class="line">//安装官方稳定版本</span><br><span class="line">sudo n stable</span><br><span class="line">//安装官方最新LTS版本</span><br><span class="line">sudo n lts</span><br></pre></td></tr></table></figure></p>
+<h2 id="二、源码包编译安装"><a href="#二、源码包编译安装" class="headerlink" title="二、源码包编译安装"></a>二、源码包编译安装</h2><p>编程语言的分类：<br>1.编译型语言: 在程序执行前，会编译成机器语言，再次执行不会编译<br>2.解释型语言: 在程序执行时翻译为机器语言</p>
+<blockquote>
+<p>ps:脚本语言：是一种解释性语言，不需要编译，由相应的脚本引擎解释执行</p>
+</blockquote>
+<ul>
+<li>已经编译的二进制包 ——统称 binary，后缀可以是 .bin 或者.sh或者没有</li>
+<li><p>不需要编译即可运行的比如Python 源代码——即 source code，使用python *.py 调用 </p>
+<h3 id="1、编译、安装、运行程序"><a href="#1、编译、安装、运行程序" class="headerlink" title="1、编译、安装、运行程序"></a>1、编译、安装、运行程序</h3><p> 1.编写c语言程序</p>
+<pre><code>vi HelloWorld.c
+</code></pre><p> 2.编写程序</p>
+<pre><code>![c语言输出hello world](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-00-27.png)
+</code></pre><p>3.使用gcc编译为二进制文件</p>
+<pre><code>gcc HelloWorld.c -o HelloWorld
+</code></pre><p>4.运行程序(已经编译的二进制包 ——统称 binary，后缀可以是 .bin 或者.sh或者没有 )<br>   (1)使用路径<br>   <img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2020-33-27.png" alt="输入路径运行程序"><br>   (2)利用环境变量</p>
+<blockquote>
+<p>查看环境变量(环境变量由冒号分割开，使用命令在路径中去寻找该命令,使用which时若无该命令无输出)</p>
+<pre><code>![ubuntu环境变量](https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2021-10-54.png)
+</code></pre></blockquote>
+<ul>
+<li>将二进制文件复制到任意PATH变量包含的目录中<br><img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2021-32-51.png" alt="ubuntu环境变量"></li>
+<li>将文件所在的目录添加到PATH变量中(先要确保已存在的路径中无该二进制文件)<br><img src="https://raw.githubusercontent.com/Vaniot-s/picture/master/2018-01-16%2022-01-08.png" alt="ubuntu环境变量"><blockquote>
+<p>上述添加目录到PATH变量的方法在主机重启后会失去作用，并未将定义的环境变量保存到任何配置文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export PATH=$PATH:/home/vaniot&quot; &gt;&gt;/etc/rc.local</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>  源码编译安装软件原理:</p>
+<pre><code>源代码-&gt;源码编译生成可执行的文件-&gt;复制该文件到任一PATH变量包含的目录 
+</code></pre><h4 id="安装webdtorm"><a href="#安装webdtorm" class="headerlink" title="安装webdtorm"></a>安装webdtorm</h4><p>安装过程：<br>解压</p>
+<pre><code>tar zxvf WebStorm-172.3544.10.tar.gz
+</code></pre><p>移动</p>
+<pre><code>sudo mv WebStorm-172.3544.10/ /opt/WebStorm-172.3544.10/
+</code></pre><p>创建链接</p>
+<pre><code>sudo ln -s /opt/WebStorm-172.3544.10/ /opt/WebStorm
+</code></pre><p>启动</p>
+<pre><code>/opt/WebStorm/bin/webstorm.sh
+</code></pre><p>添加Dash图标</p>
+<pre><code>启动webstorm-&gt;tools-&gt;Creat Desktop Entry
+</code></pre><blockquote>
+<p>为ubuntu下的wechat创建Dash创建图标<a href="https://github.com/geeeeeeeeek/electronic-wechat/releases/download/V2.0/linux-x64.tar.gz" target="_blank" rel="noopener">下载地址</a></p>
+</blockquote>
+<p>1.在 /usr/share/applications 目录下增加 wechat.desktop </p>
+<pre><code>sudo vim /usr/share/applications/wechat.desktop  
+</code></pre><p>2.添加内容</p>
+<pre><code> [Desktop Entry]  
+ Name=wechat  
+Type=Application  
+Terminal=false  
+Comment=chat
+Exec=/opt/wechat/electronic-wechat
+Icon=/opt/wechat/resources/wechat.png
+</code></pre><h3 id="2-典型源码编译安装软件"><a href="#2-典型源码编译安装软件" class="headerlink" title="2.典型源码编译安装软件"></a>2.典型源码编译安装软件</h3><p>   (1).运行configure命令，结合必要的参数生成Makefile;<br>   (2).运行make命令生成各类模板和主程序<br>   (3).运行make install命令将必要的文章复制到安装目录中</p>
+<h4 id="从源码编译安装"><a href="#从源码编译安装" class="headerlink" title="从源码编译安装"></a><strong>从源码编译安装</strong></h4><p>  1.建造基本编译环境：</p>
+<pre><code>sudo apt-get install build-essential tcl  
+</code></pre><blockquote>
+<p>tcl包执行make test,用于在执行make后,检验make的过程是否有错</p>
+</blockquote>
+<ul>
+<li><p>为编译的软件安装合适的依赖，若是apt关系的源里有这个软件，或找到依赖相同的软件，使用apt-get build-dep 补齐依赖关系 如nginx可以使用</p>
+<pre><code>sudo apt-get build-dep nginx
+</code></pre></li>
+</ul>
+<h2 id="三、查找软件安装的位置"><a href="#三、查找软件安装的位置" class="headerlink" title="三、查找软件安装的位置"></a>三、查找软件安装的位置</h2><p>1.find命令</p>
+<pre><code>sudo find / -name node
+</code></pre><p> 2.dpkg -L命令(件使用apt-get install命令安装)</p>
+<pre><code>dpkg -L node
+</code></pre><p> 3.whereis命令</p>
+<pre><code>whereis node
+</code></pre><p>4.locate命令 </p>
+<pre><code>locate node
+</code></pre><p> 5.which命令</p>
+<pre><code>which node
+</code></pre><p> 6.type命令</p>
+<pre><code>type node
+</code></pre><p> 7.软件相关名称<br>        dpkg –get-selections | grep ‘软件相关名称’</p>
+<h2 id="四、卸载方法"><a href="#四、卸载方法" class="headerlink" title="四、卸载方法"></a>四、卸载方法</h2><ul>
+<li><p>编译安装后卸载可以试用</p>
+<pre><code>sudo make uninstall  //若程序维护者嵌入了相关命令
+</code></pre><blockquote>
+<p>使用checkinstall处理编译的包安装则使用的deb/apt处理步骤</p>
+</blockquote>
+</li>
+<li><p>删除软件</p>
+<pre><code> sudo apt-get remove –purge 软件名
+sudo apt-get autoremove  --purge 软件名称  // 删除系统不再使用的孤立软件
+sudo apt-get autoclean 软件名称                      // 清理旧版本的软件缓存
+dpkg -l |grep ^rc|awk ‘{print $2}’ |sudo xargs dpkg -P     ///清除残余的配置文件
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/01/16/linux下安装和卸载软件/" target="_blank" title="linux下安装和卸载软件">https://vaniot-s.github.io/2018/01/16/linux下安装和卸载软件/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/16/Makefile/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Makefile
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/12/linux入门使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">linux入门使用</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、软件包管理器"><span class="nav-number">1.</span> <span class="nav-text">一、软件包管理器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-dpkg"><span class="nav-number">1.1.</span> <span class="nav-text">1.dpkg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-apt-get"><span class="nav-number">1.2.</span> <span class="nav-text">2.apt-get</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#example"><span class="nav-number">1.2.1.</span> <span class="nav-text">example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、源码包编译安装"><span class="nav-number">2.</span> <span class="nav-text">二、源码包编译安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、编译、安装、运行程序"><span class="nav-number">2.1.</span> <span class="nav-text">1、编译、安装、运行程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装webdtorm"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装webdtorm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-典型源码编译安装软件"><span class="nav-number">2.2.</span> <span class="nav-text">2.典型源码编译安装软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从源码编译安装"><span class="nav-number">2.2.1.</span> <span class="nav-text">从源码编译安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、查找软件安装的位置"><span class="nav-number">3.</span> <span class="nav-text">三、查找软件安装的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、卸载方法"><span class="nav-number">4.</span> <span class="nav-text">四、卸载方法</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

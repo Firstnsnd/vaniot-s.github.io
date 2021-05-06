@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>lnmp环境搭建 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="nginxphpmysql">
+  
+  
+  
+  
+  <meta name="description" content="一、安装nginx首先来安装nginx，使用如下命令：1sudo apt-get -y install nginx 查看nginx安装的文件。使用如下命令进行查看，如下： 1dpkg -S nginx nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.conf也是在该目录下。除此之外，nginx的默认网站目录在/usr/share/nginx/html下，默认">
+<meta name="keywords" content="nginx,php,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LNMP环境搭建">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/01/10/LNMP环境搭建/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="一、安装nginx首先来安装nginx，使用如下命令：1sudo apt-get -y install nginx 查看nginx安装的文件。使用如下命令进行查看，如下： 1dpkg -S nginx nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.conf也是在该目录下。除此之外，nginx的默认网站目录在/usr/share/nginx/html下，默认">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/Vaniot-s/picture/blob/master/php/lnmp/laravel.png?raw=true">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LNMP环境搭建">
+<meta name="twitter:description" content="一、安装nginx首先来安装nginx，使用如下命令：1sudo apt-get -y install nginx 查看nginx安装的文件。使用如下命令进行查看，如下： 1dpkg -S nginx nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.conf也是在该目录下。除此之外，nginx的默认网站目录在/usr/share/nginx/html下，默认">
+<meta name="twitter:image" content="https://github.com/Vaniot-s/picture/blob/master/php/lnmp/laravel.png?raw=true">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-LNMP环境搭建" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      LNMP环境搭建
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/01/10/LNMP环境搭建/" class="article-date">
+	  <time datetime="2018-01-10T14:00:33.000Z" itemprop="datePublished">2018-01-10</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/web/">web</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">1.2k</span>字  
+      预计:<span class="post-count">5</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h3 id="一、安装nginx"><a href="#一、安装nginx" class="headerlink" title="一、安装nginx"></a>一、安装nginx</h3><p>首先来安装nginx，使用如下命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install nginx</span><br></pre></td></tr></table></figure></p>
+<p>查看nginx安装的文件。使用如下命令进行查看，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -S nginx</span><br></pre></td></tr></table></figure>
+<p>nginx默认的安装位置是/etc/nginx目录，而且nginx的配置文件nginx.conf也是在该目录下。<br>除此之外，nginx的默认网站目录在/usr/share/nginx/html下，默认nginx网站配置文件为/etc/nginx/sites-available/目录下的default文件。<br>启动nginx，可以使用如下命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx start</span><br><span class="line">sudo service nginx start</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="二、安装php与php-fpm"><a href="#二、安装php与php-fpm" class="headerlink" title="二、安装php与php-fpm"></a>二、安装php与php-fpm</h3><p>nginx安装完毕后，安装php与php-fpm，使用如下命令，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -y install php7.1 php7.1-fpm php7.1-cli</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>安装较低版本的php</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add-apt-repository ppa:ondrej/php</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install php5.6</span><br></pre></td></tr></table></figure>
+<h3 id="三、nginx与php-fpm集成"><a href="#三、nginx与php-fpm集成" class="headerlink" title="三、nginx与php-fpm集成"></a>三、nginx与php-fpm集成</h3><p>nginx与php安装完毕后，开始把nginx与php集成。其实nginx与php集成是通过fastcgi来实现，而fastcgi一般使用的是php-fpm。<br>php-fpm与nginx通信方式有两种，一种是TCP方式，一种是unix socket方式。</p>
+<ul>
+<li>TCP方式就是使用TCP端口连接，一般是127.0.0.1:9000。</li>
+<li>Socket是使用unix domain socket连接套接字/dev/shm/php-cgi.sock(很多教程使用路径/tmp，而路径/dev/shm是个tmpfs，速度比磁盘快得多)，在服务器压力不大的情况下，tcp和socket差别不大，但是在压力比较满的时候，使用套接字方式，效果确实比较好。</li>
+</ul>
+<p>3.1 TCP方式<br>先来修改nginx的默认网站文件default，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/nginx/sites-available/default</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">   fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">   fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">   fastcgi_index index.php;</span><br><span class="line">   include fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>检验nginx的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -t</span><br></pre></td></tr></table></figure></p>
+<p>修改nginx的fastcgi_params文件，添加如下命令。<br>注意：这个命令一定要添加，否则nginx与php集成后，网页会显示空白。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/nginx/fastcgi_params</span><br><span class="line">fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br></pre></td></tr></table></figure></p>
+<p>修改php的配置文件php.ini，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/php/7.1/fpm/php.ini +758</span><br><span class="line">将cgi.fix_pathinfo=1修改为 cgi.fix_pathinfo=0</span><br></pre></td></tr></table></figure></p>
+<p>修改php-fpm的配置文件<a href="http://www.conf，如下：" target="_blank" rel="noopener">www.conf，如下：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/php/7.1/fpm/pool.d/www.conf</span><br><span class="line">修改liten为</span><br><span class="line">listen = 127.0.0.1:9000</span><br></pre></td></tr></table></figure>
+<p>修改完毕后，我们现在来重启nginx与php-fpm，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx restart</span><br><span class="line">sudo /etc/init.d/php7.1-fpm restart</span><br></pre></td></tr></table></figure></p>
+<p>3.2 socket方式<br>修改nginx的默认网站文件default，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/nginx/sites-available/default</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;</span><br><span class="line">fastcgi_index index.php;</span><br><span class="line">include fastcgi_params; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改nginx的fastcgi_params文件，添加如下命令。<br>注意：这个命令一定要添加，否则nginx与php集成后，网页会显示空白。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/nginx/fastcgi_params</span><br><span class="line">fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br></pre></td></tr></table></figure></p>
+<p>修改php的配置文件php.ini，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/php/7.1/fpm/php.ini +758</span><br><span class="line">将cgi.fix_pathinfo=1修改为 cgi.fix_pathinfo=0</span><br></pre></td></tr></table></figure></p>
+<p>现在再来修改php-fpm的配置文件<a href="http://www.conf，如下：" target="_blank" rel="noopener">www.conf，如下：</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/php/7.1/fpm/pool.d/www.conf</span><br><span class="line">listen = /var/run/php/php7.1-fpm.sock</span><br></pre></td></tr></table></figure></p>
+<p>再来重启nginx与php-fpm。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx restart</span><br><span class="line">sudo /etc/init.d/php7.1-fpm restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、安装mysql"><a href="#四、安装mysql" class="headerlink" title="四、安装mysql"></a>四、安装mysql</h3><p>现在来开始安装mysql，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get –y install mysql-server mysql-client php7.1-mysql</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、搭建laravel环境"><a href="#五、搭建laravel环境" class="headerlink" title="五、搭建laravel环境"></a>五、搭建laravel环境</h3><h4 id="1-php拓展"><a href="#1-php拓展" class="headerlink" title="1.php拓展"></a>1.php拓展</h4><pre><code>sudo apt-get –y install  php7.1-mcrypt //安装php7.1的加密拓展库
+</code></pre><p>启用php的加密拓展库</p>
+<pre><code>sudo phpenmod mcrypt
+</code></pre><h4 id="2-安装-Composer"><a href="#2-安装-Composer" class="headerlink" title="2.安装 Composer"></a>2.安装 Composer</h4><p>在命令行执行：</p>
+<pre><code>curl -ss https://getcomposer.org/installer | php
+</code></pre><p>在当前目录会发现 composer.phar 这个文件，这个文件就是 Compoesr 的执行文件，我们需要移到 /usr/local/bin , 这样全局就能调用 Composer 。</p>
+<pre><code>sudo mv composer.phar /usr/local/bin/composer
+</code></pre><p>Composer 安装完成。</p>
+<h4 id="3-安装laravel"><a href="#3-安装laravel" class="headerlink" title="3.安装laravel"></a>3.安装laravel</h4><p>用composer来安装 Laravel</p>
+<pre><code>    composer create-project laravel/laravel --prefer-dist  //默认的国外镜像
+
+使用国内镜像源:
+①、修改 composer 的全局配置文件，打开命令行并执行如下命令：
+
+    composer config -g repo.packagist composer https://packagist.phpcomposer.com  
+   然后输入安装命令：
+
+    composer create-project --prefer-dist laravel/laravel blog  
+②、修改当前项目的 composer.json 配置文件，打开命令行窗口，进入你的项目的根目录（ composer.json 文件所在目录），执行如下命令：
+
+    composer config repo.packagist composer https://packagist.phpcomposer.com  
+</code></pre><p>更改网站目录所属组：</p>
+<pre><code>sudo chown -R :www-data /var/www/laravel
+sudo chown -R  777 storage
+</code></pre><h4 id="4-配置-Nginx"><a href="#4-配置-Nginx" class="headerlink" title="4.配置 Nginx"></a>4.配置 Nginx</h4><p>开 nginx 默认配置文件：</p>
+<pre><code>sudo vim /etc/nginx/sites-available/default
+</code></pre><p> 增加如下配置：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80 default_server;</span><br><span class="line">    listen [::]:80 default_server ipv6only=on;</span><br><span class="line"></span><br><span class="line">	# 设定网站根目录</span><br><span class="line">    root /var/www/laravel/public;</span><br><span class="line">    # 网站默认首页</span><br><span class="line">    index index.php index.html index.htm;</span><br><span class="line"></span><br><span class="line">	# 服务器名称，server_domain_or_IP 请替换为自己设置的名称或者 IP 地址</span><br><span class="line">    server_name server_domain_or_IP;</span><br><span class="line"></span><br><span class="line">	# 修改为 Laravel 转发规则，否则PHP无法获取$_GET信息，提示404错误</span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ /index.php?$query_string;        </span><br><span class="line">        add_header &apos;Access-Control-Allow-Origin&apos; &apos;http://localhost:8080/&apos;;# 前后段分离时允许跨域请求</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	# PHP 支持</span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        try_files $uri /index.php =404;</span><br><span class="line">        fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;</span><br><span class="line">        fastcgi_index index.php;</span><br><span class="line">        include fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改完成，要重启下 nginx 服务：</p>
+<pre><code>sudo nginx -t
+sudo service nginx restart
+</code></pre><p>   在浏览器中打开localhost:<br>   <img src="https://github.com/Vaniot-s/picture/blob/master/php/lnmp/laravel.png?raw=true" alt="laravel"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/01/10/LNMP环境搭建/" target="_blank" title="LNMP环境搭建">https://vaniot-s.github.io/2018/01/10/LNMP环境搭建/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/12/linux入门使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          linux入门使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/09/三种邮件协议-STMP、POP3、IMAP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">三种邮件协议:STMP、POP3、IMAP</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、安装nginx"><span class="nav-number">1.</span> <span class="nav-text">一、安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、安装php与php-fpm"><span class="nav-number">2.</span> <span class="nav-text">二、安装php与php-fpm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、nginx与php-fpm集成"><span class="nav-number">3.</span> <span class="nav-text">三、nginx与php-fpm集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、安装mysql"><span class="nav-number">4.</span> <span class="nav-text">四、安装mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、搭建laravel环境"><span class="nav-number">5.</span> <span class="nav-text">五、搭建laravel环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-php拓展"><span class="nav-number">5.1.</span> <span class="nav-text">1.php拓展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装-Composer"><span class="nav-number">5.2.</span> <span class="nav-text">2.安装 Composer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-安装laravel"><span class="nav-number">5.3.</span> <span class="nav-text">3.安装laravel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-配置-Nginx"><span class="nav-number">5.4.</span> <span class="nav-text">4.配置 Nginx</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

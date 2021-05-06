@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>restful架构 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="RESTFUL">
+  
+  
+  
+  
+  <meta name="description" content="HTTP协议本身是一种面向资源的应用层协议，但对HTTP协议的使用实际上存在着两种不同的方式：一种是RESTful的，它把HTTP当成应用层协议，比较忠实地遵守了HTTP协议的各种规定；另一种是SOA的，它并没有完全把HTTP当成应用层协议，而是把HTTP协议作为了传输层协议，然后在HTTP之上建立了自己的应用层协议.RESTful(Representational State Transfer">
+<meta name="keywords" content="RESTFUL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RESTful架构">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/10/31/RESTful架构/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="HTTP协议本身是一种面向资源的应用层协议，但对HTTP协议的使用实际上存在着两种不同的方式：一种是RESTful的，它把HTTP当成应用层协议，比较忠实地遵守了HTTP协议的各种规定；另一种是SOA的，它并没有完全把HTTP当成应用层协议，而是把HTTP协议作为了传输层协议，然后在HTTP之上建立了自己的应用层协议.RESTful(Representational State Transfer">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/vaniot-s/picture/blob/master/RESTful/restful.png?raw=true">
+<meta property="og:image" content="https://raw.githubusercontent.com/vaniot-s/picture/master/RESTful/resourcedecrption.jpg">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RESTful架构">
+<meta name="twitter:description" content="HTTP协议本身是一种面向资源的应用层协议，但对HTTP协议的使用实际上存在着两种不同的方式：一种是RESTful的，它把HTTP当成应用层协议，比较忠实地遵守了HTTP协议的各种规定；另一种是SOA的，它并没有完全把HTTP当成应用层协议，而是把HTTP协议作为了传输层协议，然后在HTTP之上建立了自己的应用层协议.RESTful(Representational State Transfer">
+<meta name="twitter:image" content="https://github.com/vaniot-s/picture/blob/master/RESTful/restful.png?raw=true">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-RESTful架构" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      RESTful架构
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/10/31/RESTful架构/" class="article-date">
+	  <time datetime="2018-10-31T01:00:43.000Z" itemprop="datePublished">2018-10-31</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/web/">web</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">1.8k</span>字  
+      预计:<span class="post-count">6</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>HTTP协议本身是一种面向资源的应用层协议，但对HTTP协议的使用实际上存在着两种不同的方式：一种是RESTful的，它把HTTP当成应用层协议，比较忠实地遵守了HTTP协议的各种规定；另一种是SOA的，它并没有完全把HTTP当成应用层协议，而是把HTTP协议作为了传输层协议，然后在HTTP之上建立了自己的应用层协议.<br>RESTful(Representational State Transfer 表述性状态转移):对基于HTTP的应用提供了一种设计原则,即:<br><img src="https://github.com/vaniot-s/picture/blob/master/RESTful/restful.png?raw=true" alt="RESTFul"></p>
+<h2 id="RESTFul定义的URL"><a href="#RESTFul定义的URL" class="headerlink" title="RESTFul定义的URL"></a>RESTFul定义的URL</h2><p>RESTful架构又被称作为“面向资源开发”,将任何可命名的概念视为资源,资源可以是实体或抽象的概念，<code>URL</code>的命名以<code>名词为核心</code>.URL表达了被操作资源的位置,不使用动词,并要注意单复数区分.<br><a id="more"></a></p>
+<h3 id="RESTful的URL设计"><a href="#RESTful的URL设计" class="headerlink" title="RESTful的URL设计"></a>RESTful的URL设计</h3><ul>
+<li>使用<code>—</code>或<code>-</code>连接名词提升易读性，如:<code>http://www.example.com/restful-archiecture</code></li>
+<li><p>使用<code>/</code>表示资源的层级关系,如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//访问文章列表</span><br><span class="line">http://www.example.com/posts</span><br><span class="line">//某篇文章</span><br><span class="line">http://example.com/posts/&#123;post&#125;</span><br><span class="line">//某篇文章下的评论列表</span><br><span class="line">http://www.example.com/&#123;posts/post&#125;/comments</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>，</code>或者<code>;</code>表示同级资源的关系，如:<code>http://www.example.com/gone-with-wind;Jane-Eyre</code></p>
+</li>
+<li>使用<code>?</code>过滤资源，使用’&amp;’分割参数<code>http://www.example.com/books?category=science</code></li>
+<li>在URI中避免出现文件扩展名(例如.php,.aspx 和.jsp)。<h2 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h2>RESTful架构遵循统一的接口原则，包含一组受限的预定义的操作，所有的资源通过相同的接口进行资源访问,使用HTTP方法,并遵守其语义.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">动作</th>
+<th style="text-align:left">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">GET(SELECT)</td>
+<td style="text-align:left">从服务器检索特定资源(或列表)</td>
+</tr>
+<tr>
+<td style="text-align:left">POST(CREATE)</td>
+<td style="text-align:left">在服务器上创建一个新的资源</td>
+</tr>
+<tr>
+<td style="text-align:left">PUT(UPDATE)</td>
+<td style="text-align:left">更新服务器上的整个资源</td>
+</tr>
+<tr>
+<td style="text-align:left">PATCH(UPDATE)</td>
+<td style="text-align:left">更新服务器上的部分资源</td>
+</tr>
+<tr>
+<td style="text-align:left">DELETE(DELETE)</td>
+<td style="text-align:left">从服务器上删除资源</td>
+</tr>
+<tr>
+<td style="text-align:left">OPTION(OPTION)</td>
+<td style="text-align:left">跨域访问预请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><h4 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h4><ul>
+<li>安全且幂等</li>
+<li>语义:法请求指定的资源</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200（OK）</td>
+<td>表示已在响应中发出</td>
+</tr>
+<tr>
+<td>204（无内容）</td>
+<td>资源有空表示</td>
+</tr>
+<tr>
+<td>301（Moved Permanently）</td>
+<td>资源的URI已被更新</td>
+</tr>
+<tr>
+<td>303（See Other）</td>
+<td>其他（如，负载均衡）</td>
+</tr>
+<tr>
+<td>304（not modified）</td>
+<td>资源未更改（缓存）</td>
+</tr>
+<tr>
+<td>400 （bad request）</td>
+<td>指代坏请求（如，参数错误）</td>
+</tr>
+<tr>
+<td>404 （not found）</td>
+<td>资源不存在</td>
+</tr>
+<tr>
+<td>406 （not acceptable）</td>
+<td>服务端不支持所需表示</td>
+</tr>
+<tr>
+<td>500 （internal server error）</td>
+<td>通用错误响应</td>
+</tr>
+<tr>
+<td>503 （Service Unavailable）</td>
+<td>服务端当前无法处理请求</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://tools.ietf.org/html/rfc7231#section-4.3.1" target="_blank" rel="noopener">GET更多…</a></p>
+<h4 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h4><ul>
+<li>不安全且不幂等</li>
+<li>语义:发送数据给服务器,创建资源. </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200（OK）</td>
+<td>如果现有资源已被更改</td>
+</tr>
+<tr>
+<td>201（created）</td>
+<td>如果新资源被创建</td>
+</tr>
+<tr>
+<td>202（accepted）</td>
+<td>已接受处理请求但尚未完成（异步处理）</td>
+</tr>
+<tr>
+<td>301（Moved Permanently）</td>
+<td>资源的URI被更新</td>
+</tr>
+<tr>
+<td>303（See Other）</td>
+<td>其他（如，负载均衡）</td>
+</tr>
+<tr>
+<td>400（bad request）</td>
+<td>指代坏请求</td>
+</tr>
+<tr>
+<td>404 （not found）</td>
+<td>资源不存在</td>
+</tr>
+<tr>
+<td>406 （not acceptable）</td>
+<td>服务端不支持所需表示</td>
+</tr>
+<tr>
+<td>409 （conflict）</td>
+<td>通用冲突</td>
+</tr>
+<tr>
+<td>412 （Precondition Failed）</td>
+<td>前置条件失败（如执行条件更新时的冲突）</td>
+</tr>
+<tr>
+<td>415 （unsupported media type）</td>
+<td>接受到的表示不受支持</td>
+</tr>
+<tr>
+<td>500 （internal server error）</td>
+<td>通用错误响应</td>
+</tr>
+<tr>
+<td>503 （Service Unavailable）</td>
+<td>服务当前无法处理请求</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://tools.ietf.org/html/rfc7231#section-4.3.3" target="_blank" rel="noopener">POST更多…</a></p>
+<h4 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h4><ul>
+<li>不安全但幂等</li>
+<li>语义:用于新增资源或者使用请求中的有效负载替换目标资源的表现形式。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200 （OK）</td>
+<td>如果已存在资源被更改</td>
+</tr>
+<tr>
+<td>301（Moved Permanently）</td>
+<td>资源的URI已更改</td>
+</tr>
+<tr>
+<td>303 （See Other）</td>
+<td>其他（如，负载均衡）</td>
+</tr>
+<tr>
+<td>400 （bad request）</td>
+<td>指代坏请求</td>
+</tr>
+<tr>
+<td>404 （not found）</td>
+<td>资源不存在</td>
+</tr>
+<tr>
+<td>406 （not acceptable）</td>
+<td>服务端不支持所需表示</td>
+</tr>
+<tr>
+<td>409 （conflict）</td>
+<td>通用冲突</td>
+</tr>
+<tr>
+<td>412 （Precondition Failed）</td>
+<td>前置条件失败（如执行条件更新时的冲突）</td>
+</tr>
+<tr>
+<td>415 （unsupported media type）</td>
+<td>接受到的表示不受支持</td>
+</tr>
+<tr>
+<td>500 （internal server error）</td>
+<td>通用错误响应</td>
+</tr>
+<tr>
+<td>503 （Service Unavailable）</td>
+<td>服务当前无法处理请求</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://tools.ietf.org/html/rfc7231#section-4.3.4" target="_blank" rel="noopener">Put更多…</a></p>
+<h4 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h4><ul>
+<li>不安全但幂等</li>
+<li>语义:请求方法用于删除指定的资源。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200 （OK）</td>
+<td>资源已被删除</td>
+</tr>
+<tr>
+<td>301 （Moved Permanently）</td>
+<td>资源的URI已更改</td>
+</tr>
+<tr>
+<td>303 （See Other）</td>
+<td>其他，如负载均衡</td>
+</tr>
+<tr>
+<td>400 （bad request）</td>
+<td>指代坏请求</td>
+</tr>
+<tr>
+<td>404 （not found）</td>
+<td>资源不存在</td>
+</tr>
+<tr>
+<td>409 （conflict）</td>
+<td>通用冲突</td>
+</tr>
+<tr>
+<td>500 （internal server error）</td>
+<td>通用错误响应</td>
+</tr>
+<tr>
+<td>503 （Service Unavailable）</td>
+<td>服务端当前无法处理请求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Glossary/%E5%B9%82%E7%AD%89" target="_blank" rel="noopener">幂等</a>：指的是同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的，幂等方法不应该具有副作用(统计用途除外）。幂等是分布式系统的一种特性,不论是SOA还是RESTful的Web API设计都应该考虑幂等性。</p>
+</blockquote>
+<blockquote>
+<p>使用RestFul操作资源的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /collection #获取所有的集合列表</span><br><span class="line">POST /collection #新建一个集合</span><br><span class="line">GET /collection/:id #获取指定集合的信息</span><br><span class="line">PUT /collection/:id #更新指定集合的全部信息</span><br><span class="line">PATCH /collection/:id #更新指定集合的部分信息</span><br><span class="line">DELETE /collection/:id #删除指定的集合</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="资源的表述"><a href="#资源的表述" class="headerlink" title="资源的表述"></a>资源的表述</h2><p>客户端通过HTTP获取资源的表述,如文本的表述格式可为:html,xml,json等,资源的表述包括数据和描述数据的元数据，例如，HTTP头“Content-Type” 就是这样一个元数据属性。</p>
+<h3 id="JSON-API"><a href="#JSON-API" class="headerlink" title="JSON API"></a>JSON API</h3><p>RestFul规定URL和HTTP Method的使用,未定义body的数据格式,JSON是最主流的网络传输格式</p>
+<h4 id="MIME类型"><a href="#MIME类型" class="headerlink" title="MIME类型"></a>MIME类型</h4><p>客户端请求头中<code>Content-Type</code>应该为<code>application/vnd.api+json</code>，并且在<code>Accept</code>中也必须包含<code>application/vnd.api+json</code>。如果指定错误服务器应该返回415或406状态码。</p>
+<h2 id="客户端与服务端"><a href="#客户端与服务端" class="headerlink" title="客户端与服务端"></a>客户端与服务端</h2><p>  客户端获取资源的表述（资源的外在呈现)不是资源的本身，资源的的表述包含了数据的描述和数据的元数据，浏览器与服务器间通过HTTP协议协商，浏览器通过<code>Accept</code>头请求一种特定的格式表述，服务器通过<code>Content-type</code>返回给浏览器客户端资源的表述形式。<br>  <img src="https://raw.githubusercontent.com/vaniot-s/picture/master/RESTful/resourcedecrption.jpg" alt="资源表述"></p>
+<h2 id="状态转移"><a href="#状态转移" class="headerlink" title="状态转移"></a>状态转移</h2><p>  在REST设计原则中客户端与服务端的交互是无状态(HTTP协议的特性)，客户端维护应用的状态，服务端维护资源的状态，但服务端不保存客户端状态。只有在每一次的请求中包含处理请求的信息，”会话”被客户端用作为应用状态进行跟踪，在服务端的超媒体的指引下发生变迁。服务端通过超媒体告诉客户端当前状态有哪些后续状态可以进入。 </p>
+<blockquote>
+<p>ps</p>
+<ul>
+<li>违反无状态通信原则的设计,如:利用Cookie跟踪某个服务端会话状态.</li>
+<li>超媒体:把一个个把资源链接起来.</li>
+</ul>
+</blockquote>
+<h2 id="认证机制"><a href="#认证机制" class="headerlink" title="认证机制"></a>认证机制</h2><p>  认证机制的引入用于解决，RESTful的服务无状态，认证机制用于确定访问资源的用户(权限机制用于确定用户是否可以使用，修改，删除或创建资源，常与业务逻辑绑定)，</p>
+<p>### </p>
+<blockquote>
+<p>参考资料<br> 1.<a href="http://jsonapi.org/format/" target="_blank" rel="noopener">json</a><br> 2.<a href="https://insights.thoughtworks.cn/api-restful/" target="_blank" rel="noopener">细说API – 重新认识RESTful</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/10/31/RESTful架构/" target="_blank" title="RESTful架构">https://vaniot-s.github.io/2018/10/31/RESTful架构/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/31/golang笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          golang笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/30/计算机网络/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">计算机网络</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RESTFul定义的URL"><span class="nav-number">1.</span> <span class="nav-text">RESTFul定义的URL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTful的URL设计"><span class="nav-number">1.1.</span> <span class="nav-text">RESTful的URL设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP动词"><span class="nav-number">2.</span> <span class="nav-text">HTTP动词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">2.1.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GET"><span class="nav-number">2.1.1.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POST"><span class="nav-number">2.1.2.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUT"><span class="nav-number">2.1.3.</span> <span class="nav-text">PUT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DELETE"><span class="nav-number">2.1.4.</span> <span class="nav-text">DELETE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源的表述"><span class="nav-number">3.</span> <span class="nav-text">资源的表述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-API"><span class="nav-number">3.1.</span> <span class="nav-text">JSON API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MIME类型"><span class="nav-number">3.1.1.</span> <span class="nav-text">MIME类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端与服务端"><span class="nav-number">4.</span> <span class="nav-text">客户端与服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态转移"><span class="nav-number">5.</span> <span class="nav-text">状态转移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认证机制"><span class="nav-number">6.</span> <span class="nav-text">认证机制</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

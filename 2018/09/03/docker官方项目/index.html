@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>docker官方项目 | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="docker">
+  
+  
+  
+  
+  <meta name="description" content="Compose   Compose定义和运行多个Docker容器的应用，实现对Docker容器集群的快速编排。通过一个docker-compose.yml模板文件，定义一组相关联的服务(容器应用)为一个项目(由多个服务组成的完整的业务单元)。 Compose的使用命令   Compose的命令对象默认指定为项目，使用 docker-compose [COMMAND] --help或docker-c">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker官方项目">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/09/03/docker官方项目/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="Compose   Compose定义和运行多个Docker容器的应用，实现对Docker容器集群的快速编排。通过一个docker-compose.yml模板文件，定义一组相关联的服务(容器应用)为一个项目(由多个服务组成的完整的业务单元)。 Compose的使用命令   Compose的命令对象默认指定为项目，使用 docker-compose [COMMAND] --help或docker-c">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker官方项目">
+<meta name="twitter:description" content="Compose   Compose定义和运行多个Docker容器的应用，实现对Docker容器集群的快速编排。通过一个docker-compose.yml模板文件，定义一组相关联的服务(容器应用)为一个项目(由多个服务组成的完整的业务单元)。 Compose的使用命令   Compose的命令对象默认指定为项目，使用 docker-compose [COMMAND] --help或docker-c">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-docker官方项目" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      docker官方项目
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/09/03/docker官方项目/" class="article-date">
+	  <time datetime="2018-09-03T14:45:23.000Z" itemprop="datePublished">2018-09-03</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/web/">web</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">3.5k</span>字  
+      预计:<span class="post-count">14</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h2><p>   <code>Compose</code>定义和运行多个<code>Docker</code>容器的应用，实现对<code>Docker</code>容器集群的快速编排。通过一个<code>docker-compose.yml</code>模板文件，定义一组相关联的服务(容器应用)为一个项目(由多个服务组成的完整的业务单元)。</p>
+<h3 id="Compose的使用"><a href="#Compose的使用" class="headerlink" title="Compose的使用"></a>Compose的使用</h3><h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>   <code>Compose</code>的命令对象默认指定为项目，使用 <code>docker-compose [COMMAND] --help</code>或<code>docker-compose help[COMMAND]</code>可以查看某个具体命令的使用格式。<br>   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose [-f=&lt;arg&gt;...] [options] [COMMAND] [ARGS...]</span><br></pre></td></tr></table></figure></p>
+   <a id="more"></a>
+<h4 id="命令选项"><a href="#命令选项" class="headerlink" title="命令选项"></a>命令选项</h4><ul>
+<li>-f, –file FILE 指定使用的 Compose 模板文件，默认为 docker-compose.yml，可以多次指定。</li>
+<li>-p, –project-name NAME 指定项目名称，默认将使用所在目录名称作为项目名。</li>
+<li>–x-networking 使用 Docker 的可拔插网络后端特性</li>
+<li>–x-network-driver DRIVER 指定网络后端的驱动，默认为 bridge</li>
+<li>–verbose 输出更多调试信息。</li>
+<li><p>-v, –version 打印版本并退出。</p>
+<h4 id="命令使用说明"><a href="#命令使用说明" class="headerlink" title="命令使用说明"></a>命令使用说明</h4></li>
+<li><p>build</p>
+<p>在项目目录下，(重新)构建项目中的容器:<code>docker-compose build [options] [SERVICE...]</code>服务容器构建后将会带上一个标记名。</p>
+<ul>
+<li>–force-rm 删除构建过程中的临时容器</li>
+<li>–no-cache 构建过程中不使用cache</li>
+<li>–pull尝试通过pull获取更新版本的镜像</li>
+</ul>
+</li>
+<li><p>config</p>
+<p>验证Compose文件格式是否正确</p>
+</li>
+<li><p>down</p>
+<p>停止up命令所启动的容器，并删除网络</p>
+</li>
+<li><p>exec</p>
+<p>进入指定的容器</p>
+</li>
+<li><p>help</p>
+<p>获得一个命令的帮助</p>
+</li>
+<li><p>images</p>
+<p>列出Compose文件中包含的镜像</p>
+</li>
+<li><p>kill</p>
+<p><code>docker-compose kill [options] [SERVICE...]</code>通过发送<code>SIGKILL</code>信号强制停止服务容器。带参数<code>-s</code>指定发送信号。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose kill -s SIGINT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>logs</p>
+<p>查看服务容器的输出，<code>docker-compose</code>对不同的服务输出使用不同的颜色区分，当带有<code>--no-color</code>关闭颜色</p>
+</li>
+<li><p>pause</p>
+<p>暂停一个服务容器,<code>docker-compose pause [SERVICE...]</code></p>
+</li>
+<li><p>port </p>
+<p>打印某个容器端口所映射的公共端口<code>docker-compose port [options] SERVICE PRIVATE_PORT</code></p>
+<ul>
+<li>-protocol=proto 指定端口协议，tcp(默认值)或者udp</li>
+<li>–index=index 同一个服务存在多个容器，指定容器对象的序号</li>
+</ul>
+</li>
+<li><p>ps</p>
+<p>项目中的所有容器<code>docker-compose ps [options][SERVICE...]</code></p>
+<ul>
+<li>-q 只打印容器的ID信息</li>
+</ul>
+</li>
+<li><p>pull </p>
+<p> 拉取服务依赖的镜像<code>docker-compose pull [options][SERVICE...]</code>。</p>
+<ul>
+<li>–ingore-pull-failure 忽略拉取取镜像过程中的错误</li>
+</ul>
+</li>
+<li><p>push</p>
+<p>推送服务依赖的镜像到docker镜像仓库</p>
+</li>
+<li><p>restart</p>
+<p>重启项目中的服务<code>docker-compose restart [options][SERVICE..]</code></p>
+<ul>
+<li>-t,-timeout TIMEOUT指定重启的超时时间(默认10秒) </li>
+</ul>
+</li>
+<li><p>rm </p>
+<p>删除(停止状态的容器)<code>docker-compose rm [options] [SERVICE...]</code></p>
+<ul>
+<li>-f,–force 强制直接删除，包括非停止状态的容器</li>
+<li>-v 删除容器所挂载的数据卷</li>
+</ul>
+</li>
+<li><p>run</p>
+<p>在指定服务上执行命令<code>docker-compose run [options] [-p PORT..][-e KEY=VAL..] SERVICE [COMMAND] [ARGS...]</code><br>指定服务上执行一个命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose run ubuntu ping docker.com</span><br></pre></td></tr></table></figure>
+<p>默认会将相关联的(未启动)服务启动，但给定命令将会覆盖原有的自动运行命令，并且不会自动创建端口，以避免冲突。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose run --no-deps web python manage.py shell #--no-deps 不启动关联的容器</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-d 后台运行容器。</li>
+<li>–name NAME 为容器指定一个名字。</li>
+<li>–entrypoint CMD 覆盖默认的容器启动指令。</li>
+<li>-e KEY=VAL 设置环境变量值，可多次使用选项来设置多个环境变量。</li>
+<li>-u, –user=”” 指定运行容器的用户名或者 uid。</li>
+<li>–no-deps 不自动启动关联的服务容器。</li>
+<li>–rm 运行命令后自动删除容器，d 模式下将忽略。</li>
+<li>-p, –publish=[] 映射容器端口到本地主机。</li>
+<li>–service-ports 配置服务端口并映射到本地主机。</li>
+<li>-T 不分配伪 tty，意味着依赖 tty 的指令将无法运行。</li>
+</ul>
+</li>
+<li><p>scale</p>
+<p>设置指定服务运行的容器个数<code>docker-compose scale [options] [SERVICE=NUM...]</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose scale web=3 db=2 #启动3个web服务，2个db服务</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当指定的服务大于运行中的容器，创建并启动新的容器，反之，停止多余的容器。</p>
+</blockquote>
+<ul>
+<li>-t,–timeout TIMEOUT停止容器的超时(默认10s)</li>
+</ul>
+</li>
+<li><p>start</p>
+<p>启动已经存在的服务容器<code>docker-compose start [Service...]</code></p>
+</li>
+<li><p>stop</p>
+<p>使运行状态的容器停止<code>docker-compose stop [optins] [SERVICE...]</code></p>
+<ul>
+<li>-t,–timeout TIMEOUT </li>
+</ul>
+</li>
+<li><p>top</p>
+<p>查看各服务容器内运行的进程</p>
+</li>
+<li><p>unpause</p>
+<p>恢复处于暂停状态的服务<code>docker-compose unpause [SERVICE...]</code></p>
+</li>
+<li><p>up</p>
+<p><code>docker-compose up [options] [SERVICE...]</code>将尝试自动完成构建镜像，创建服务，启动服务，关联服务相关的容器，启动关闭的相关容器。默认<code>docker-compose up</code>启动的容器在前台，控制台会打印出所有容器的输出信息。使用<code>docker-compose up -d</code>将在后台启动并运行所有的容器。服务容器已经存在，<code>docker-compose up</code>将会尝试停止容器，然后重新创建（保持使用 <code>volumes-from</code>挂载的卷），以保证新启动的服务匹配 <code>docker-compose.yml</code> 文件的最新内容。如果用户不希望容器被停止并重新创建，可以使用 <code>docker-compose up --no-recreate</code>。这样将只会启动处于停止状态的容器，而忽略已经运行的服务。如果用户只想重新部署某个服务，可以使用 d<code>ocker-compose up --no-deps -d &lt;SERVICE_NAME&gt;</code> 来重新创建服务并后台停止旧服务，启动新服务，并不会影响到其所依赖的服务。</p>
+<ul>
+<li>-d 在后台运行服务容器。</li>
+<li>–no-color 不使用颜色来区分不同的服务的控制台输出。</li>
+<li>–no-deps 不启动服务所链接的容器。</li>
+<li>–force-recreate 强制重新创建容器，不能与 </li>
+<li>–no-recreate 同时使用。</li>
+<li>–no-recreate 如果容器已经存在了，则不重新创建，不能与 –force-recreate 同时使用。</li>
+<li>–no-build 不自动构建缺失的服务镜像。</li>
+<li>-t, –timeout TIMEOUT 停止容器时候的超时（默认为 10 秒）。</li>
+</ul>
+</li>
+<li><p>version </p>
+<p>  打印版本信息 </p>
+<h3 id="compose模板文件"><a href="#compose模板文件" class="headerlink" title="compose模板文件"></a>compose模板文件</h3><p><code>compose</code>文件中的指令说明了构建的服务参数。</p>
+<h4 id="指令详解"><a href="#指令详解" class="headerlink" title="指令详解"></a>指令详解</h4></li>
+<li><p>build </p>
+<p>指定<code>Dockerfile</code>的文件路径(绝对路径或相对<code>docker-compose.yml</code>文件路径)  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 用build指定目录</span><br><span class="line">version: '3'</span><br><span class="line">services:</span><br><span class="line">webapp:</span><br><span class="line">    build: ./dir</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> </span><br><span class="line">version: '3'</span><br><span class="line">services:</span><br><span class="line">webapp:</span><br><span class="line">    build:</span><br><span class="line">        context: ./dir # 使用context指令指定`Dockerfile`所在文件夹的路径</span><br><span class="line">        dockerfile:Dockerfile-alternate # 指定Dockerfile的文件名</span><br><span class="line">        args:</span><br><span class="line">            buildno: 1 # 指令指定构建镜像时的变量</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 使用cache_from 指定构建镜像的缓存</span><br><span class="line">build:</span><br><span class="line">    context: .</span><br><span class="line">    cache_from:</span><br><span class="line">        - alpine:latest</span><br><span class="line">        - corp/web_app:3.14</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>cap_add,cap_drop</p>
+<p>指定容器的内和能力(capacity)分配。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cap_add: # 容器拥有所有的能力</span><br><span class="line"> - ALL</span><br><span class="line">cap_drop: #去掉NET_ADMIN能力</span><br><span class="line"> - NET_ADMIN</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>command</p>
+<p>覆盖容器启动后默认执行的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  command: echo "hello world"</span><br><span class="line">  ```  </span><br><span class="line">- configs</span><br><span class="line"></span><br><span class="line">  仅用于`Swarm mode`,</span><br><span class="line"></span><br><span class="line">- cgroup_parent</span><br><span class="line"> </span><br><span class="line">  指定父`cgroup`组,继承该组的资源限制.</span><br><span class="line">  ```shell</span><br><span class="line">  cgroup_parent:cgroup_1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>container_name<br>指定容器名称，默认会使用<code>项目名称_服务名称_序号</code>的格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container_name:docker-web-container</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>指定容器名称后，该服务将无法进行扩展（scale），Docker 中不允许多个容器具有相同的名称。</p>
+</blockquote>
+</li>
+<li><p>deploy</p>
+<p>仅用于 Swarm mode</p>
+</li>
+<li><p>devices</p>
+<p>指定设备映射关系。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">devices:</span><br><span class="line">- "/dev/ttyUSB1:/dev/ttyUSB0"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>depends_on</p>
+<p>解决容器的依赖、启动先后的问题。以下例子中会先启动 redis db 再启动 web</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">version: '3'</span><br><span class="line">services:</span><br><span class="line">web:</span><br><span class="line">    build: .</span><br><span class="line">    depends_on:</span><br><span class="line">    - db</span><br><span class="line">    - redis</span><br><span class="line">redis:</span><br><span class="line">    image: redis</span><br><span class="line">db:</span><br><span class="line">    image: postgres</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：web 服务不会等待 redis db 「完全启动」之后才启动。</p>
+</blockquote>
+</li>
+<li><p>dns</p>
+<p>自定义 DNS 服务器。可以是一个值，也可以是一个列表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dns: 8.8.8.8</span><br><span class="line">dns:</span><br><span class="line">- 8.8.8.8</span><br><span class="line">- 114.114.114.114</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dns_search</p>
+<p>配置 DNS 搜索域。可以是一个值，也可以是一个列表。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dns_search: example.com</span><br><span class="line">dns_search:</span><br><span class="line">- domain1.example.com</span><br><span class="line">- domain2.example.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tmpfs</p>
+<p>挂载一个 tmpfs 文件系统到容器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tmpfs: /run</span><br><span class="line">tmpfs:</span><br><span class="line">- /run</span><br><span class="line">- /tmp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>env_file</p>
+<p>从文件中获取环境变量，可以为单独的文件路径或列表。</p>
+<p>如果通过 docker-compose -f FILE 方式来指定 Compose 模板文件，则 env_file 中变量的路径会基于模板文件路径。</p>
+<p>如果有变量名称与 environment 指令冲突，则按照惯例，以后者为准。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">env_file: .env</span><br><span class="line"></span><br><span class="line">env_file:</span><br><span class="line">- ./common.env</span><br><span class="line">- ./apps/web.env</span><br><span class="line">- /opt/secrets.env</span><br></pre></td></tr></table></figure>
+<p>环境变量文件中每一行必须符合格式，支持 # 开头的注释行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> common.env: Set development environment</span><br><span class="line">PROG_ENV=development</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>environment</p>
+<p>设置环境<br>配置日志选项。组或字典两种格式。</p>
+<p>只给定名<br>配置日志选项。运行 Compose<br>配置日志选项。，可以用来防止泄露不<br>配置日志选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置日志选项。</span><br><span class="line">environment:</span><br><span class="line">RACK_ENV: development</span><br><span class="line">SESSION_SECRET:</span><br><span class="line">environment:</span><br><span class="line">- RACK_ENV=development</span><br><span class="line">- SESSION_SECRET</span><br></pre></td></tr></table></figure>
+<p>如果变量名称或者值中用到 true|false，yes|no 等表达 布尔 含义的词汇，最好放到引号里，避免 YAML 自动解析某些内容为对应的布尔语义。这些特定词汇，包括</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y|Y|yes|Yes|YES|n|N|no|No|NO|true|True|TRUE|false|False|on|On|ON|off|Off|OFF</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>expose</p>
+<p>暴露端口，但不映射到宿主机    配置日志选项。连接的服务访问。</p>
+<p>仅可以指定内部端口为参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">expose:</span><br><span class="line">- "3000"</span><br><span class="line">- "8000"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>external_links</p>
+<blockquote>
+<p>注意：不建议使用该指令。</p>
+</blockquote>
+<p>链接到 docker-compose.yml 外部的容器，甚至并非 Compose 管理的外部容器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">external_links:</span><br><span class="line">- redis_1</span><br><span class="line">- project_db_1:mysql</span><br><span class="line">- project_db_1:postgresql</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>extra_hosts</p>
+<p>类似 Docker 中的 –add-host 参数，指定额外的 host 名称映射信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">extra_hosts:</span><br><span class="line">- "googledns:8.8.8.8"</span><br><span class="line">- "dockerhub:52.1.157.61"</span><br></pre></td></tr></table></figure>
+<p>会在启动后的服务容器中 /etc/hosts 文件中添加如下两条条目。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8.8.8.8 googledns</span><br><span class="line">52.1.157.61 dockerhub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>healthcheck</p>
+<p>通过命令检查容器是否健康运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">healthcheck:</span><br><span class="line">test: ["CMD", "curl", "-f", "http://localhost"]</span><br><span class="line">interval: 1m30s</span><br><span class="line">timeout: 10s</span><br><span class="line">retries: 3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>image</p>
+<p>指定为镜像名称或镜像 ID。如果镜像在本地不存在，Compose 将会尝试拉取这个镜像。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">image: ubuntu</span><br><span class="line">image: orchardup/postgresql</span><br><span class="line">image: a4bc65fd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>labels</p>
+<p>为容器添加 Docker 元数据（metadata）信息。例如可以为容器添加辅助说明信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">labels:</span><br><span class="line">com.startupteam.description: "webapp for a startup team"</span><br><span class="line">com.startupteam.department: "devops department"</span><br><span class="line">com.startupteam.release: "rc3 for v1.0"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>links</p>
+<blockquote>
+<p>不推荐使用该指令。</p>
+</blockquote>
+</li>
+<li><p>logging<br>配置日志选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">logging:</span><br><span class="line">driver: syslog</span><br><span class="line">options:</span><br><span class="line">    syslog-address: "tcp://192.168.0.42:123"</span><br></pre></td></tr></table></figure>
+<p>目前支持三种日志驱动类型。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver: "json-file"</span><br><span class="line">driver: "syslog"</span><br><span class="line">driver: "none"</span><br></pre></td></tr></table></figure>
+<p>options 配置日志驱动的相关参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">options:</span><br><span class="line">max-size: "200k"</span><br><span class="line">max-file: "10"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>network_mode</p>
+<p>设置网络模式。使用和 docker run 的 –network 参数一样的值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">network_mode: "bridge"</span><br><span class="line">network_mode: "host"</span><br><span class="line">network_mode: "none"</span><br><span class="line">network_mode: "service:[service name]"</span><br><span class="line">network_mode: "container:[container name/id]"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>networks</p>
+<p>配置容器连接的网络。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">version: "3"</span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">some-service:</span><br><span class="line">    networks:</span><br><span class="line">    - some-network</span><br><span class="line">    - other-network</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">some-network:</span><br><span class="line">other-network:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pid</p>
+<p>跟主机系统共享进程命名空间。打开该选项的容器之间，以及容器和宿主机系统之间可以通过进程 ID 来相互访问和操作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pid: "host"</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ports</p>
+<p>暴露端口信息。</p>
+<p>使用宿主端口：容器端口 (HOST:CONTAINER) 格式，或者仅仅指定容器的端口（宿主将会随机选择端口）都可以。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ports:</span><br><span class="line">- "3000"</span><br><span class="line">- "8000:8000"</span><br><span class="line">- "49100:22"</span><br><span class="line">- "127.0.0.1:8001:8001"</span><br></pre></td></tr></table></figure>
+<p>注意：当使用 HOST:CONTAINER 格式来映射端口时，如果你使用的容器端口小于 60 并且没放到引号里，可能会得到错误结果，因为 YAML 会自动解析 xx:yy 这种数字格式为 60 进制。为避免出现这种问题，建议数字串都采用引号包括起来的字符串格式。</p>
+</li>
+<li><p>secrets</p>
+<p>存储敏感数据，例如 mysql 服务密码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">version: "3.1"</span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">mysql:</span><br><span class="line">image: mysql</span><br><span class="line">environment:</span><br><span class="line">    MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password</span><br><span class="line">secrets:</span><br><span class="line">    - db_root_password</span><br><span class="line">    - my_other_secret</span><br><span class="line"></span><br><span class="line">secrets:</span><br><span class="line">my_secret:</span><br><span class="line">    file: ./my_secret.txt</span><br><span class="line">my_other_secret:</span><br><span class="line">    external: true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>security_opt</p>
+<p>指定容器模板标签（label）机制的默认属性（用户、角色、类型、级别等）。例如配置标签的用户名和角色名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">security_opt:</span><br><span class="line">    - label:user:USER</span><br><span class="line">    - label:role:ROLE</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>stop_signal</p>
+<p>设置另一个信号来停止容器。在默认情况下使用的是 SIGTERM 停止容器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop_signal: SIGUSR1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sysctls</p>
+<p>配置容器内核参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysctls:</span><br><span class="line">net.core.somaxconn: 1024</span><br><span class="line">net.ipv4.tcp_syncookies: 0</span><br><span class="line"></span><br><span class="line">sysctls:</span><br><span class="line">- net.core.somaxconn=1024</span><br><span class="line">- net.ipv4.tcp_syncookies=0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ulimits</p>
+<p>指定容器的 ulimits 限制值。</p>
+<p>例如，指定最大进程数为 65535，指定文件句柄数为 20000（软限制，应用可以随时修改，不能超过硬限制） 和 40000（系统硬限制，只能 root 用户提高）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ulimits:</span><br><span class="line">    nproc: 65535</span><br><span class="line">    nofile:</span><br><span class="line">    soft: 20000</span><br><span class="line">    hard: 40000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>volumes</p>
+<p>数据卷所挂载路径设置。可以设置宿主机路径 （HOST:CONTAINER） 或加上访问模式 （HOST:CONTAINER:ro）。</p>
+<p>该指令中路径支持相对路径。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">- /var/lib/mysql</span><br><span class="line">- cache/:/tmp/cache</span><br><span class="line">- ~/configs:/etc/configs/:ro</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其它指令</p>
+<p>此外，还有包括 <code>domainname, entrypoint, hostname, ipc, mac_address, privileged, read_only, shm_size, restart, stdin_open, tty, user, working_dir</code> 等指令，基本跟 docker run 中对应参数的功能一致。</p>
+<p>指定服务容器启动后执行的入口文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entrypoint: /code/entrypoint.sh</span><br></pre></td></tr></table></figure>
+<p>指定容器中运行应用的用户名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user: nginx</span><br></pre></td></tr></table></figure>
+<p>指定容器中工作目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">working_dir: /code</span><br></pre></td></tr></table></figure>
+<p>指定容器中搜索域名、主机名、mac 地址等。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">domainname: your_website.com</span><br><span class="line">hostname: test</span><br><span class="line">mac_address: 08-00-27-00-0C-0A</span><br></pre></td></tr></table></figure>
+<p>允许容器中运行一些特权命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">privileged: true</span><br></pre></td></tr></table></figure>
+<p>指定容器退出后的重启策略为始终重启。该命令对保持服务始终运行十分有效，在生产环境中推荐配置为 always 或者 unless-stopped。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restart: always</span><br></pre></td></tr></table></figure>
+<p>以只读模式挂载容器的 root 文件系统，意味着不能对容器内容进行修改。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">read_only: true</span><br></pre></td></tr></table></figure>
+<p>打开标准输入，可以接受外部输入。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stdin_open: true</span><br></pre></td></tr></table></figure>
+<p>模拟一个伪终端。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty: true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读取变量</p>
+<p>Compose 模板文件支持动态读取主机的系统环境变量和当前目录下的 .env 文件中的变量。</p>
+<p>例如，下面的 Compose 文件将从运行它的环境中读取变量 ${MONGO_VERSION} 的值，并写入执行的指令中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">version: "3"</span><br><span class="line">services:</span><br><span class="line"></span><br><span class="line">db:</span><br><span class="line">image: "mongo:$&#123;MONGO_VERSION&#125;"</span><br></pre></td></tr></table></figure>
+<p>如果执行 MONGO_VERSION=3.2 docker-compose up 则会启动一个 mongo:3.2 镜像的容器；如果执行 MONGO_VERSION=2.8MONGO_VERSION=2.8 docker-compose up 则会启动一个 mongo:2.8 镜像的容器。<br>在当前目录新建 .env 文件并写入以下内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 支持 # 号注释</span><br><span class="line">MONGO_VERSION=3.6</span><br></pre></td></tr></table></figure>
+<p>执行 docker-compose up 则会启动一个 mongo:3.6 镜像的容器。</p>
+<h2 id="Machine"><a href="#Machine" class="headerlink" title="Machine"></a>Machine</h2><p><code>docker Machine</code> 用于创建虚拟的 Docker 主机，</p>
+<h2 id="Swarm"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm</h2><p><code>Docker Swarm</code>提供<code>Docker</code>容器集群服务，利用<code>Docker Swarm</code>可以将多个<code>Docker</code>主机封装为单个大型的虚拟主机，Docker 1.12 Swarm mode 已经内嵌入 Docker 引擎，成为了 docker 子命令 docker swarm。</p>
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><h3 id="服务及任务"><a href="#服务及任务" class="headerlink" title="服务及任务"></a>服务及任务</h3></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/09/03/docker官方项目/" target="_blank" title="docker官方项目">https://vaniot-s.github.io/2018/09/03/docker官方项目/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/04/算法导论笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          算法导论笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/21/docker基本操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">docker基本操作</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Compose"><span class="nav-number">1.</span> <span class="nav-text">Compose</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compose的使用"><span class="nav-number">1.1.</span> <span class="nav-text">Compose的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令"><span class="nav-number">1.1.1.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令选项"><span class="nav-number">1.1.2.</span> <span class="nav-text">命令选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令使用说明"><span class="nav-number">1.1.3.</span> <span class="nav-text">命令使用说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compose模板文件"><span class="nav-number">1.2.</span> <span class="nav-text">compose模板文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指令详解"><span class="nav-number">1.2.1.</span> <span class="nav-text">指令详解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine"><span class="nav-number">2.</span> <span class="nav-text">Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swarm"><span class="nav-number">3.</span> <span class="nav-text">Swarm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#节点"><span class="nav-number">3.1.</span> <span class="nav-text">节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务及任务"><span class="nav-number">3.2.</span> <span class="nav-text">服务及任务</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>

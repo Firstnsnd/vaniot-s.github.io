@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>php socket编程(一) | Vaniot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="phpsocket">
+  
+  
+  
+  
+  <meta name="description" content="Socket函数socketsocket_create  函数 resource socket_create(int $domain,int $type,int $protocol)  domain: AF_INET、AF_INET6、AF_UNIX，*AF (address family)地址族*。 type: SOCK_STREAM、SOCK_DGRAM等，常用SOCK_STREAM，基于字节">
+<meta name="keywords" content="php,socket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php socket编程(一)">
+<meta property="og:url" content="https://vaniot-s.github.io/2018/03/27/php-socket-一/index.html">
+<meta property="og:site_name" content="Vaniot">
+<meta property="og:description" content="Socket函数socketsocket_create  函数 resource socket_create(int $domain,int $type,int $protocol)  domain: AF_INET、AF_INET6、AF_UNIX，*AF (address family)地址族*。 type: SOCK_STREAM、SOCK_DGRAM等，常用SOCK_STREAM，基于字节">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-05-06T21:05:19.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php socket编程(一)">
+<meta name="twitter:description" content="Socket函数socketsocket_create  函数 resource socket_create(int $domain,int $type,int $protocol)  domain: AF_INET、AF_INET6、AF_UNIX，*AF (address family)地址族*。 type: SOCK_STREAM、SOCK_DGRAM等，常用SOCK_STREAM，基于字节">
+  
+    <link rel="alternate" href="/atom.xml" title="Vaniot" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css">
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/material">materials</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-php-socket-一" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      php socket编程(一)
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/27/php-socket-一/" class="article-date">
+	  <time datetime="2018-03-27T13:12:02.000Z" itemprop="datePublished">2018-03-27</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      本文共:<span class="post-count">763</span>字  
+      预计:<span class="post-count">3</span>分钟可读完
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="Socket函数"><a href="#Socket函数" class="headerlink" title="Socket函数"></a>Socket函数</h2><h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><h4 id="socket-create"><a href="#socket-create" class="headerlink" title="socket_create"></a>socket_create</h4><p>  函数 <code>resource socket_create(int $domain,int $type,int $protocol)</code></p>
+<ul>
+<li>domain: AF_INET、AF_INET6、AF_UNIX，*AF (address family)地址族*。</li>
+<li>type: SOCK_STREAM、SOCK_DGRAM等，常用SOCK_STREAM，基于字节流的SOCKET类型，也是TCP协议使用的类型</li>
+<li>protocol: SOL_TCP、SOL_UDP<a id="more"></a>
+</li>
+</ul>
+<h4 id="socket-bind"><a href="#socket-bind" class="headerlink" title="socket_bind"></a>socket_bind</h4><p>函数: <code>bool socket_bind(resource $socket,string $address[,int $port=0])</code></p>
+<ul>
+<li>socket: 使用 <code>socket_create</code> 创建的socket资源</li>
+<li>address: ip 地址</li>
+<li>port: 监听的端口号，web服务器通常为80端口</li>
+</ul>
+<h4 id="socket-listen"><a href="#socket-listen" class="headerlink" title="socket_listen"></a>socket_listen</h4><p>函数 <code>bool socket_listen(resource $socket[,int $bcklog=0])</code></p>
+<ul>
+<li>socket: 使用 <code>socket_create</code> 创建的socket资源</li>
+<li>backlog: 等待处理连接队列的最大长度</li>
+</ul>
+<h4 id="socket-acccept"><a href="#socket-acccept" class="headerlink" title="socket_acccept"></a>socket_acccept</h4><p>函数: <code>resource socket_accept(resource $socket)</code></p>
+<ul>
+<li>socket: 使用<code>socket_create</code>创建的socket资源</li>
+</ul>
+<h4 id="socket-write"><a href="#socket-write" class="headerlink" title="socket_write"></a>socket_write</h4><p>函数： <code>int socket_write(resource $socket,string $buffer[,int $length])</code></p>
+<ul>
+<li>socket: 调用 <code>socket_accept</code> 接收的新连接产生 <code>socket</code> 资源</li>
+<li>buffer: 写入到 <code>socket</code> 资源中的数据</li>
+<li>length: 控制写入到 <code>socket</code> 资源中的 <code>buffer</code> 的长度，如果长度大于 <code>buffer</code> 的容量，则取 <code>buffer</code> 的容量。</li>
+</ul>
+<h4 id="socket-close"><a href="#socket-close" class="headerlink" title="socket_close"></a>socket_close</h4><p>函数： <code>void socket_close(resource $socket)</code></p>
+<ul>
+<li>socket: <code>socket_accept</code> 或者 <code>socket_create</code> 产生的资源，不能用于 <code>stream</code> 资源的关闭。<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//server.php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$sock=socket_create(AF_INET,SOCK_STREAM,SOL_TCP);<span class="comment">//创建socket资源</span></span><br><span class="line">socket_bind($sock,<span class="string">"127.0.0.1"</span>,<span class="number">80</span>);<span class="comment">//绑定端口</span></span><br><span class="line">socket_listen($sock);<span class="comment">//监听端口</span></span><br><span class="line"><span class="keyword">for</span>(;;)&#123;</span><br><span class="line">$sock=socket_accept($sock);<span class="comment">//接收向端口发出的请求</span></span><br><span class="line">$write_buffer=<span class="string">"HTTP/1.0 200 OK\r\nServer: my_server\r\nContent-Type: text/html; charset=utf-8\r\n\r\nhello!world"</span>;</span><br><span class="line">$socket_write($conn,$write_buffer);<span class="comment">//写入数据到socket中</span></span><br><span class="line">$socket_close($conn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php server.php</span><br></pre></td></tr></table></figure></p>
+<h3 id="socket-stream"><a href="#socket-stream" class="headerlink" title="socket_stream"></a>socket_stream</h3><h4 id="stream-socket-server"><a href="#stream-socket-server" class="headerlink" title="stream_socket_server"></a>stream_socket_server</h4><p>一次性创建、绑定端口、监听端口<br>函数: <code>resource stream_socket_server ( string $local_socket [, int &amp;$errno [, string &amp;$errstr [, int $flags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN [, resource $context ]]]] )</code></p>
+<ul>
+<li>local_socket: 协议名://地址:端口号</li>
+<li>errno: 错误码</li>
+<li>errstr: 错误信息</li>
+<li>flags: 只使用该函数的部分功能</li>
+<li>context: 使用stream_context_create函数创建的资源流上下文</li>
+</ul>
+<h4 id="stream-socket-accept"><a href="#stream-socket-accept" class="headerlink" title="stream_socket_accept"></a>stream_socket_accept</h4><p>函数: <code>resource stream_socket_accept ( resource $server_socket [, float $server_socket[,float timeout = ini_get(&quot;default_socket_timeout&quot;) [, string &amp;$peername ]] )</code></p>
+<ul>
+<li>server_socket: 使用stream_socket_server创建的stream资源</li>
+<li>timeout: 超时时间</li>
+<li>peername: 设置客户端主机名称</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// server.php</span></span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$sock = stream_socket_server(<span class="string">"tcp://127.0.0.1:80"</span>, $errno, $errstr);</span><br><span class="line"><span class="keyword">for</span> ( ; ; ) &#123;</span><br><span class="line">    $conn = stream_socket_accept($sock);</span><br><span class="line">    $write_buffer = <span class="string">"HTTP/1.0 200 OK\r\nServer: my_server\r\nContent-Type: text/html; charset=utf-8\r\n\r\nhello!world"</span>;<span class="comment">// http 头信息</span></span><br><span class="line">    fwrite($conn, $write_buffer);</span><br><span class="line">    fclose($conn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><b>Note:</b>stream_socket_server和socket_create创建的不是同一种资源,stream_socket_server创建的是stream资源，可以用fwrite、fread、fclose操作该资源. socket_create创建的是socket资源，不是stream资源，所以socket_create创建的资源只能用socket_write、socket_read、socket_close来操作</p>
+<h2 id="多进程"><a href="#多进程" class="headerlink" title="多进程"></a>多<a href>进程</a></h2><h3 id="多进程函数"><a href="#多进程函数" class="headerlink" title="多进程函数"></a>多进程函数</h3><h4 id="pcntl-fork"><a href="#pcntl-fork" class="headerlink" title="pcntl_fork"></a>pcntl_fork</h4><p>函数：<code>int pcntl_fork(void)</code>;<br>pcntl_fork 会复制当前进程产生另一个进程，称为当前进程的子进程。父进程和子进程都会在该函数后继续运行，该函数在父进程和子进程中的返回值不相同，在父进程中返回的是 fork 出的子进程的进程ID，而在子进程中返回的是0，创建子进程失败时返回-1,创建成功的子进程会复制父进程的数据(堆、栈、静态数据)</p>
+<h4 id="pcntl-waitpid-等待返回fork的子进程状态"><a href="#pcntl-waitpid-等待返回fork的子进程状态" class="headerlink" title="pcntl_waitpid 等待返回fork的子进程状态"></a>pcntl_waitpid 等待返回fork的子进程状态</h4><p>函数：<code>int pcntl_waitpid(int $pid,int &amp;$status[,int $options=0])</code><br>挂起当前进程的执行一直到 pid 指定的进程退出，亦或接收一个信号中断当前进程、调用一个信号处理函数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: '打赏支持', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-40-06.png',
+  alipayImage: 'https://raw.githubusercontent.com/vaniot-s/picture/master/Qcoder/Screenshot%20from%202018-08-21%2016-49-42.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>本文作者:  </strong>Vaniot</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>本文链接:  </strong>
+          <a href="/2018/03/27/php-socket-一/" target="_blank" title="php socket编程(一)">https://vaniot-s.github.io/2018/03/27/php-socket-一/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>版权声明:   </strong>
+            本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            许可协议。转载请注明出处
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80MDY5MS8xNzIxNg==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/09/mysql用户管理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          mysql用户管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/20/tcp-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">TCP(一)</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket函数"><span class="nav-number">1.</span> <span class="nav-text">Socket函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#socket"><span class="nav-number">1.1.</span> <span class="nav-text">socket</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-create"><span class="nav-number">1.1.1.</span> <span class="nav-text">socket_create</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-bind"><span class="nav-number">1.1.2.</span> <span class="nav-text">socket_bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-listen"><span class="nav-number">1.1.3.</span> <span class="nav-text">socket_listen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-acccept"><span class="nav-number">1.1.4.</span> <span class="nav-text">socket_acccept</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-write"><span class="nav-number">1.1.5.</span> <span class="nav-text">socket_write</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#socket-close"><span class="nav-number">1.1.6.</span> <span class="nav-text">socket_close</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-stream"><span class="nav-number">1.2.</span> <span class="nav-text">socket_stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stream-socket-server"><span class="nav-number">1.2.1.</span> <span class="nav-text">stream_socket_server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stream-socket-accept"><span class="nav-number">1.2.2.</span> <span class="nav-text">stream_socket_accept</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程"><span class="nav-number">2.</span> <span class="nav-text">多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程函数"><span class="nav-number">2.1.</span> <span class="nav-text">多进程函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pcntl-fork"><span class="nav-number">2.1.1.</span> <span class="nav-text">pcntl_fork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pcntl-waitpid-等待返回fork的子进程状态"><span class="nav-number">2.1.2.</span> <span class="nav-text">pcntl_waitpid 等待返回fork的子进程状态</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2021 Vaniot All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span> |
+                                 博客字数统计: <span class="post-count">74.3k</span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/material" class="mobile-nav-link">Materials</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1275225219&web_id=1275225219" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Vaniot
+          </div>
+          <div class="panel-body">
+            Copyright © 2021 Vaniot All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+</body>
+</html>
